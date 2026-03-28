@@ -1,0 +1,30 @@
+• python is a object oriented & high level & scripting language
+• python was developed by Dutch programmer Guido van Rossum in 1989 
+EXTENSION: ".PY"
+→ Python is a large community, standard library with packages/modules/frameworks which 
+are used for all processing.
+*** 
+- Converts .py source code into bytecode (.pyc files).
+- This bytecode is then executed by the Python Virtual Machine (PVM).
+- The compilation step is automatic and hidden from the programmer.
+(#) is used for single line comment
+(''' ''') for multiple line comment
+Note: this comments are ignored by compiler and interpreter
+
+**IMP TOPICS→
+VARIABLES
+DATA TYPES
+CONTROL STATEMENTS
+SYNTAX & KEYWORDS
+INPUT & OUTPUT
+OPERATORS
+OOPS 
+FILE HANDLING
+ERROR HANDLING
+etc....
+
+
+
+
+
+
