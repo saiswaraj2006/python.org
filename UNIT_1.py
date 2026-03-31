@@ -81,4 +81,43 @@ if age>=50:  #indentation for the logical condition if that not places then the 
     print("you are vey old in age")
 else:
     print("you are young")
+#OPERATORS 
+str1="GOOD"
+str2="MORNING!"
+c=str1+str2#'+' operator uses to concatenates
+print(c)
+str1+=str2# it same as str1=str1+str2
+print(str1)
+#using operators like +,-,*,/,%,//,**.
+x=32
+y=3
+print(x+y)#addition operation
+print(x-y)#subtraction operation
+print(x*y)#multiplication
+print(x/y)#Division
+print(x%y)#modulus it returns remainder
+print(x//y)#Floor Division it returns quotient
+print(x**y)#Exponent operation it raises (32^3)performs exponential calculation
+k=43
+j=45
+k+=j# same has k=k+j and stores k has k+j
+print(k)
+j-=k#in above k value is changes to 88 then it performs operation, it is also same as j=j-k then returns j
+print(j)
+#comparison operators
+#such as <,>,!=,>=,<=
+h=90
+g=90
+l=1
+print(h>l)#returns True if the value of left operand is grater than right operand 
+print(h<l)#returns True if the value of left operand is lesser than right operand
+print(h!=g)#returns True if the two values not equal
+print(h>=g)#returns True if the value of the left operand is greater than or equal to the value of right operand
+print(h<=g)#returns True if the value of the right side  operand is either greater than or equal to the value on its left side
+
+no1=22
+no2=2
+no1/=no2
+print(no1)
+
 
