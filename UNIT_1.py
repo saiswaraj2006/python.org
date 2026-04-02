@@ -179,5 +179,43 @@ indexing
 slicing
 length etc
 '''
+#
+# + operator is used for combining both strings
+
+print("cricket is played with "+"bat & ball")
+print("missile man of India"+"-sir APJ Abdul Kalam")
+#we can add even numbers also 
+print("python"+"3.3")
+print("12"+"3456789")#it stores as a string value so that it could not perform addition instead of that it concatenates
+#MULTIPLICATION (OR STRING REPETITION )
+# If a string is multiplied by floating number it gives error 
+#print("root"*4.0)
+#TypeError: can't multiply sequence by non-int of type 'float'
+#IF A STRING IS MULTIPLIED BY THE INTEGER THEN IT PRINTS 
+print("hello\t"* 4)
+#output→hello   hello   hello   hello
+#if a integer is stored as string then it concatenates or merges both 
+print("hello"+"4")#output→hello4
+'''Tuples
+A tuple is an ordered collection of items that is immutable, meaning once created, its elements cannot be changed, added, or removed.
+Tuple is written by using ()
+Duplicates are allowed means repeated values are allowed 
+'''
+#create a tuple and print the values
+roop=(21,81,91,0)
+print(roop.index(0))#it returns 3 because the line tracks the exact index value from tuple
+#finding class type of the roop variable
+print(type(roop))#it prints <class 'tuple'>
+print(len(roop))#finding length of the tuple 
+tup=(21,41,21,42,5,5,3,5)
+#counting the duplicate value in the tuple
+print(tup.count(5))
+print( roop)
+print(2*roop)#it prints 2 times each value in order 
+print(sorted(tup))#it prints in sorted means ascending ordered form if duplicates are there then it prints duplicates
+#tuple can stores integers and strings
+tup2=(23,'hi','bye',71,'good morning')
+x,y,z,t,u=tup2
+print(y,u)
 
 
