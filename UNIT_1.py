@@ -182,40 +182,118 @@ length etc
 #
 # + operator is used for combining both strings
 
-print("cricket is played with "+"bat & ball")
-print("missile man of India"+"-sir APJ Abdul Kalam")
+#print("cricket is played with "+"bat & ball")
+#print("missile man of India"+"-sir APJ Abdul Kalam")
 #we can add even numbers also 
-print("python"+"3.3")
-print("12"+"3456789")#it stores as a string value so that it could not perform addition instead of that it concatenates
+#print("python"+"3.3")
+#print("12"+"3456789")#it stores as a string value so that it could not perform addition instead of that it concatenates
 #MULTIPLICATION (OR STRING REPETITION )
 # If a string is multiplied by floating number it gives error 
 #print("root"*4.0)
 #TypeError: can't multiply sequence by non-int of type 'float'
 #IF A STRING IS MULTIPLIED BY THE INTEGER THEN IT PRINTS 
-print("hello\t"* 4)
+#print("hello\t"* 4)
 #output→hello   hello   hello   hello
 #if a integer is stored as string then it concatenates or merges both 
-print("hello"+"4")#output→hello4
+#print("hello"+"4")#output→hello4
 '''Tuples
 A tuple is an ordered collection of items that is immutable, meaning once created, its elements cannot be changed, added, or removed.
 Tuple is written by using ()
 Duplicates are allowed means repeated values are allowed 
 '''
 #create a tuple and print the values
-roop=(21,81,91,0)
-print(roop.index(0))#it returns 3 because the line tracks the exact index value from tuple
+#roop=(21,81,91,0)
+#print(roop.index(0))#it returns 3 because the line tracks the exact index value from tuple
 #finding class type of the roop variable
-print(type(roop))#it prints <class 'tuple'>
-print(len(roop))#finding length of the tuple 
-tup=(21,41,21,42,5,5,3,5)
+#print(type(roop))#it prints <class 'tuple'>
+#print(len(roop))#finding length of the tuple 
+#tup=(21,41,21,42,5,5,3,5)
 #counting the duplicate value in the tuple
-print(tup.count(5))
-print( roop)
-print(2*roop)#it prints 2 times each value in order 
-print(sorted(tup))#it prints in sorted means ascending ordered form if duplicates are there then it prints duplicates
+#print(tup.count(5))
+#print( roop)
+#print(2*roop)#it prints 2 times each value in order 
+#print(sorted(tup))#it prints in sorted means ascending ordered form if duplicates are there then it prints duplicates
 #tuple can stores integers and strings
-tup2=(23,'hi','bye',71,'good morning')
-x,y,z,t,u=tup2
-print(y,u)
+#tup2=(23,'hi','bye',71,'good morning')
+#x,y,z,t,u=tup2#assigning values directly to variables like x,y,z,t,u then i calling y,u so it prints hi good morning
+#print(y,u)
+#tup3=('the balu ',)#the comma after the first element
+#print(type(tup3))
+#tup4=('the balu ')
+#print(type(tup4))# No comma after the first element is not a tuple it shows it is a string
+#tup5=(3,4,1,34,7,45,7,1,8)
+#accessing the values in a tuple
+#print("tup5[3:5]=",tup5[3:5])#it prints tuple values by using indexing
+#print("tup5[1:8]=",tup5[1:8])
+#print("tup5[0:9]=",tup5[0:9])
 
+#deleting the created tuple
+tup9=(4,'hook')
+del(tup9)
+#print(tup9)
+#NameError: name 'tup9' is not defined. Did you mean: 'tuple'?
+#because it is deleted
+''' using the divmod() function to find the remainder and quotient after successful division
+so divmod() functions returns two values like quotient and remainder'''
+quotient, remainder=divmod(555,3)
+print("quotient=",quotient)
+print("remainder=",remainder)
+rog=(12,45,67,23,89,5)
+a=min(rog)
+b=max(rog)
+print("minimum value from the rog tuple=",a)
+print("maximum value from the rog tuple=",b)
+# example 2
+a,b,c,d=(10,20,30,40)
+print(a)
+print(b)
+print(c)
+print(d)
+#write a python program to multiply all the numbers in the tuple
+yup=(2,3,4,5)
+a,b,c,d=(2,3,4,5)#here i use the tuple assignment
+print(a*b*c*d)
+upp=((1,2),(3,4),(5,6))
+#sorting the tuple by using'sorting'
+oppo=(13,98,2,78)
+print(sorted(oppo))#it returns sorted tuple in ordered way
+sai_marks=[19,20,18]
+print(tuple(sai_marks),type(sai_marks))
+print(type(sai_marks))
+#checking wheather the value is there are not
+if 1 in sai_marks:
+    print("True")
+else:
+    print("False")
+#example write a code to find the sum of all numbers in a tuple
+hup=(736,87,526,0,1,76)
+#create a variable and a assign a built-in sum()function
+total_sum=sum(hup)
+print(total_sum)
+tub=('blue',67,9,21,'black')
+#for printing strings,integers separately i need to go for the line of code which separates by instance in a given tuple
+numbers=tuple(x for x in tub if isinstance(x,(int,float)) )
+print("numbers=",numbers)
+total=sum(numbers)
+print('total=',total, type(numbers))
+#question -1
+#check whether an element 25 in the tuple (10,20,25,30)
+que_1=(10,20,25,30)
+if 25 in que_1:
+    print("is exist")
+else:
+    print("doesn't exist")
+    #question-2
+#write a program to find the length of a tuple 
+length=len(que_1)
+print("length=",length)
+    #question-3
+#given a tuple (1,2,3,4,5), create a new tuple with  each element squared
+que_3=(1,2,3,4,5)
+squared=tuple( x in que_3(x**2))
+print(x)
+
+ 
+
+ 
 
