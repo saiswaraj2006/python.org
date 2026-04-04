@@ -290,8 +290,43 @@ print("length=",length)
     #question-3
 #given a tuple (1,2,3,4,5), create a new tuple with  each element squared
 que_3=(1,2,3,4,5)
-squared=tuple( x in que_3(x**2))
-print(x)
+squared=tuple((i**2) for i in que_3)
+print(squared)
+    #question-4
+#Convert a tuple (10, 20, 30) into a list, modify it by adding 40, and convert it back to a tuple.
+yup=(10,20,30)
+y=list(yup)
+print(y)
+y.append(40)
+print(y)
+new_tuple=tuple(y)
+print(new_tuple)
+    #question-5
+#Write a program to count how many times an element appears in a tuple.
+oppo=(1,2,4,2,5,2,2)
+print(oppo.count(2))
+    #question-6
+#Access the 3rd element of a tuple (10, 20, 30, 40, 50) and print it.
+up=(10, 20, 30, 40, 50)
+u=up[3]
+print(u)
+    #question-7
+#Concatenate two tuples (1, 2, 3) and (4, 5, 6) and print the result.
+nut=(1,2,3)
+mut=(4,5,6)
+but=nut+mut
+print(but)
+    #question-8
+#Given a tuple of numbers, remove duplicates and return a new tuple.
+oppo=(1,2,4,2,5,2,2)
+duplicates=tuple(x for x in set(oppo) if oppo.count(x)>1)
+print(duplicates)
+
+
+
+
+
+
 
  
 
