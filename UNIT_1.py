@@ -321,6 +321,52 @@ print(but)
 oppo=(1,2,4,2,5,2,2)
 duplicates=tuple(x for x in set(oppo) if oppo.count(x)>1)
 print(duplicates)
+def remove_duplicates(oppo):
+    result = ()#creating a null tuple
+    for x in oppo:
+        if x not in result:
+            result=result+(x,)
+    return result
+oppo=(1,2,4,2,5,2,2)
+print(remove_duplicates(oppo))
+    #question-9
+#Given a nested tuple like (1, (2, 3), (4, 5)), flatten it into a single tuple (1, 2, 3, 4, 5).
+rup=(1,(2,3),(4,5))
+result=()
+for x in rup:
+    if isinstance(x,tuple):
+        result=result+x
+    else:
+        result=result+(x,)
+print(result)
+    #question-10
+#Write a program to sort a tuple without using sorted() (hint: convert to list).
+cup=(8,3,4,2,9,8,0,0)
+print(sorted(cup))
+    #question-11
+#Store student records as tuples (name, marks) and find the student with the highest marks.
+student_record=(("nandhini",20),("varsha",19),("vaishnavi",18))
+top_student=max(student_record,key=lambda x: x[1])
+print(top_student)
+'''on the above line top_student works by using max() it selects
+the each element in student_record and selects the maximum value on a condition
+key=lamda x: x[1]
+take each tuple x
+return x[1]→the marks by using indexing 
+means x="nandhini" and x[1]=20
+so, it returns x[1]
+'''
+    #question-12
+#Given a tuple of daily temperatures, calculate the average temperature.
+daily_temperature=(34,33,35,28)
+a,b,c,d=daily_temperature#by using assignments if there is a less data
+print((a+b+c+d)/4)
+#if there was long data then im using the sum(),len()
+daily_temperature=(34,33,35,28)
+average_temperature=sum(daily_temperature)/len(daily_temperature)
+print(average_temperature)
+# this is the best because while the large data is there then this method is best
+
 
 
 
