@@ -257,41 +257,41 @@ upp=((1,2),(3,4),(5,6))
 #sorting the tuple by using'sorting'
 oppo=(13,98,2,78)
 print(sorted(oppo))#it returns sorted tuple in ordered way
-sai_marks=[19,20,18]
-print(tuple(sai_marks),type(sai_marks))
-print(type(sai_marks))
+#sai_marks=[19,20,18]
+#print(tuple(sai_marks),type(sai_marks))
+#print(type(sai_marks))
 #checking wheather the value is there are not
-if 1 in sai_marks:
-    print("True")
-else:
-    print("False")
+#if 1 in sai_marks:
+ #   print("True")
+#else:
+#    print("False")
 #example write a code to find the sum of all numbers in a tuple
 hup=(736,87,526,0,1,76)
 #create a variable and a assign a built-in sum()function
-total_sum=sum(hup)
-print(total_sum)
+#total_sum=sum(hup)
+#print(total_sum)
 tub=('blue',67,9,21,'black')
 #for printing strings,integers separately i need to go for the line of code which separates by instance in a given tuple
 numbers=tuple(x for x in tub if isinstance(x,(int,float)) )
-print("numbers=",numbers)
-total=sum(numbers)
-print('total=',total, type(numbers))
+#print("numbers=",numbers)
+#total=sum(numbers)
+#print('total=',total, type(numbers))
 #question -1
 #check whether an element 25 in the tuple (10,20,25,30)
-que_1=(10,20,25,30)
-if 25 in que_1:
-    print("is exist")
-else:
-    print("doesn't exist")
+#que_1=(10,20,25,30)
+#if 25 in que_1:
+    #print("is exist")
+#else:
+    #print("doesn't exist")
     #question-2
 #write a program to find the length of a tuple 
-length=len(que_1)
-print("length=",length)
+#length=len(que_1)
+#print("length=",length)
     #question-3
 #given a tuple (1,2,3,4,5), create a new tuple with  each element squared
 que_3=(1,2,3,4,5)
 squared=tuple((i**2) for i in que_3)
-print(squared)
+#print(squared)
     #question-4
 #Convert a tuple (10, 20, 30) into a list, modify it by adding 40, and convert it back to a tuple.
 yup=(10,20,30)
@@ -366,8 +366,54 @@ daily_temperature=(34,33,35,28)
 average_temperature=sum(daily_temperature)/len(daily_temperature)
 print(average_temperature)
 # this is the best because while the large data is there then this method is best
+#convert the floating point number to the corresponding integer
+#a=float(input("Enter the floating point number"))
+print(("The integer variant of")+str(a)+("=")+str(int(a)))
+
+'''Here i used concatenation operator so, it only concatenates the string values not integers
+that's why i used str(a) instead of 'a' because 'a' stores the float value so i use that str(a)'''
 
 
+
+#LISTS-NEW TOPIC
+#List is a versatile data type which is available in the python and the elements is separated by usoing commas
+#List allows different types of Datatypes to store in it it also allows indexing,updating,repetition,concatenation, and some operations 
+first_lst=[1,'sun','Monday','3+5j',5.90,True]
+print(first_lst)
+print(type(first_lst))#it returns <class 'list'>
+#List is mutable which means the value of its element can be changed
+#ACCESSING VALUES IN LIST
+#same has strings the list also perform the slicing,and concatenations
+#lst=[start:stop:step]
+#↡↡↡
+#Above lst shows about slicing example
+lst1=[1,2,3,4,5,6,7,8,9,10]
+print("num List is:",lst1)
+print("First element in the List is ",lst1[0])
+print("Last element of the List is ",lst1[-1])#here by using slicing i calling last element in the particular list this is useful when large data is given then we want last element then this slicing is useful
+print("lst1=[::2]", lst1[::2])#this returns every other element from the list
+print("lst1=[2::2]", lst1[2::2])#get every other element but starting with index 2
+print("reverse of List=", lst1[::-1])#it gets the output in the reverse order
+lst2=[1,2,3,4,5,6,7,8,9,10]
+print(lst2)
+#performing inserting,append(),deletion 
+ #on the list which is already created
+    #example
+lst2[9]=99#inserting the 99 value at the 9th index instead of 10
+print(lst2)
+lst2[1]=22
+print(lst2)
+lst2.append(299)#by using append( ) we can add any element at the last of the list
+print(lst2)
+del lst2[10]
+print(lst2)#by using indexing we can delete a particular value of a given list 
+#deleting all elements in a list
+del lst2[::]
+print(lst2)#it deletes all elements in the list and prints empty list because we using indexing
+#Note:but it doesn't delete total list it only deletes the elements in the list
+#when you want to delete the total list then directly use the del 
+del lst2
+#print(lst2)#NameError: name 'lst2' is not defined. Did you mean: 'lst1'?
 
 
 
