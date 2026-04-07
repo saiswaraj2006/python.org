@@ -414,13 +414,85 @@ print(lst2)#it deletes all elements in the list and prints empty list because we
 #when you want to delete the total list then directly use the del 
 del lst2
 #print(lst2)#NameError: name 'lst2' is not defined. Did you mean: 'lst1'?
+#Write a program to insert a list in another list using the slice operation 
+lst3=[9,4,2,1]
+lst4=[]
+lst4=lst3[::]
+print("lst4=",lst4)#here i use null list to insertion by using slicing
+#Taking a list with elements then slicing it into the another list 
+lst5=[23,24,25]
+lst5[2]=lst3
+print("lst5 after insertion is=",lst5)#OUTPUT=lst5 after insertion is= [23, 24, [9, 4, 2, 1]]
+#another way by using direct way without creating a list inserting directly in the step lest see.
+lst5[1]=[0,1,22]
+print("lst5 After insertion =",lst5)#OUTPUT=lst5 After insertion = [23, [0, 1, 22], [9, 4, 2, 1]]
 
-
-
-
-
-
- 
-
- 
-
+#NESTED LISTS
+#'NESTED LIST' means a list within another list 
+#for example 
+lst5=[23, [0, 1, 22], [9, 4, 2, 1]]
+#here at the index 1,2 there are another list elements in int 
+lst5[0]='fool'
+print(lst5)
+i=0
+while i<(len(lst5)):
+    print("lst5[",i,"]=",lst5[i])
+    i+=1
+#lst5[ 0 ]= fool
+#lst5[ 1 ]= [0, 1, 22]
+#lst5[ 2 ]= [9, 4, 2, 1]
+lst5=[23,[0,1,22],[9,4,2,1]]
+lst5.insert(0,22)#syntax is (index,object)
+print(lst5)
+lst5.pop(0)#it deletes the element from the list at specific index 
+print(lst5)
+lst5.insert(0,'sun') 
+print(lst5)
+lst3.sort()
+print(lst3)#it sorts in low to high order
+lst3.reverse()#the reverse() method can reverse the all elements 
+print(lst3)
+lst3.extend(lst5)#it adds the another list at the end of the list
+print(lst3)
+print(lst3.count(9))#it counts the 9 how many times it will repeat
+print(lst3.index(4))#it prints the index value where the object exist
+    #example-1
+'''A small library wants to manage its collection of books using a python
+program. The library stores book titles in a list. Your task is to write
+a program that performs the following operations 
+LIST METHODS
+1. Add new books to the collection
+2. Remove a book if it is borrowed 
+3. Sort the books alphabetically 
+4. Reverse the order
+5. Count how many times a particular book appears
+6. Find the position of a book in the list
+7. Copy the collection into another list
+8. Clear the collection at the end of the day
+'''
+#1
+library_books=['Harry Potter', 'The Hobbit','1984','Harry Potter']
+library_books.insert(1,'Dune')
+library_books.insert(2,'Pride and Prejudice')
+print(library_books)
+#2
+#removing book '1984'
+library_books.remove('1984')
+print("The '1984' book was borrowed so the remaining books was:",library_books)
+#3
+library_books.sort()
+print(library_books)
+#4
+library_books.reverse()
+print(library_books)
+#5
+j=library_books.count('Harry Potter')
+print(j)#IT PRINTS COUNT=2
+#6
+library_books.index('Harry Potter')
+#7
+copy_library_books=library_books.copy()
+print(copy_library_books)
+#8
+copy_library_books.clear()
+print(copy_library_books)
