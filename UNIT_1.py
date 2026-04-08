@@ -496,3 +496,73 @@ print(copy_library_books)
 #8
 copy_library_books.clear()
 print(copy_library_books)
+library_books.pop(2)
+print(library_books)#it deletes an element from list at certain index place
+a=len(library_books)
+print(a)
+#program to make a list of cubes
+
+b=[]#creating an empty list
+for i in range(13):
+    b.append(i**3)#it prints 0 to 13 cubes 
+print(b)
+#Looping in the lists
+#example
+#for i in list:
+    #print(i)
+#program to print the sum of elements and the mean also
+#first creating a list 
+klst=[4,3,2,1,6,3]
+sum=0
+for i in klst:
+    sum=sum+i
+print("sum of the given list is:",sum)
+mean=float(sum/float(len(klst)))
+print("mean of the given list:",mean)
+
+#example 2
+'''
+- Print all elements of the list one by one.
+- Find the sum of all elements in the list.
+- Find the largest and smallest numbers in the list.
+- Count how many even and odd numbers are present in the list.
+- Reverse the list without using built-in functions like reverse() or slicing.
+
+
+
+'''
+#creating the list to perform all operations by using loops concepts in the list
+hook=[3,9,1,4,6,7]
+for i in hook:
+    print( i)#for printing all elements in the list
+sum_hook=0
+for i in hook:
+    sum_hook=sum_hook+i
+print("sum is:",sum_hook)  #to return the sum of elements in the given list
+
+largest=hook[0]
+for num in hook:
+    if num>largest:
+        largest=num
+print("largest is:",largest)
+smaller=hook[0]
+for nums in hook:
+    if nums<smaller:
+        smaller=nums
+print("smallest number :",smaller)
+count=0
+for nume in hook:
+    if nume%2==0:#this condition checks if the number is even or not
+        count+=1#if even then count is +1
+print("even number count is:",count)
+counts=0
+for numo in hook:
+    if numo%2!=0:
+        counts+=1
+print("odd number count is:",counts)
+
+
+
+
+    
+
