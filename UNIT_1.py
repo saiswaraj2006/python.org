@@ -560,6 +560,35 @@ for numo in hook:
     if numo%2!=0:
         counts+=1
 print("odd number count is:",counts)
+#converting any string,set,tuple or dictionary into list
+dug=list("king emperor")#here the space also count
+print(dug)
+#LIST CLONING
+#list cloning means creating a separate copy of the list this process is called as the list cloning
+vig1=['l',9,0,4,'gun','rose']
+vig2=vig1
+print(vig2) 
+vig3=vig2[2:-1]
+print('vig3:',vig3)#list vig3 is clone by using vig2
+#clone the all student marks from taking input from the user
+s_marks=[]
+#for i in range(5):
+
+    #s_mark=input("enter the student marks {i+1} :")
+    #s_marks.append(s_mark)
+#print("s_marks:",s_marks)
+s_names=[]
+#for i in range(5):
+    #names=input("Enter the student names{i+1}:")
+    #s_names.append(names)
+#print("s_names:",s_names)
+s_report=list(zip(s_names,s_marks))
+#above line is used to merge two lists using the zip()
+
+
+#print("s_report:",s_report)#output→s_report: [('sowmya', '12'), ('riya', '15'), ('somanth', '13'), ('hales', '20'), ('bejoes', '20')]
+
+
 
 
 
