@@ -586,9 +586,30 @@ s_report=list(zip(s_names,s_marks))
 #above line is used to merge two lists using the zip()
 
 
-#print("s_report:",s_report)#output→s_report: [('sowmya', '12'), ('riya', '15'), ('somanth', '13'), ('hales', '20'), ('bejoes', '20')]
-
-
+print("s_report:",s_report)#output→s_report: [('sowmya', '12'), ('riya', '15'), ('somanth', '13'), ('hales', '20'), ('bejoes', '20')]
+#program to iilustrate the use of the enumerate() to print an individual item and its index in the list
+fool=[3,53,21,9,6]
+for index,i in enumerate(fool):
+    print(i,"index value is=",index)
+    '''
+3 index value is= 0
+53 index value is= 1
+21 index value is= 2
+9 index value is= 3
+6 index value is= 4
+    '''
+for index,i in enumerate(s_report):
+    print(i,"is at index:",index)
+    '''
+('shiva', '14') is at index: 0
+('ragu', '12') is at index: 1
+('vasim', '15') is at index: 2
+('vaishnavi', '20') is at index: 3
+('helini', '20') is at index: 4
+    '''
+moo=[2,45,1,45,2]
+for i in range(len(moo)):
+    print("index:",i)
 
 
 
