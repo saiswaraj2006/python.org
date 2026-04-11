@@ -610,9 +610,41 @@ for index,i in enumerate(s_report):
 moo=[2,45,1,45,2]
 for i in range(len(moo)):
     print("index:",i)
+'''output is:
+index: 0
+index: 1
+index: 2
+index: 3
+index: 4
+'''
+#filter() function constructs a list those elements of the list for which a function
+#returns True.The syntax of the filter() function is= filter(function, sequence)
+#   PROBLEM SOLVING 
+#write a program that creates a list of numbers from 1-20 that are either divisible
+#by 2 or divisible by 4 without using the filter function
+div_2_4=[]
+for i in range(2,22):
+    if(i%2==0 or i%4==0):#it checks that is divisible by 2 or 4 then adds to the empty list 
+        div_2_4.append(i)
 
-
-
-
-    
+print(div_2_4)
+#write a program using filter function to a list of squares of numbers from 1-10.then 
+#use the for...in construct to sum the elements in the list generated
+def square(x):
+    return(x**2)
+squares=[]
+squares=list(square(i) for i in filter(square, range(1,11)))
+print("list of the 1-10 squares:",squares)
+sum=0
+for i in squares:
+    sum=sum+i
+print('sum:',sum)
+#write a program that defines a list of 5 states that are a member of india 
+#check whether the state belongs to that list or not
+India_states5=['Arunachal pradesh','Andhra pradesh','Telangana','Gujarat','GOA']
+is_state=input("Enter the name of the state:")
+if is_state in India_states5:
+    print(is_state,"is already in india")
+else:
+    print("Enter correct name")
 
