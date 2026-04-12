@@ -642,9 +642,48 @@ print('sum:',sum)
 #write a program that defines a list of 5 states that are a member of india 
 #check whether the state belongs to that list or not
 India_states5=['Arunachal pradesh','Andhra pradesh','Telangana','Gujarat','GOA']
-is_state=input("Enter the name of the state:")
-if is_state in India_states5:
-    print(is_state,"is already in india")
-else:
-    print("Enter correct name")
+#is_state=input("Enter the name of the state:")
+#if is_state in India_states5:
+   # print(is_state,"is already in india")
+#else:
+   
+   # print("Enter correct name")
+    #SET() CONCEPT
+#set is created by placing all elements in the curly braces{},separated by the comma or by using builtin function set()
+#example of creating the set 
+set1={3,1.1,'set created',90}
+print(set1)
+#or
+s=set(['sort','removes_duplicates',22,43])
+print(s)
+#set has a property of removing duplicates directly from the set
+#example
+dog=set(['bone',"bone",66,43,11,11,5.6])#check the set has initialized by some duplicate values when i call the set it automatically removes
+print(dog)
+#here the output={'bone', 66, 5.6, 11, 43}because the 'bone' repeated two times so it prints one time means removes the duplicate values and the 11 also 
+#CONVERSIONS
+list45=[4,6,45]
+print(set(list45))#list is converted to set.output=
+tup0=(4,32,4,23)
+print(set(tup0))
+print(tup0)#it returns tuple values output=(4, 32, 4, 23)
+print(set(tup0))#converts the tuples to the set values. output={32, 4, 23}
+str="fjeiwnsfhimdve"
+print(set(str))#converting the string into the set
+
+print(set("a man has hunger issues".split()))#forms a set of words
+#set operations 
+'''s.update()
+s.add()
+s.discard(),s.pop(), s.clear(), len(), s.union(), s.intersection, s.difference , s.difference_update(), s.symmetric_difference()
+s.copy(),s.isdisjoint(), all(s),max(),min(),sorted(),enumerate(s) etc
+'''
+# Original set
+original_set = {1, 2, 3, 4}
+
+# Copying the set
+copied_set = original_set.copy()
+
+print("Original Set:", original_set)
+print("Copied Set:", copied_set)
 
