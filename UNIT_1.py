@@ -686,4 +686,35 @@ copied_set = original_set.copy()
 
 print("Original Set:", original_set)
 print("Copied Set:", copied_set)
+soup={3,5,2,1}
+sop={5,2,6}
+sop.update(soup)
+print(sop)
+sop.add(77)
+print(sop)
+sop.clear()
+print(sop)#it gives output has=set() means that empty values in the set
+sop.add(55)#here im adding a element to empty set()
+print(sop)
+#so the set has contains only one element so im updating the set by adding some values
+add_sop=set([3,4,2,99,46])
+sop.update(add_sop)
+print(sop)
+#so the set 'sop' contains {2, 99, 3, 4, 55, 46}
+#finding the length of my set() by using len()
+l=len(sop)
+print(l)#6
+#checking is a element is present in the set or not
+print(3 in sop)#it returns 'TRUE' because the element is present in the sop()
+print(3 not in sop)#it returns 'FALSE' because the element is present in the sop() hence im checking not in set
+#now im creating two sets to perform symmetrical operations
+mat23={45,2,1,89,44,17,3,5}
+mat45={64,90,1,2,3,5,4,99}
 
+print("the intersection of mat23&mat45:",mat23&mat45)
+print("the union of mat23 and mat45:",mat23|mat45)
+mat23.intersection_update(mat45)
+print(mat23)#without using '&'
+set8={1,2,3}
+set8.issubset(mat45)
+print(set8<=mat45) 
