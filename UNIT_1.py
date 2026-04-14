@@ -513,11 +513,11 @@ print(b)
 #program to print the sum of elements and the mean also
 #first creating a list 
 klst=[4,3,2,1,6,3]
-sum=0
+s=0
 for i in klst:
-    sum=sum+i
-print("sum of the given list is:",sum)
-mean=float(sum/float(len(klst)))
+    s=s+i
+print("sum of the given list is:",s)
+mean=float(s/float(len(klst)))
 print("mean of the given list:",mean)
 
 #example 2
@@ -635,10 +635,10 @@ def square(x):
 squares=[]
 squares=list(square(i) for i in filter(square, range(1,11)))
 print("list of the 1-10 squares:",squares)
-sum=0
+s=0
 for i in squares:
-    sum=sum+i
-print('sum:',sum)
+    s=s+i
+print('sum:',s)
 #write a program that defines a list of 5 states that are a member of india 
 #check whether the state belongs to that list or not
 India_states5=['Arunachal pradesh','Andhra pradesh','Telangana','Gujarat','GOA']
@@ -717,4 +717,45 @@ mat23.intersection_update(mat45)
 print(mat23)#without using '&'
 set8={1,2,3}
 set8.issubset(mat45)
-print(set8<=mat45) 
+print(set8<=mat45) #here it returns 'TRUE' because the all elements in the set8() are in the mat45()
+#using enumeration function
+dug={45,2,0,4,2,3}
+for i in enumerate(dug):
+    print(i)
+alphabets={'a','b','c','d','e','f','g'}
+for i in enumerate(alphabets):
+    print(i,end='')#it returns (0, 'd')(1, 'a')(2, 'c')(3, 'e')(4, 'f')(5, 'g')(6, 'b')
+#end='', which means no newline and no space will be added after each tuple.
+#so to create new line 
+print()
+#for finding maximum and minimum in the given set
+#max()
+sets={3,4,21,9,3,22,99,2}
+print(max(sets)) 
+#or
+mm=max(sets)
+print('maximum:',mm)
+#min()
+print(min(sets))
+#or
+mi=min(sets)
+print('minimum:',mi)
+#to print it in the sorted set form
+sorted_set=sorted(sets)
+
+print('sorted:',sorted_set)
+#finding if the two sets have a null intersection or not
+ss=set([23,54,1])
+sp=set([44,2,68])
+print(ss.isdisjoint(sp))
+#it returns True,because there is no intersection
+#if it returns False then there is a intersection between the two sets
+#example
+sr=set([43,1,55])
+print(ss.isdisjoint(sr))
+#it prints False because the 1 is in the another set
+print(ss.intersection(sr))#it returns the intersecting value={1}
+#finding the sum of the set values
+set4=set([22,1,4,343,342,1,25])
+#it should not take the duplicate values 
+print(sum(set4))#737
