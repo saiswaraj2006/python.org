@@ -759,3 +759,19 @@ print(ss.intersection(sr))#it returns the intersecting value={1}
 set4=set([22,1,4,343,342,1,25])
 #it should not take the duplicate values 
 print(sum(set4))#737
+#write a program that generates a set  of prime numbers and another set of odd numbers. Demonstrate the result of union, intersection,
+#difference, and symmetric difference operations on these sets
+odds=set([x*2+1 for x in range(1,10)])
+print('odd numbers:',odds)
+primes=set()
+for nu in range(2,20):
+    for i in range(2,nu):
+        if nu%i==0:
+            break
+    else:
+        primes.add(nu)
+print("prime num:",primes)
+print("union:",odds.union(primes))
+print("intersection is:",odds.intersection(primes))
+print("symmetric difference:",odds.symmetric_difference(primes))
+print("difference:",odds.difference(primes))
