@@ -630,14 +630,14 @@ for i in range(2,22):
 print(div_2_4)
 #write a program using filter function to a list of squares of numbers from 1-10.then 
 #use the for...in construct to sum the elements in the list generated
-def square(x):
-    return(x**2)
-squares=[]
-squares=list(square(i) for i in filter(square, range(1,11)))
-print("list of the 1-10 squares:",squares)
-s=0
-for i in squares:
-    s=s+i
+#def square(x):
+    #return(x**2)
+#squares=[]
+#squares=list(square(i) for i in filter(square, range(1,11)))
+#print("list of the 1-10 squares:",squares)
+#s=0
+#for i in squares:
+    #s=s+i
 print('sum:',s)
 #write a program that defines a list of 5 states that are a member of india 
 #check whether the state belongs to that list or not
@@ -652,26 +652,26 @@ India_states5=['Arunachal pradesh','Andhra pradesh','Telangana','Gujarat','GOA']
 #set is created by placing all elements in the curly braces{},separated by the comma or by using builtin function set()
 #example of creating the set 
 set1={3,1.1,'set created',90}
-print(set1)
+#print(set1)
 #or
 s=set(['sort','removes_duplicates',22,43])
-print(s)
+#print(s)
 #set has a property of removing duplicates directly from the set
 #example
 dog=set(['bone',"bone",66,43,11,11,5.6])#check the set has initialized by some duplicate values when i call the set it automatically removes
-print(dog)
+#print(dog)
 #here the output={'bone', 66, 5.6, 11, 43}because the 'bone' repeated two times so it prints one time means removes the duplicate values and the 11 also 
 #CONVERSIONS
 list45=[4,6,45]
-print(set(list45))#list is converted to set.output=
+#print(set(list45))#list is converted to set.output=
 tup0=(4,32,4,23)
-print(set(tup0))
-print(tup0)#it returns tuple values output=(4, 32, 4, 23)
-print(set(tup0))#converts the tuples to the set values. output={32, 4, 23}
+#print(set(tup0))
+#print(tup0)#it returns tuple values output=(4, 32, 4, 23)
+#print(set(tup0))#converts the tuples to the set values. output={32, 4, 23}
 str="fjeiwnsfhimdve"
-print(set(str))#converting the string into the set
+#print(set(str))#converting the string into the set
 
-print(set("a man has hunger issues".split()))#forms a set of words
+#print(set("a man has hunger issues".split()))#forms a set of words
 #set operations 
 '''s.update()
 s.add()
@@ -684,81 +684,81 @@ original_set = {1, 2, 3, 4}
 # Copying the set
 copied_set = original_set.copy()
 
-print("Original Set:", original_set)
-print("Copied Set:", copied_set)
+#print("Original Set:", original_set)
+#print("Copied Set:", copied_set)
 soup={3,5,2,1}
 sop={5,2,6}
-sop.update(soup)
-print(sop)
-sop.add(77)
-print(sop)
-sop.clear()
-print(sop)#it gives output has=set() means that empty values in the set
-sop.add(55)#here im adding a element to empty set()
-print(sop)
+#sop.update(soup)
+#print(sop)
+#sop.add(77)
+#print(sop)
+#sop.clear()
+#print(sop)#it gives output has=set() means that empty values in the set
+#sop.add(55)#here im adding a element to empty set()
+#print(sop)
 #so the set has contains only one element so im updating the set by adding some values
 add_sop=set([3,4,2,99,46])
 sop.update(add_sop)
-print(sop)
+#print(sop)
 #so the set 'sop' contains {2, 99, 3, 4, 55, 46}
 #finding the length of my set() by using len()
 l=len(sop)
-print(l)#6
+#print(l)#6
 #checking is a element is present in the set or not
-print(3 in sop)#it returns 'TRUE' because the element is present in the sop()
-print(3 not in sop)#it returns 'FALSE' because the element is present in the sop() hence im checking not in set
+#print(3 in sop)#it returns 'TRUE' because the element is present in the sop()
+#print(3 not in sop)#it returns 'FALSE' because the element is present in the sop() hence im checking not in set
 #now im creating two sets to perform symmetrical operations
 mat23={45,2,1,89,44,17,3,5}
 mat45={64,90,1,2,3,5,4,99}
 
-print("the intersection of mat23&mat45:",mat23&mat45)
-print("the union of mat23 and mat45:",mat23|mat45)
-mat23.intersection_update(mat45)
-print(mat23)#without using '&'
+#print("the intersection of mat23&mat45:",mat23&mat45)
+#print("the union of mat23 and mat45:",mat23|mat45)
+#mat23.intersection_update(mat45)
+#print(mat23)#without using '&'
 set8={1,2,3}
-set8.issubset(mat45)
-print(set8<=mat45) #here it returns 'TRUE' because the all elements in the set8() are in the mat45()
+#set8.issubset(mat45)
+#print(set8<=mat45) #here it returns 'TRUE' because the all elements in the set8() are in the mat45()
 #using enumeration function
 dug={45,2,0,4,2,3}
-for i in enumerate(dug):
-    print(i)
+#for i in enumerate(dug):
+    #print(i)
 alphabets={'a','b','c','d','e','f','g'}
-for i in enumerate(alphabets):
-    print(i,end='')#it returns (0, 'd')(1, 'a')(2, 'c')(3, 'e')(4, 'f')(5, 'g')(6, 'b')
+#for i in enumerate(alphabets):
+    #print(i,end='')#it returns (0, 'd')(1, 'a')(2, 'c')(3, 'e')(4, 'f')(5, 'g')(6, 'b')
 #end='', which means no newline and no space will be added after each tuple.
 #so to create new line 
 print()
 #for finding maximum and minimum in the given set
 #max()
-sets={3,4,21,9,3,22,99,2}
-print(max(sets)) 
+#sets={3,4,21,9,3,22,99,2}
+#print(max(sets)) 
 #or
-mm=max(sets)
-print('maximum:',mm)
+#mm=max(sets)
+#print('maximum:',mm)
 #min()
-print(min(sets))
+#print(min(sets))
 #or
-mi=min(sets)
-print('minimum:',mi)
+#mi=min(sets)
+#print('minimum:',mi)
 #to print it in the sorted set form
-sorted_set=sorted(sets)
+#sorted_set=sorted(sets)
 
-print('sorted:',sorted_set)
+#print('sorted:',sorted_set)
 #finding if the two sets have a null intersection or not
 ss=set([23,54,1])
 sp=set([44,2,68])
-print(ss.isdisjoint(sp))
+#print(ss.isdisjoint(sp))
 #it returns True,because there is no intersection
 #if it returns False then there is a intersection between the two sets
 #example
 sr=set([43,1,55])
-print(ss.isdisjoint(sr))
+#print(ss.isdisjoint(sr))
 #it prints False because the 1 is in the another set
-print(ss.intersection(sr))#it returns the intersecting value={1}
+#print(ss.intersection(sr))#it returns the intersecting value={1}
 #finding the sum of the set values
 set4=set([22,1,4,343,342,1,25])
 #it should not take the duplicate values 
-print(sum(set4))#737
+#print(sum(set4))#737
 #write a program that generates a set  of prime numbers and another set of odd numbers. Demonstrate the result of union, intersection,
 #difference, and symmetric difference operations on these sets
 odds=set([x*2+1 for x in range(1,10)])
@@ -775,3 +775,36 @@ print("union:",odds.union(primes))
 print("intersection is:",odds.intersection(primes))
 print("symmetric difference:",odds.symmetric_difference(primes))
 print("difference:",odds.difference(primes))
+'''
+write a program that creates two sets .one of even numbers in range 1-10 and other has all composite numbers in range 1-20
+demonstrate the use all(),is.superset(), len(),and sum() functions on the sets
+'''
+evens=set([x for x in range(1,20) if x%2==0])#here checks the condition and if it is true then prints x value
+eve=set([x*2 for x in range(1,10)])#the x is multiplied by the 2 with all numbers 1-10
+print(eve)
+print(evens)
+#for printing the composite numbers in range 1-20
+composites = set()
+
+for i in range(2, 21):  # start from 2, since 1 is not composite
+    j = 2
+    while j <= i // 2:  # check divisors up to half of i
+        if i % j == 0:
+            composites.add(i)
+            break       # stop checking once composite is confirmed
+        j += 1
+
+print("Composite numbers from 1 to 20:", composites)
+print("ALL:",all(evens))
+print("superset:",evens.issuperset(eve))
+print("superset:",evens.issuperset(composites))#it returns False
+print("Length of evens:",len(evens))
+print("sum of all numbers in th evens set:",sum(evens))
+#write a program that creates the two sets  squares and cubes
+squares=set([x**2 for x in range(1,10)])
+print('squares:',squares)
+cubes=set([x**3 for x in range(1,10)])
+print("cubes:",cubes)
+#adding the element
+squares.add(11*2)
+print("squares_after_adding:",squares)
