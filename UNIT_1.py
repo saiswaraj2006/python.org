@@ -807,4 +807,27 @@ cubes=set([x**3 for x in range(1,10)])
 print("cubes:",cubes)
 #adding the element
 squares.add(11*2)
-print("squares_after_adding:",squares)
+print("squares_after_adding:",squares)#it adds the value o 11*2=22 in the squares
+squares_pop=squares.pop()
+print("squares after pop:=",squares_pop)#it returns the 64
+#if i use pop() operation  then the set is empty then it gives key error
+set_empty={}
+#print(set_empty.pop()) #it raises error 
+#remove(), update(), clear()
+squares.remove(36)
+print("after remove:",squares)
+squares.update(cubes)
+print(squares)#it updates all cubes set values in  the squares
+#so it gives the output has
+#{64, 1, 512, 4, 8, 9, 16, 81, 22, 343, 216, 25, 729, 27, 49, 125}
+#in the above if any duplicates are there it should be deleted and returns the set
+#clear()
+cubes.clear()
+print(cubes)#it empty the whole set i gives empty set has the output
+#if i use discard() function then
+squares.discard(1)
+print(squares)#then it tries to remove the element if is present in the set
+#so here my output is the={64, 512, 4, 8, 9, 16, 81, 22, 343, 216, 25, 729, 27, 49, 125}
+#write a program that has a list of countries . creates a set of the countries and prints the names of the countries in the sorted form
+countries=(['China','Russia','Australia','India','Afghanistan','Cuba','Europe','South korea'])
+print("countries_after_sorted:",sorted(set(countries)))
