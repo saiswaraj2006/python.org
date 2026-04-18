@@ -831,3 +831,30 @@ print(squares)#then it tries to remove the element if is present in the set
 #write a program that has a list of countries . creates a set of the countries and prints the names of the countries in the sorted form
 countries=(['China','Russia','Australia','India','Afghanistan','Cuba','Europe','South korea'])
 print("countries_after_sorted:",sorted(set(countries)))
+#countries_after_sorted: ['Afghanistan', 'Australia', 'China', 'Cuba', 'Europe', 'India', 'Russia', 'South korea']
+#dictionaries
+#dictionary is a data structure in which we store values as a point of key and value.Each key is separated from its value by colon
+# (:),and consecutive items are separated by commas.The entire items in a dictionary are enclosed in curly brackets({}). The 
+# syntax for defining a dictionary is
+#dictionary_name={key_1: value_1, key_2: value_2, key_3: value_3}
+dict={'roll_no':'22','Admno':'24CAM1022','Hno':'1-67'}
+print(dict)
+#program to create a 10 key values pairs where key is a number in hte range 1-10 and the value is twice the number
+squares={x: x**2 for x in range(1,10)}
+print(squares)
+#output={1: 1, 2: 4, 3: 9, 4: 16, 5: 25, 6: 36, 7: 49, 8: 64, 9: 81}
+
+#program to access values stored in a dictionary
+dic={'roll_no':'22','marks':'45','School_name':'SMHS','Name':'swaraj'}
+print("dic[name]=",dic['Name'])
+print("dic[School_name]:",dic['School_name'])
+print("dic[marks]:",dic['marks'])
+print("dic[roll_no]:",dic['roll_no'])
+#program to add a new line
+dics={'Roll no':'34','School name':'high school'}
+print("dics[Roll no]:",dics['Roll no'])
+print("dics[School name]:",dics['School name'])
+dics['marks']=100#new entry
+print(dics)
+#for entry updating 
+print("dics['marks']:",dics['Marks'])
