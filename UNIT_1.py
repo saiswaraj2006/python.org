@@ -638,7 +638,7 @@ print(div_2_4)
 #s=0
 #for i in squares:
     #s=s+i
-print('sum:',s)
+#print('sum:',s)
 #write a program that defines a list of 5 states that are a member of india 
 #check whether the state belongs to that list or not
 India_states5=['Arunachal pradesh','Andhra pradesh','Telangana','Gujarat','GOA']
@@ -762,7 +762,7 @@ set4=set([22,1,4,343,342,1,25])
 #write a program that generates a set  of prime numbers and another set of odd numbers. Demonstrate the result of union, intersection,
 #difference, and symmetric difference operations on these sets
 odds=set([x*2+1 for x in range(1,10)])
-print('odd numbers:',odds)
+#print('odd numbers:',odds)
 primes=set()
 for nu in range(2,20):
     for i in range(2,nu):
@@ -770,19 +770,19 @@ for nu in range(2,20):
             break
     else:
         primes.add(nu)
-print("prime num:",primes)
-print("union:",odds.union(primes))
-print("intersection is:",odds.intersection(primes))
-print("symmetric difference:",odds.symmetric_difference(primes))
-print("difference:",odds.difference(primes))
+#print("prime num:",primes)
+#print("union:",odds.union(primes))
+#print("intersection is:",odds.intersection(primes))
+#print("symmetric difference:",odds.symmetric_difference(primes))
+#print("difference:",odds.difference(primes))
 '''
 write a program that creates two sets .one of even numbers in range 1-10 and other has all composite numbers in range 1-20
 demonstrate the use all(),is.superset(), len(),and sum() functions on the sets
 '''
 evens=set([x for x in range(1,20) if x%2==0])#here checks the condition and if it is true then prints x value
 eve=set([x*2 for x in range(1,10)])#the x is multiplied by the 2 with all numbers 1-10
-print(eve)
-print(evens)
+#print(eve)
+#print(evens)
 #for printing the composite numbers in range 1-20
 composites = set()
 
@@ -794,43 +794,43 @@ for i in range(2, 21):  # start from 2, since 1 is not composite
             break       # stop checking once composite is confirmed
         j += 1
 
-print("Composite numbers from 1 to 20:", composites)
-print("ALL:",all(evens))
-print("superset:",evens.issuperset(eve))
-print("superset:",evens.issuperset(composites))#it returns False
-print("Length of evens:",len(evens))
-print("sum of all numbers in th evens set:",sum(evens))
+#print("Composite numbers from 1 to 20:", composites)
+#print("ALL:",all(evens))
+#print("superset:",evens.issuperset(eve))
+#print("superset:",evens.issuperset(composites))#it returns False
+#print("Length of evens:",len(evens))
+#print("sum of all numbers in th evens set:",sum(evens))
 #write a program that creates the two sets  squares and cubes
 squares=set([x**2 for x in range(1,10)])
-print('squares:',squares)
+#print('squares:',squares)
 cubes=set([x**3 for x in range(1,10)])
-print("cubes:",cubes)
+#print("cubes:",cubes)
 #adding the element
 squares.add(11*2)
-print("squares_after_adding:",squares)#it adds the value o 11*2=22 in the squares
+#print("squares_after_adding:",squares)#it adds the value o 11*2=22 in the squares
 squares_pop=squares.pop()
-print("squares after pop:=",squares_pop)#it returns the 64
+#print("squares after pop:=",squares_pop)#it returns the 64
 #if i use pop() operation  then the set is empty then it gives key error
 set_empty={}
 #print(set_empty.pop()) #it raises error 
 #remove(), update(), clear()
 squares.remove(36)
-print("after remove:",squares)
+#print("after remove:",squares)
 squares.update(cubes)
-print(squares)#it updates all cubes set values in  the squares
+#print(squares)#it updates all cubes set values in  the squares
 #so it gives the output has
 #{64, 1, 512, 4, 8, 9, 16, 81, 22, 343, 216, 25, 729, 27, 49, 125}
 #in the above if any duplicates are there it should be deleted and returns the set
 #clear()
 cubes.clear()
-print(cubes)#it empty the whole set i gives empty set has the output
+#print(cubes)#it empty the whole set i gives empty set has the output
 #if i use discard() function then
 squares.discard(1)
-print(squares)#then it tries to remove the element if is present in the set
+#print(squares)#then it tries to remove the element if is present in the set
 #so here my output is the={64, 512, 4, 8, 9, 16, 81, 22, 343, 216, 25, 729, 27, 49, 125}
 #write a program that has a list of countries . creates a set of the countries and prints the names of the countries in the sorted form
 countries=(['China','Russia','Australia','India','Afghanistan','Cuba','Europe','South korea'])
-print("countries_after_sorted:",sorted(set(countries)))
+#print("countries_after_sorted:",sorted(set(countries)))
 #countries_after_sorted: ['Afghanistan', 'Australia', 'China', 'Cuba', 'Europe', 'India', 'Russia', 'South korea']
 #dictionaries
 #dictionary is a data structure in which we store values as a point of key and value.Each key is separated from its value by colon
@@ -838,23 +838,53 @@ print("countries_after_sorted:",sorted(set(countries)))
 # syntax for defining a dictionary is
 #dictionary_name={key_1: value_1, key_2: value_2, key_3: value_3}
 dict={'roll_no':'22','Admno':'24CAM1022','Hno':'1-67'}
-print(dict)
+#print(dict)
 #program to create a 10 key values pairs where key is a number in hte range 1-10 and the value is twice the number
 squares={x: x**2 for x in range(1,10)}
-print(squares)
+#print(squares)
 #output={1: 1, 2: 4, 3: 9, 4: 16, 5: 25, 6: 36, 7: 49, 8: 64, 9: 81}
 
 #program to access values stored in a dictionary
 dic={'roll_no':'22','marks':'45','School_name':'SMHS','Name':'swaraj'}
-print("dic[name]=",dic['Name'])
-print("dic[School_name]:",dic['School_name'])
-print("dic[marks]:",dic['marks'])
-print("dic[roll_no]:",dic['roll_no'])
+#print("dic[name]=",dic['Name'])
+#print("dic[School_name]:",dic['School_name'])
+#print("dic[marks]:",dic['marks'])
+#print("dic[roll_no]:",dic['roll_no'])
 #program to add a new line
 dics={'Roll no':'34','School name':'high school'}
-print("dics[Roll no]:",dics['Roll no'])
-print("dics[School name]:",dics['School name'])
+#print("dics[Roll no]:",dics['Roll no'])
+#print("dics[School name]:",dics['School name'])
 dics['marks']=100#new entry
-print(dics)
-#for entry updating 
-print("dics['marks']:",dics['Marks'])
+#print(dics)
+#now im creating the new dictionary and modifying the entry
+new_dic={'Roll_No':22,'Stuyding':'AI-ML','Hobby':'editing,gaming,drawing,script writing,writing'}
+print(new_dic)
+print("ROLL_NO:",new_dic['Roll_No'])
+print("STUDYING:",new_dic['Stuyding'])
+print("HOBBY:",new_dic['Hobby'])
+new_dic['Game']={'Chess,FF,Hill Climb Racing,Sudoku,etc'}
+print("GAME:",new_dic['Game'])
+print("AFTER ADDING THE NEW DATA:",new_dic)
+#now for erasing all data i use the clear() function
+#otherwise for deleting the certain data i use the del(dict_name) function to delete the certain one
+del new_dic['Game']
+print(new_dic)#{'Roll_No': 22, 'Stuyding': 'AI-ML', 'Hobby': 'editing,gaming,drawing,script writing,writing'}
+#for clearing the all data from the existing dictionary we use clear() function
+print("after clearing:",new_dic.clear())
+#it gives none because the  dictionary has no data if i call the dictionary then
+print(new_dic)#output→{}
+#for deleting the data i use clear(),but for deleting the whole dictionary i use the del() function
+del new_dic
+
+#print(new_dic)
+
+#then it returns Traceback (most recent call last):
+#File "c:\Users\saisw\OneDrive\Desktop\python_practice\UNIT_1.py", line 878, in <module>
+#print(new_dic)
+#^^^^^^^
+#NameError: name 'new_dic' is not defined
+#here  dictionaries are case-sensitive 
+#a program to randomly pop() or the element from  a dictionary
+sov={'Roll No':690000,'Name':'Bhuvi','Rank':'1st'}
+print(sov.pop('Roll No'))
+print('sov=',sov)
