@@ -668,7 +668,7 @@ tup0=(4,32,4,23)
 #print(set(tup0))
 #print(tup0)#it returns tuple values output=(4, 32, 4, 23)
 #print(set(tup0))#converts the tuples to the set values. output={32, 4, 23}
-str="fjeiwnsfhimdve"
+#str="fjeiwnsfhimdve"
 #print(set(str))#converting the string into the set
 
 #print(set("a man has hunger issues".split()))#forms a set of words
@@ -886,5 +886,32 @@ del new_dic
 #here  dictionaries are case-sensitive 
 #a program to randomly pop() or the element from  a dictionary
 sov={'Roll No':690000,'Name':'Bhuvi','Rank':'1st'}
-print(sov.pop('Roll No'))
+print(sov.pop('Roll No'))#it returns Roll No
 print('sov=',sov)
+#today im concentrating on the  dictionaries Built-in Functions and methods 
+#to find the length of the dictionary 
+print(len(sov))#it returns the value 2
+#because the above block of the code pop the 'Roll No' so it has only two elements it returns 2
+print(sov)
+print(repr(sov))#Return the canonical string representation of the object.
+#or
+print("string representation:",str(sov))
+#creating another dictionary to perform the copy ,clear
+frog_lifespan={"Common Pond Frog":{"Wild":"5-8 years","Captivity":"10+ years"},
+               "American Bullfrog":{"Wild":"7-10 years", "Captivity":"15+ years"},
+               "Tree Frogs":{"Wild":"2-5 years", "Captivity": "8-10 years"},
+               "Posiion Dart Frogs":{"Wild":"5-7 years", "Captivity":"10-12 years"},
+               "Goliath Frog":{"Wild": "10-12 years","Captivity":"15+ years"},
+               "Wood Frog":{"Wild": "3-6 years","Captivity":"8-10 years"}
+               }
+print(frog_lifespan.keys())
+#it prints key values in the above dictionary
+#ex=dict(''keys'':''values'')so it prints the key values
+#dict_keys(['Common Pond Frog', 'American Bullfrog', 'Tree Frogs', 'Posiion Dart Frogs', 'Goliath Frog', 'Wood Frog'])
+print("frog_lifespan.values=",frog_lifespan.values())
+print(frog_lifespan['American Bullfrog']['Wild'])
+#7-10 years
+print(frog_lifespan.items())
+frog_lifespan.setdefault('Golden Frog',{'Wild':'4-6 years','Captivity':'8 years'})
+print("\n",frog_lifespan['Golden Frog'])
+#it sets default value for a key that is  not present in the dictionary
