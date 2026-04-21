@@ -347,7 +347,7 @@ print(sorted(cup))
 #Store student records as tuples (name, marks) and find the student with the highest marks.
 student_record=(("nandhini",20),("varsha",19),("vaishnavi",18))
 top_student=max(student_record,key=lambda x: x[1])
-print(top_student)
+#print(top_student)
 '''on the above line top_student works by using max() it selects
 the each element in student_record and selects the maximum value on a condition
 key=lamda x: x[1]
@@ -360,15 +360,15 @@ so, it returns x[1]
 #Given a tuple of daily temperatures, calculate the average temperature.
 daily_temperature=(34,33,35,28)
 a,b,c,d=daily_temperature#by using assignments if there is a less data
-print((a+b+c+d)/4)
+#print((a+b+c+d)/4)
 #if there was long data then im using the sum(),len()
 daily_temperature=(34,33,35,28)
 average_temperature=sum(daily_temperature)/len(daily_temperature)
-print(average_temperature)
+#print(average_temperature)
 # this is the best because while the large data is there then this method is best
 #convert the floating point number to the corresponding integer
 #a=float(input("Enter the floating point number"))
-print(("The integer variant of")+str(a)+("=")+str(int(a)))
+#print(("The integer variant of")+str(a)+("=")+str(int(a)))
 
 '''Here i used concatenation operator so, it only concatenates the string values not integers
 that's why i used str(a) instead of 'a' because 'a' stores the float value so i use that str(a)'''
@@ -379,8 +379,8 @@ that's why i used str(a) instead of 'a' because 'a' stores the float value so i 
 #List is a versatile data type which is available in the python and the elements is separated by usoing commas
 #List allows different types of Datatypes to store in it it also allows indexing,updating,repetition,concatenation, and some operations 
 first_lst=[1,'sun','Monday','3+5j',5.90,True]
-print(first_lst)
-print(type(first_lst))#it returns <class 'list'>
+#print(first_lst)
+#print(type(first_lst))#it returns <class 'list'>
 #List is mutable which means the value of its element can be changed
 #ACCESSING VALUES IN LIST
 #same has strings the list also perform the slicing,and concatenations
@@ -388,28 +388,28 @@ print(type(first_lst))#it returns <class 'list'>
 #↡↡↡
 #Above lst shows about slicing example
 lst1=[1,2,3,4,5,6,7,8,9,10]
-print("num List is:",lst1)
-print("First element in the List is ",lst1[0])
-print("Last element of the List is ",lst1[-1])#here by using slicing i calling last element in the particular list this is useful when large data is given then we want last element then this slicing is useful
-print("lst1=[::2]", lst1[::2])#this returns every other element from the list
-print("lst1=[2::2]", lst1[2::2])#get every other element but starting with index 2
-print("reverse of List=", lst1[::-1])#it gets the output in the reverse order
+#print("num List is:",lst1)
+#print("First element in the List is ",lst1[0])
+#print("Last element of the List is ",lst1[-1])#here by using slicing i calling last element in the particular list this is useful when large data is given then we want last element then this slicing is useful
+#print("lst1=[::2]", lst1[::2])#this returns every other element from the list
+#print("lst1=[2::2]", lst1[2::2])#get every other element but starting with index 2
+#print("reverse of List=", lst1[::-1])#it gets the output in the reverse order
 lst2=[1,2,3,4,5,6,7,8,9,10]
-print(lst2)
+#print(lst2)
 #performing inserting,append(),deletion 
  #on the list which is already created
     #example
 lst2[9]=99#inserting the 99 value at the 9th index instead of 10
-print(lst2)
+#print(lst2)
 lst2[1]=22
-print(lst2)
+#print(lst2)
 lst2.append(299)#by using append( ) we can add any element at the last of the list
-print(lst2)
+#print(lst2)
 del lst2[10]
 print(lst2)#by using indexing we can delete a particular value of a given list 
 #deleting all elements in a list
 del lst2[::]
-print(lst2)#it deletes all elements in the list and prints empty list because we using indexing
+#print(lst2)#it deletes all elements in the list and prints empty list because we using indexing
 #Note:but it doesn't delete total list it only deletes the elements in the list
 #when you want to delete the total list then directly use the del 
 del lst2
@@ -418,14 +418,14 @@ del lst2
 lst3=[9,4,2,1]
 lst4=[]
 lst4=lst3[::]
-print("lst4=",lst4)#here i use null list to insertion by using slicing
+#print("lst4=",lst4)#here i use null list to insertion by using slicing
 #Taking a list with elements then slicing it into the another list 
 lst5=[23,24,25]
 lst5[2]=lst3
-print("lst5 after insertion is=",lst5)#OUTPUT=lst5 after insertion is= [23, 24, [9, 4, 2, 1]]
+#print("lst5 after insertion is=",lst5)#OUTPUT=lst5 after insertion is= [23, 24, [9, 4, 2, 1]]
 #another way by using direct way without creating a list inserting directly in the step lest see.
 lst5[1]=[0,1,22]
-print("lst5 After insertion =",lst5)#OUTPUT=lst5 After insertion = [23, [0, 1, 22], [9, 4, 2, 1]]
+#print("lst5 After insertion =",lst5)#OUTPUT=lst5 After insertion = [23, [0, 1, 22], [9, 4, 2, 1]]
 
 #NESTED LISTS
 #'NESTED LIST' means a list within another list 
@@ -433,7 +433,7 @@ print("lst5 After insertion =",lst5)#OUTPUT=lst5 After insertion = [23, [0, 1, 2
 lst5=[23, [0, 1, 22], [9, 4, 2, 1]]
 #here at the index 1,2 there are another list elements in int 
 lst5[0]='fool'
-print(lst5)
+#print(lst5)
 i=0
 while i<(len(lst5)):
     print("lst5[",i,"]=",lst5[i])
@@ -443,19 +443,19 @@ while i<(len(lst5)):
 #lst5[ 2 ]= [9, 4, 2, 1]
 lst5=[23,[0,1,22],[9,4,2,1]]
 lst5.insert(0,22)#syntax is (index,object)
-print(lst5)
+#print(lst5)
 lst5.pop(0)#it deletes the element from the list at specific index 
-print(lst5)
+#print(lst5)
 lst5.insert(0,'sun') 
-print(lst5)
+#print(lst5)
 lst3.sort()
-print(lst3)#it sorts in low to high order
+#print(lst3)#it sorts in low to high order
 lst3.reverse()#the reverse() method can reverse the all elements 
-print(lst3)
+#print(lst3)
 lst3.extend(lst5)#it adds the another list at the end of the list
-print(lst3)
-print(lst3.count(9))#it counts the 9 how many times it will repeat
-print(lst3.index(4))#it prints the index value where the object exist
+#print(lst3)
+#print(lst3.count(9))#it counts the 9 how many times it will repeat
+#print(lst3.index(4))#it prints the index value where the object exist
     #example-1
 '''A small library wants to manage its collection of books using a python
 program. The library stores book titles in a list. Your task is to write
@@ -474,38 +474,38 @@ LIST METHODS
 library_books=['Harry Potter', 'The Hobbit','1984','Harry Potter']
 library_books.insert(1,'Dune')
 library_books.insert(2,'Pride and Prejudice')
-print(library_books)
+#print(library_books)
 #2
 #removing book '1984'
 library_books.remove('1984')
-print("The '1984' book was borrowed so the remaining books was:",library_books)
+#print("The '1984' book was borrowed so the remaining books was:",library_books)
 #3
 library_books.sort()
-print(library_books)
+#print(library_books)
 #4
 library_books.reverse()
-print(library_books)
+#print(library_books)
 #5
 j=library_books.count('Harry Potter')
-print(j)#IT PRINTS COUNT=2
+#print(j)#IT PRINTS COUNT=2
 #6
 library_books.index('Harry Potter')
 #7
 copy_library_books=library_books.copy()
-print(copy_library_books)
+#print(copy_library_books)
 #8
 copy_library_books.clear()
-print(copy_library_books)
+#print(copy_library_books)
 library_books.pop(2)
-print(library_books)#it deletes an element from list at certain index place
+#print(library_books)#it deletes an element from list at certain index place
 a=len(library_books)
-print(a)
+#print(a)
 #program to make a list of cubes
 
 b=[]#creating an empty list
 for i in range(13):
     b.append(i**3)#it prints 0 to 13 cubes 
-print(b)
+#print(b)
 #Looping in the lists
 #example
 #for i in list:
@@ -514,11 +514,11 @@ print(b)
 #first creating a list 
 klst=[4,3,2,1,6,3]
 s=0
-for i in klst:
-    s=s+i
-print("sum of the given list is:",s)
-mean=float(s/float(len(klst)))
-print("mean of the given list:",mean)
+#for i in klst:
+    #s=s+i
+#print("sum of the given list is:",s)
+#mean=float(s/float(len(klst)))
+#print("mean of the given list:",mean)
 
 #example 2
 '''
@@ -538,38 +538,38 @@ for i in hook:
 sum_hook=0
 for i in hook:
     sum_hook=sum_hook+i
-print("sum is:",sum_hook)  #to return the sum of elements in the given list
+#print("sum is:",sum_hook)  #to return the sum of elements in the given list
 
 largest=hook[0]
 for num in hook:
     if num>largest:
         largest=num
-print("largest is:",largest)
+#print("largest is:",largest)
 smaller=hook[0]
 for nums in hook:
     if nums<smaller:
         smaller=nums
-print("smallest number :",smaller)
+#print("smallest number :",smaller)
 count=0
 for nume in hook:
     if nume%2==0:#this condition checks if the number is even or not
         count+=1#if even then count is +1
-print("even number count is:",count)
+#print("even number count is:",count)
 counts=0
 for numo in hook:
     if numo%2!=0:
         counts+=1
-print("odd number count is:",counts)
+#print("odd number count is:",counts)
 #converting any string,set,tuple or dictionary into list
 dug=list("king emperor")#here the space also count
-print(dug)
+#print(dug)
 #LIST CLONING
 #list cloning means creating a separate copy of the list this process is called as the list cloning
 vig1=['l',9,0,4,'gun','rose']
 vig2=vig1
-print(vig2) 
+#print(vig2) 
 vig3=vig2[2:-1]
-print('vig3:',vig3)#list vig3 is clone by using vig2
+#print('vig3:',vig3)#list vig3 is clone by using vig2
 #clone the all student marks from taking input from the user
 s_marks=[]
 #for i in range(5):
@@ -586,7 +586,7 @@ s_report=list(zip(s_names,s_marks))
 #above line is used to merge two lists using the zip()
 
 
-print("s_report:",s_report)#output→s_report: [('sowmya', '12'), ('riya', '15'), ('somanth', '13'), ('hales', '20'), ('bejoes', '20')]
+#print("s_report:",s_report)#output→s_report: [('sowmya', '12'), ('riya', '15'), ('somanth', '13'), ('hales', '20'), ('bejoes', '20')]
 #program to iilustrate the use of the enumerate() to print an individual item and its index in the list
 fool=[3,53,21,9,6]
 for index,i in enumerate(fool):
@@ -858,21 +858,21 @@ dics['marks']=100#new entry
 #print(dics)
 #now im creating the new dictionary and modifying the entry
 new_dic={'Roll_No':22,'Stuyding':'AI-ML','Hobby':'editing,gaming,drawing,script writing,writing'}
-print(new_dic)
-print("ROLL_NO:",new_dic['Roll_No'])
-print("STUDYING:",new_dic['Stuyding'])
-print("HOBBY:",new_dic['Hobby'])
+#print(new_dic)
+#print("ROLL_NO:",new_dic['Roll_No'])
+#print("STUDYING:",new_dic['Stuyding'])
+#print("HOBBY:",new_dic['Hobby'])
 new_dic['Game']={'Chess,FF,Hill Climb Racing,Sudoku,etc'}
-print("GAME:",new_dic['Game'])
-print("AFTER ADDING THE NEW DATA:",new_dic)
+#print("GAME:",new_dic['Game'])
+#print("AFTER ADDING THE NEW DATA:",new_dic)
 #now for erasing all data i use the clear() function
 #otherwise for deleting the certain data i use the del(dict_name) function to delete the certain one
-del new_dic['Game']
-print(new_dic)#{'Roll_No': 22, 'Stuyding': 'AI-ML', 'Hobby': 'editing,gaming,drawing,script writing,writing'}
+#del new_dic['Game']
+#print(new_dic)#{'Roll_No': 22, 'Stuyding': 'AI-ML', 'Hobby': 'editing,gaming,drawing,script writing,writing'}
 #for clearing the all data from the existing dictionary we use clear() function
-print("after clearing:",new_dic.clear())
+##print("after clearing:",new_dic.clear())
 #it gives none because the  dictionary has no data if i call the dictionary then
-print(new_dic)#output→{}
+#print(new_dic)#output→{}
 #for deleting the data i use clear(),but for deleting the whole dictionary i use the del() function
 del new_dic
 
@@ -886,16 +886,16 @@ del new_dic
 #here  dictionaries are case-sensitive 
 #a program to randomly pop() or the element from  a dictionary
 sov={'Roll No':690000,'Name':'Bhuvi','Rank':'1st'}
-print(sov.pop('Roll No'))#it returns Roll No
-print('sov=',sov)
+#print(sov.pop('Roll No'))#it returns Roll No
+#print('sov=',sov)
 #today im concentrating on the  dictionaries Built-in Functions and methods 
 #to find the length of the dictionary 
-print(len(sov))#it returns the value 2
+#print(len(sov))#it returns the value 2
 #because the above block of the code pop the 'Roll No' so it has only two elements it returns 2
-print(sov)
-print(repr(sov))#Return the canonical string representation of the object.
+#print(sov)
+#print(repr(sov))#Return the canonical string representation of the object.
 #or
-print("string representation:",str(sov))
+#print("string representation:",str(sov))
 #creating another dictionary to perform the copy ,clear
 frog_lifespan={"Common Pond Frog":{"Wild":"5-8 years","Captivity":"10+ years"},
                "American Bullfrog":{"Wild":"7-10 years", "Captivity":"15+ years"},
@@ -904,14 +904,76 @@ frog_lifespan={"Common Pond Frog":{"Wild":"5-8 years","Captivity":"10+ years"},
                "Goliath Frog":{"Wild": "10-12 years","Captivity":"15+ years"},
                "Wood Frog":{"Wild": "3-6 years","Captivity":"8-10 years"}
                }
-print(frog_lifespan.keys())
+#print(frog_lifespan.keys())
 #it prints key values in the above dictionary
 #ex=dict(''keys'':''values'')so it prints the key values
 #dict_keys(['Common Pond Frog', 'American Bullfrog', 'Tree Frogs', 'Posiion Dart Frogs', 'Goliath Frog', 'Wood Frog'])
-print("frog_lifespan.values=",frog_lifespan.values())
-print(frog_lifespan['American Bullfrog']['Wild'])
+#print("frog_lifespan.values=",frog_lifespan.values())
+#print(frog_lifespan['American Bullfrog']['Wild'])
 #7-10 years
-print(frog_lifespan.items())
+#print(frog_lifespan.items())
 frog_lifespan.setdefault('Golden Frog',{'Wild':'4-6 years','Captivity':'8 years'})
-print("\n",frog_lifespan['Golden Frog'])
+#print("\n",frog_lifespan['Golden Frog'])
 #it sets default value for a key that is  not present in the dictionary
+#output→{'Wild': '4-6 years', 'Captivity': '8 years'}
+#for updating the dictionary 
+D1={'Name':'RDD','Working_job':'Software','Skills':'Python'}
+D2={'Business':'None'}
+print("Before updating:",D1)
+#for updating the D1 im using update() function
+D1.update(D2)
+print("After updating D1:",D1)
+#next step im printing the 'Values' of the updated D1
+print(D1.values())
+#OUTPUT:dict_values(['RDD', 'Software', 'Python', 'None'])
+#Next im printing the 'Keys' of the updated D1
+
+print(D1.keys())
+#OUTPUT:dict_keys(['Name', 'Working_job', 'Skills', 'Business'])
+D1.popitem()
+print(D1)#it removes the last element 
+#here im creating while loop to clear all the values upto null
+while D1:
+    key, value=D1.popitem()
+    print(f"popped: {key}-{value}")
+    print(D1)
+#here the output is
+#popped: Skills-Python
+#{'Name': 'RDD', 'Working_job': 'Software'}
+#popped: Working_job-Software
+#{'Name': 'RDD'}
+#popped: Name-RDD
+#{}=means the D1 is empty now
+#TODAY IM SOLVING THE DICTIONARIES PROBLEMS FROM BASICS TO CHALLENGE LEVEL 
+#Here im also focussing on the real-world problems
+#- Create a dictionary of 5 fruits with their prices.
+
+#- Use pop() to remove "apple" and print the updated dictionary.
+Fruits_Prices={'Apple':'100','Banana':'40','Kiwi':'240','Orange':'75','Grapes':'50'}
+
+#print(Fruits_Prices)
+#Here my aim is to  using pop() to remove 'apple' 
+aa=Fruits_Prices.pop('Apple')
+print(aa)
+print(Fruits_Prices)
+#2- Make a dictionary of student names and marks.
+#- Print all key–value pairs using .items().
+print(Fruits_Prices.items())
+#3.Problem
+#- Write a loop that pops items one by one using popitem() until the dictionary is empty. Print each popped pair.
+#so here im writing the while loop
+while Fruits_Prices:
+    key,value=Fruits_Prices.popitem()
+    print("After popped:",Fruits_Prices)
+
+'''output=
+After popped: {'Banana': '40', 'Kiwi': '240'}
+After popped: {'Banana': '40'}
+After popped: {}'''
+#- Given a dictionary of numbers { "a": -1, "b": 3, "c": 0, "d": 5 }, pop only the items where the value is greater than 0
+alphas={"a": -1, "b": 3, "c": 0, "d": 5 }
+for key in list(alphas.keys()): 
+    if alphas[key]>0:
+        value=alphas.pop(key)
+        print(f"popitems():{key}-{value}")
+print("After popping the updated dict is:",alphas)
