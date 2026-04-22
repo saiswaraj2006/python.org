@@ -977,3 +977,30 @@ for key in list(alphas.keys()):
         value=alphas.pop(key)
         print(f"popitems():{key}-{value}")
 print("After popping the updated dict is:",alphas)
+#popitems():b-3
+#popitems():d-5
+#After popping the updated dict is: {'a': -1, 'c': 0}
+#5.Create a dictionary of IPL teams and their scores.
+
+#Write a loop that removes teams with scores less than 150 using pop().
+IPL_Teams={'DC':165,'SRH':225,'PW':149,'CSK':180,'PBKS':145}
+for key in list(IPL_Teams.keys()):
+    if IPL_Teams[key]<150:#it checks the condition whether the team is less then 150 or not
+        print(IPL_Teams.pop(key))#it pop the key value 
+        print(f"popped the:{key}-{value}")
+        print(IPL_Teams)
+    #output={'DC': 165, 'SRH': 225, 'CSK': 180}
+#6.Build a dictionary of words and their frequencies from a sentence.
+#Use .items() to print only the words that occur more than once
+sent="this is dog and this is in brown in colour"
+
+#using split()to make it as a list
+words=sent.split()
+freq={}
+for word in words:
+    freq[word]=freq.get(word, 0)+1
+for word,count in freq.items():
+    if count>1:
+        print(f"{word}-{count}")
+
+
