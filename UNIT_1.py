@@ -1002,5 +1002,42 @@ for word in words:
 for word,count in freq.items():
     if count>1:
         print(f"{word}-{count}")
-
-
+#example question
+Dict={1:2,3:4,4:11,5:6,7:8}
+print(Dict[Dict[3]])
+#it works first checks the value Dict[3]=key 3 is  value 4
+#next the Dict[4] then it checks the 4 key then the value of the key is 11
+#so then it returns 11
+#list example
+List=[1,2,3,4,5,6,7,8,9,10]
+print(List[8:4:-1])#HERE the slicing starts at index 8 means 9 value
+#and stops at index 4 means value 5 and steps each step backwards because -1
+#so the output is [9, 8, 7, 6]
+ls=min([sum([10,20]),max(abs(-30),4)])
+print(ls)
+#here list is defined by total min() function here in that min function the set sum([10,20])=30
+#and the max(abs(-30),4)) means abs(-30)is absolute value is if negative then it is positive so abs(-30)=30
+#and the max(30,4) is 30  then the 30,30 is in the list the min(30,30 ) is 30
+lss=(12,8,7,5)
+print(max(min(lss[:2]),abs(-6)))
+#here the list[:2] means starts at index 0 and stops at index 2 then lss=12,8 not include the index value 2 and min(12,8)=8
+#and abs(-6) is 6 so max(8,6)is =8 the output also 8
+#NESTED LOOPS
+#the loop that placed inside other loops.and this nested loop can works within while,for loop
+#here the for loop using
+# A first for loop is used to control the number of times a particular set of statements will be executed 
+#and the second for loop or outer loop is used to control the number of times of that a whole loop is repeated
+for i in range(1,5):
+    print()
+    for j in range(1,20):
+        print("*",end=' ')
+'''
+* * * * * * * * * * * * * * * * * * * 
+* * * * * * * * * * * * * * * * * * * =output
+* * * * * * * * * * * * * * * * * * * 
+* * * * * * * * * * * * * * * * * * *
+'''
+for i in range(1,6):
+    print()
+    for j in range(1,i+1):
+        print("#",end='')
