@@ -1041,3 +1041,49 @@ for i in range(1,6):
     print()
     for j in range(1,i+1):
         print("#",end='')
+#output=
+#
+##
+###
+####
+#####
+n=int(input("Enter the n value:" ))
+print(n)
+for i in range(n):
+    print()
+    for j in range(i+1):
+        print("*",end="")
+'''output=
+*
+**
+***
+****
+*****
+'''
+#here for printing the inverted right-angled triangle
+# here same logic but the rows starts with the n values and ends with  0
+#and columns are create by using the ranging the i
+n=int(input("Enter the n:"))
+print(n)
+for i in range(n,0,-1):
+    print()
+    for j in range(i):
+        print("*",end="")
+        '''if n=5 then output=
+*****
+****
+***
+**
+*
+'''
+n=5
+print("\n",n)
+for i in range(1,n+1):
+    print(" "*(n-i),end="")
+    print("*"*(2*i-1))
+    
+n = 5
+width = 20
+for i in range(1, n+1):
+    stars = "*" * (2*i - 1)
+    print(stars.center(width))
