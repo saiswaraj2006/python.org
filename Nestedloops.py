@@ -146,4 +146,55 @@ for no,month in zip(numbers,months):
         print(f"{no}: {month}: (current month)")
     else:
         print(f"{no}: {month}")
-    
+    #so above firstly used normal outer loop and inner loop i get stuck then i use for pairs zip() function
+    # then i get the answer perfectly
+'''for printing below pattern
+******
+*    *
+*    *
+*    *
+******
+''' 
+#for normal outlined box
+#To print the horizontal * 
+n=6
+for i in range(n):
+    for j in range(n):
+        if i==0 or i==n-1 or j==0 or j==n-1:
+            print('*',end='')
+        else:
+            print(' ',end='')
+    print()
+#now i need to print '$' symbol inside the box but in the diagonal top-left to down-right
+#so here i observe that the if both diagonals 0,0 and 1,1, and 2,2 and 3,3 and 4,4 is equal then it has '$' symbol
+#but here im taking n=5
+#then 
+n=5
+for i in range(n):
+    for j in range(n):
+        if i==j:
+            print('$',end='') #for diagonal condition when i==j then prints the '$'
+        elif i==0 or i==n-1 or j==0 or j==n-1:
+            print('*',end='')
+        else:
+            print(' ',end='')
+    print()
+    '''
+$****
+*$  *
+* $ *
+*  $*
+****$
+    '''
+#now i need two diagonals one is left to right and one is reverse
+print()
+n=5
+for i in range(n):
+    for j in range(n):
+        if i==j or i+j==n-1:#here i use both diagonal and reverse diagonal 
+            print('$',end='')
+        elif i==0 or i==n-1 or j==0 or j==n-1:
+            print('*',end='')
+        else:
+            print(' ',end='')
+    print()

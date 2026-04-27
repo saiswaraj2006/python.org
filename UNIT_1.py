@@ -1079,7 +1079,7 @@ for i in range(n,0,-1):
 n=5
 print("\n",n)
 for i in range(1,n+1):
-    print(" "*(n-i),end="")
+    print(" "*(n-i),end="")#here ""it creates space and multiplied by n-i
     print("*"*(2*i-1))
     
 n = 5
@@ -1087,3 +1087,4 @@ width = 20
 for i in range(1, n+1):
     stars = "*" * (2*i - 1)
     print(stars.center(width))
+
