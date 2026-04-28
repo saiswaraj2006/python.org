@@ -198,3 +198,41 @@ for i in range(n):
         else:
             print(' ',end='')
     print()
+print()
+    #to print the following pattern
+'''
+    0
+    12
+    345
+    6789
+    '''
+count=0
+for t in range(1,5):
+    print()
+    for u in range(1,t+1):
+        print(n,end=' ')
+        count=count+1
+#to print the below pattern
+'''
+     1
+    12
+   123
+  1234
+ 12345
+'''
+print()
+n=5
+for i in range(1,n+1):
+    for k in range(n,i,-1):
+        #to print in reverse order using slicing
+        print(" ",end='')
+    for j in range(1,i+1):
+        print(j,end='')
+    print()
+#here i used reverse printing condition when there is pattern starts in reverse so i use another 
+#loop to iterate from n to 0
+#then the loop starts with n
+#stops at index o 
+#steps -1
+#means starts with nth and ends with starting position
+
