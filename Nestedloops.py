@@ -235,4 +235,41 @@ for i in range(1,n+1):
 #stops at index o 
 #steps -1
 #means starts with nth and ends with starting position
+#write a program to implement the following sequence of numbers.
+'''
+1. 1,8,27,64,.....
+2. -5,-2,0,3,6,9,12,....
+3. -2,-4,-6,-8,-12.....
+4. 1,4,7,10,.....
+'''
+print()
+for i in range(1,6):
+    print(i**3,end=',' if i<5 else ",...")#if i add the comma in the end block then it prints , at the end also so i use condition
+    #if i<5 then prints the ,....
+    
+print()
+#for 2. sequence
 
+for l in range(-5,16,3):
+    if l==-2:
+        print(l,end=",")
+        
+    elif l>0:
+        print(l-1,end="," if l-1<12 else",....")
+    else:
+        print(l,end="," )
+
+#output=-5,-2,0,3,6,9,12,....
+#for 3rd sequence 
+#-2,-4,-6,-10,-12,...
+#here it is starts with the -2 and ends upto -12
+print()
+for i in range(-2,-13,-2):
+    print(i,end="," if i>-12 else",...")
+#for printing the 1,4,7,10
+#here it starts with the 1 and ends upto the value 10 and so on ,...
+
+#so by using the for loop start,stop,step condition i able to print the sequence
+print()#for new line because it will print from the end of the above output
+for i in range(1,11,3):
+    print(i,end=',' if i<9 else",....")
