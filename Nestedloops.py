@@ -140,12 +140,12 @@ for r in range(rows):
 
 #For printing the months in a year i also use the nested loop
 months=['January','February','March','April','May','June','July','August','September','October','November','December']
-numbers=[1,2,3,4,5,6,7,8,9,10,11,12]
-for no,month in zip(numbers,months):
-    if month=='April'and no==4:
-        print(f"{no}: {month}: (current month)")
-    else:
-        print(f"{no}: {month}")
+#numbers=[1,2,3,4,5,6,7,8,9,10,11,12]
+#for no,month in zip(numbers,months):
+    #if month=='April'and no==4:
+        #print(f"{no}: {month}: (current month)")
+    #else:
+        #print(f"{no}: {month}")
     #so above firstly used normal outer loop and inner loop i get stuck then i use for pairs zip() function
     # then i get the answer perfectly
 '''for printing below pattern
@@ -273,3 +273,20 @@ for i in range(-2,-13,-2):
 print()#for new line because it will print from the end of the above output
 for i in range(1,11,3):
     print(i,end=',' if i<9 else",....")
+#some crazy work
+print()
+a=30
+if a==30:
+    a=60
+if a==60:
+    a=90
+c=0
+c=+a
+print(a+78)
+c=a+78
+g='g'+str(c)+"ood"#here if i want to add the c value then it is integer so i used str(c) this converts the c value to string so then concatenates with g
+print(g)
+print("\n g is:",g)
+
+
+
