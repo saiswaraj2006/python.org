@@ -287,6 +287,34 @@ c=a+78
 g='g'+str(c)+"ood"#here if i want to add the c value then it is integer so i used str(c) this converts the c value to string so then concatenates with g
 print(g)
 print("\n g is:",g)
+#so tomorrow i can prepare for the new concept is file handling 
+#File is a collection of data stored on a secondary storage device like hard disk.
+#we have ASCII files and Binary files and opening and closing file
+#For opening file 
+#we use
+#fileobj=open(file_name[, access_mode])
+file=open("File.txt","rb")
+print(file)
+#<_io.BufferedReader name='File.txt'>
+#we have accessing the modes
+#r=This is the default mode of opening file which opens the file for reading only
+#rb= This mode opens a file for reading only in binary format.The file pointer  is placed at the beginning of the file
+#r+=This mode opens a file for  both reading and writing .This file pointer at the beginning of the file
+#rb+=This mode opens the file for both reding and writing in binary format.The file is placed at the beginning of the file
+#w=this mode is used only for writing 
+#wb=opens a file in binary format for writing only.In this mode two things can happens when file is does not exist,a new file 
+#is created for writing .if the file is already existed and has some data stored in it,the contents are over written
+file=open("File.txt")
+print("the file name is:",file.name)
+print("File is closed:",file.closed)
+print("File has been opened in:",file.mode,"mode")#it returns the mode has 'r' which means read mode
 
+f=open("File.txt","r")
+file=open("File.txt","w")
+'''
+THE close() METHOD
+'''
+#using close method by
+#fileobj.close()
 
 
