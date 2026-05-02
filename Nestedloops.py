@@ -316,5 +316,34 @@ THE close() METHOD
 '''
 #using close method by
 #fileobj.close()
+'''
+'ab' is used to appending the binary file .The pointer is at end of the file exists.If the file does not exist it creates a new file
+for writing 
 
+'a+' is  used to open a file for both reading and the appending . The file pointer is placed at the end of the file if the file exists.
+If the file does not exist then it creates a new file
+
+'ab+' is used to open a file in binary format for both reading and appending. The file pointer is placed at the end of the file if hte file exists.
+If it does not exist, a new file is created for reding and writing.'''
+#example
+f=open("File.txt","a+")
+f.write("Adding python 'File Handling' concept in the nested loops.py file \n")
+f.close()
+print("successfully added the content")
+
+with open("File.txt", "a") as f:
+    f.write("Adding python 'File Handling' concept in the nested loops.py file \n")
+
+print("Successfully added the content")
+
+with open("File.txt","+r") as f:
+    print("open file is \n",f.read())
+
+with open("File.txt","+r") as f:
+    for line in f:
+        print("line is\n",line.strip())#this line.strip () is removes the spaces at beginning and ending of the line
+
+with open("File.txt","w") as f:
+    f.write("third line is added by using 'w' mode\n")#this overwrites the entire file and removes the existing files
+    
 
