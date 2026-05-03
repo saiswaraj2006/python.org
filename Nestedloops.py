@@ -345,5 +345,31 @@ with open("File.txt","+r") as f:
 
 with open("File.txt","w") as f:
     f.write("third line is added by using 'w' mode\n")#this overwrites the entire file and removes the existing files
+#for splitting the words in the certain text file
+#using the .split() method for splitting 
+with open("File.txt","r") as f:
+    line=f.readline()
+    wp=line.split()
+    print("wp:",wp)
+#wp: ['third', 'line', 'is', 'added', 'by', 'using', "'w'", 'mode']
+#now im adding the another line in the existing file
+with open("File.txt","+a") as f:
+    f.write("this text file is created by the owner for studying purpose\n")
+    print("successfully added the content in the text file")
+
+#again splitting and updated text file 
+with open("File.txt","r") as f:
+    content=f.read()#used to read entire file as the one string
     
+    words=content.split()
+    print("words_after_splitting:",words)
+#output=words_after_splitting: ['third', 'line', 'is', 'added', 'by', 'using', "'w'", 'mode', 'this', 'text', 'file', 'is', 'created', 'by', 'the', 'owner', 'for', 'studying', 'purpose']
+#for printing each line separately
+with open("File.txt","r") as f:
+    content=f.readlines()
+    for line in content:
+        word=line.split()
+        print("words:",word)
+#output=words: ['this', 'text', 'file', 'is', 'created', 'by', 'the', 'owner', 'for', 'studying', 'purpose']
+
 
