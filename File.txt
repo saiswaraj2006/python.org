@@ -1,2 +1,0 @@
-third line is added by using 'w' mode
-this text file is created by the owner for studying purpose

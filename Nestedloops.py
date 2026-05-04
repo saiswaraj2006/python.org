@@ -371,5 +371,33 @@ with open("File.txt","r") as f:
         word=line.split()
         print("words:",word)
 #output=words: ['this', 'text', 'file', 'is', 'created', 'by', 'the', 'owner', 'for', 'studying', 'purpose']
+#program to display all content in the file 
+#for that we use read() method
+file=open("File.txt","r")
+for line in file:
+    print(line)
+file.close()
+''' output is:
+third line is added by using 'w' mode
+
+this text file is created by the owner for studying purpose
+'''
+#fileno()=used to return the file number of the file(which is an integer descriptor)
+#flush()=This method is used to flushes the write buffer of the stream
+#isatty()=Returns True if the file stream is interactive and False otherwise
+#readline(n)=Reads and returns one line from the file .if n is specified then almost n bytes are read
+#truncate()=Resizes the file to n bytes
+# rstrip()=Strips off whitespaces including newline characters from the right side of the string  
+file=open("File.txt","w")
+print(file.fileno()) 
+#3
+feee=open("File.txt","w")
+print(feee.flush())
+#for knowing if my program is interactively running on the terminal or not
+#if it runs then it returns 'True' and otherwise 'False'
+file=open("File.txt","w")
+print(file.isatty())#it returns 'False' because file is the regular file in the disk not in the terminal
+#Reading a file in chunks of 27 characters per line
+
 
 
