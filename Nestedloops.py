@@ -399,23 +399,23 @@ file=open("File.txt","w")
 print(file.isatty())#it returns 'False' because file is the regular file in the disk not in the terminal
 #Reading a file in chunks of 27 characters per line
 #for calculating the vowels and consonants in the particular file by every character 
-filename=input("Enter the file name:")
-with open(filename) as file:
-    text=file.read()
-    count_vowels=0
-    count_consonants=0
-    for i in text:
-        if i in "aeiou" or i in "AEIOU":
-            count_vowels+=1
-        else:
-            count_consonants+=1
-print("Number of vowels:",count_vowels)
-print("Number of the consonants:",count_consonants)
+#filename=input("Enter the file name:")
+#with open(filename) as file:
+    #text=file.read()
+    #count_vowels=0
+    #count_consonants=0
+    #for i in text:
+        #if i in "aeiou" or i in "AEIOU":
+            #count_vowels+=1
+        #else:
+            #count_consonants+=1
+#print("Number of vowels:",count_vowels)
+#print("Number of the consonants:",count_consonants)
 #for printing the length of the file
-print("Length of the file is=",len(text))
+#print("Length of the file is=",len(text))
 #i use another method for length of the file 
 #by adding the "count_vowels"+"count_consonants"=length of the file
-print("length of the file:",count_vowels+count_consonants)
+#print("length of the file:",count_vowels+count_consonants)
 '''
 output=Enter the file name:Nestedloops.py
 Number of vowels: 3085
@@ -424,10 +424,44 @@ Length of the file is= 14325
 length of the file: 14325
 '''
 #for calculating the percentage of vowels presented in the file and also calculating the consonants presented in the file
-print("Percentage of the vowels in the file:",((count_vowels*100)/len(text)))
+#print("Percentage of the vowels in the file:",((count_vowels*100)/len(text)))
 #the output is=Percentage of the vowels in the file: 21.535776614310645
 #now for consonants in the same file
-print("Percentage of the consonants in the file:",((count_consonants*100)/len(text)))
+#print("Percentage of the consonants in the file:",((count_consonants*100)/len(text)))
 #output=Percentage of the consonants in the file: 78.46422338568935
 #so here my "Nestedloops.py" file has very high amount of consonants
 #*NOTE=for calculating each character in the provided file
+#Write a program that counts the number of tabs ,spaces, and newline characters in a file
+filename=input("Enter the name of the file:")
+with open(filename) as file:
+    text=file.read()
+    count_tabs=0
+    count_spaces=0
+    count_new_line=0
+    for char in text:
+        if char=='\t':
+            count_tabs+=1
+        if char==' ':
+            count_spaces+=1
+        if char=='\n':
+            count_new_line+=1
+print("TABS=",count_tabs)
+print("Spaces:",count_spaces)
+print("NEW LINE:",count_new_line)
+'''
+Enter the name of the file:UNIT_1.py
+TABS= 0
+Spaces: 4930
+NEW LINE: 1090
+'''
+#WRITE A PROGRAM TO READ A FILE LINE BY LINE .EACH LINE READ FROM THE FILE IS COPIED TO ANOTHER FILE WITH LINE NUMBERS SPECIFIED AT 
+#THE BEGINNING OF THE LINE
+file1=open("File.txt","r")
+file2=open("new.txt","w")
+num=1
+for line in file1:
+    file2.write(str(num)+" : "+line)
+    num=num+1
+file1.close()
+file2.close()
+
