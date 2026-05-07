@@ -432,22 +432,22 @@ length of the file: 14325
 #so here my "Nestedloops.py" file has very high amount of consonants
 #*NOTE=for calculating each character in the provided file
 #Write a program that counts the number of tabs ,spaces, and newline characters in a file
-filename=input("Enter the name of the file:")
-with open(filename) as file:
-    text=file.read()
-    count_tabs=0
-    count_spaces=0
-    count_new_line=0
-    for char in text:
-        if char=='\t':
-            count_tabs+=1
-        if char==' ':
-            count_spaces+=1
-        if char=='\n':
-            count_new_line+=1
-print("TABS=",count_tabs)
-print("Spaces:",count_spaces)
-print("NEW LINE:",count_new_line)
+#filename=input("Enter the name of the file:")
+#with open(filename) as file:
+    #text=file.read()
+    #count_tabs=0
+    #count_spaces=0
+    #count_new_line=0
+    #for char in text:
+        #if char=='\t':
+            #count_tabs+=1
+        #if char==' ':
+            #count_spaces+=1
+        #if char=='\n':
+            #count_new_line+=1
+#print("TABS=",count_tabs)
+#print("Spaces:",count_spaces)
+#print("NEW LINE:",count_new_line)
 '''
 Enter the name of the file:UNIT_1.py
 TABS= 0
@@ -464,4 +464,34 @@ for line in file1:
     num=num+1
 file1.close()
 file2.close()
+#write a program that copies first 10 bytes of a binary file into another
+with open("File.txt","rb") as file1:#using rb for reading only in the binary file format and pointer 
 
+    with open("new.txt","wb") as file2:
+        buff=file1.read(10)
+        file2.write(buff)
+print("file is copied")
+print(buff)
+
+with open("File.txt","rb") as f1, open("new.txt","rb") as f2:
+    original = f1.read(10)
+    copied = f2.read()
+
+    print("Original File (first 10 bytes):", original)
+    print("Copied File (new.txt):", copied)
+#output=Original File (first 10 bytes): b''
+#Copied File (new.txt): b''
+#so here my file is empty so the buffered pointer is empty to copy 10 bytes 
+#now im adding the data in the file
+with open("File.txt","wb") as f:
+    f.write(b"abcdefghijklmnopqrstuvwxyz")
+print("successfully completed")
+#now my file has some data then i can copy upto 10 bytes and print
+with open("File.txt","rb") as f1:
+    with open("new.txt","wb") as f2:
+        buffff=f1.read(10)
+        f2.write(buffff)
+print(buffff)#b'abcdefghij'
+with open("File.txt","rb") as f1, open("new.txt","rb") as f2:
+    print("Original File (first 20 bytes):", f1.read())
+    print("Copied File (new.txt):", f2.read())
