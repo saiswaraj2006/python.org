@@ -495,3 +495,32 @@ print(buffff)#b'abcdefghij'
 with open("File.txt","rb") as f1, open("new.txt","rb") as f2:
     print("Original File (first 20 bytes):", f1.read())
     print("Copied File (new.txt):", f2.read())
+#the output=Original File (first 20 bytes): b'abcdefghijklmnopqrstuvwxyz'
+#Copied File (new.txt): b'abcdefghij'
+#i have a text file named as ''war.txt''
+#now to delete this file firstly im adding the content in the file
+with open("war.txt","w+") as file:
+    file.write("text is ssss but this file is created to add some text and then delete the file")
+#now for delete the whole file from my system im using os.remove() method
+#importing the os
+import os
+os.remove("war.txt")
+print("successfully deleted the file")
+#print(war.txt) output=NameError: name 'war' is not defined because the file is removed from my os 
+
+#RENAME the file
+#firstly adding the text in the my new file
+with open("cap.txt","w+") as file:
+    file.write("the name of file is cap.txt ")
+print("written successfully")
+#RENAMING THE "cap.txt" file to "cap2.txt"
+import os
+os.rename("cap.txt","cap5.txt")
+print("\n Your File is renamed as 'cap5.txt'")
+#directory methods
+'''
+the directory is a collection of files where each file may be of a different format, python has various modules that help programmers to work
+with directories .These methods allow users to create ,remove, and change directories'''
+
+#using os.mkdir("new_dir_name")
+
