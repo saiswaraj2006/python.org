@@ -510,17 +510,48 @@ print("successfully deleted the file")
 
 #RENAME the file
 #firstly adding the text in the my new file
-with open("cap.txt","w+") as file:
-    file.write("the name of file is cap.txt ")
-print("written successfully")
+#with open("cap.txt","w+") as file:
+#    file.write("the name of file is cap.txt ")
+#print("written successfully")
 #RENAMING THE "cap.txt" file to "cap2.txt"
-import os
-os.rename("cap.txt","cap5.txt")
-print("\n Your File is renamed as 'cap5.txt'")
+#import os
+#os.rename("cap.txt","cap5.txt")
+#print("\n Your File is renamed as 'cap5.txt'")
 #directory methods
 '''
 the directory is a collection of files where each file may be of a different format, python has various modules that help programmers to work
 with directories .These methods allow users to create ,remove, and change directories'''
 
 #using os.mkdir("new_dir_name")
+import os
+
+# Get current working directory
+print(os.getcwd())
+#list the files in the directory
+print(os.listdir("C:/Users/saisw/OneDrive/Desktop/python_practice"))
+#it returns in list format like
+#['.git', 'Nestedloops.py', 'cap4.txt', ]
+
+#creating new directory
+#os.mkdir("pythonnexttopics")
+#it creates a new directory 
+import pathlib
+#for using in cleaner path using 
+#A path is a class from python's  pathlib module
+#from pathlib import Path
+#path("C:/Users/saisw/OneDrive/Desktop/python_practice>").mkdir(pythonnexttopics==True,exist_ok=True)
+#it returns "FileExistError"
+#already exists:"pythonnexttopics"
+#creating and writing files 
+#using open() or Path.write_text()
+from pathlib import Path
+file=Path("c:/Users/saisw/OneDrive/Desktop/python_practice/pythonnexttopics/summary.txt")
+file.write_text("My new directory was created to perform all types of operations here")
+print(file.read_text())
+#it prints 
+#My new directory was created to perform all types of operations here
+#APPENDING DATA
+with open(file,"a") as f:
+    f.write("\n Adding the notes by using the appending 'a' .")
+
 

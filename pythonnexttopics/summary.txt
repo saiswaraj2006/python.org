@@ -1,0 +1,2 @@
+My new directory was created to perform all types of operations here
+ Adding the notes by using the appending 'a' .
