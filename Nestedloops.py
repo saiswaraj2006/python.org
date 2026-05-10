@@ -503,9 +503,9 @@ with open("war.txt","w+") as file:
     file.write("text is ssss but this file is created to add some text and then delete the file")
 #now for delete the whole file from my system im using os.remove() method
 #importing the os
-import os
-os.remove("war.txt")
-print("successfully deleted the file")
+#import os
+#os.remove("war.txt")
+#print("successfully deleted the file")
 #print(war.txt) output=NameError: name 'war' is not defined because the file is removed from my os 
 
 #RENAME the file
@@ -523,12 +523,12 @@ the directory is a collection of files where each file may be of a different for
 with directories .These methods allow users to create ,remove, and change directories'''
 
 #using os.mkdir("new_dir_name")
-import os
+#import os
 
 # Get current working directory
-print(os.getcwd())
+#print(os.getcwd())
 #list the files in the directory
-print(os.listdir("C:/Users/saisw/OneDrive/Desktop/python_practice"))
+#print(os.listdir("C:/Users/saisw/OneDrive/Desktop/python_practice"))
 #it returns in list format like
 #['.git', 'Nestedloops.py', 'cap4.txt', ]
 
@@ -553,5 +553,18 @@ print(file.read_text())
 #APPENDING DATA
 with open(file,"a") as f:
     f.write("\n Adding the notes by using the appending 'a' .")
+    #it adds the text in the above file
+    
+import os
+print(os.path.getsize(file))#it returns the no of bytes of data the file is used
+
+#to check the file absolute path using Path.resolve()
+from pathlib import Path
+p=Path("Users/saisw/OneDrive/Desktop/python_practice/cap1.txt")
+print(p.resolve())
+#for checking is the path is exist im using .exists()
+print("path is exist:",p.exists())
+
+
 
 
