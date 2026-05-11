@@ -565,6 +565,18 @@ print(p.resolve())
 #for checking is the path is exist im using .exists()
 print("path is exist:",p.exists())
 
+#using teh os.stat(file) for retrieving a full set of metadata about the file (size,timestamps, permissions , etc)
+#stat.st_size=gives the file size in bytes
+import os
+import time
+
+file = "cap1.txt"
+stats = os.stat(file)
+
+print("Size:", stats.st_size, "bytes")
+print("Created:", time.ctime(stats.st_ctime))
+print("Modified:", time.ctime(stats.st_mtime))
+print("Last accessed:", time.ctime(stats.st_atime))
 
 
 
