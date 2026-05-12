@@ -577,6 +577,62 @@ print("Size:", stats.st_size, "bytes")
 print("Created:", time.ctime(stats.st_ctime))
 print("Modified:", time.ctime(stats.st_mtime))
 print("Last accessed:", time.ctime(stats.st_atime))
+#Size: 0 bytes
+#Created: Fri May  8 23:17:57 2026
+#Modified: Fri May  8 23:17:57 2026
+#Last accessed: Fri May  8 23:17:57 2026
+'''write a program that generates a quiz and uses two files-- Questions.txt and Answers.txt. The program opens Questions.txt and reads a questions and displays the 
+questions with options on the screen . The program then opens the Answer.txt file and displays the correct answers
+'''
+#first im creating both files of the both .txt files
+with open("Questions.txt","w+") as file1:
+    file1.write("Q1.print(type({}))" )
+    file1.write("\n A.<class'list'> \n B.<class'dict'>\n C.<class'set'>\n D.Error")
+    file1.write("\n Q2.Which of the following is used to create a tuple in python?")
+    file1.write("\n A.[] \n B.{} \n C.() \n D.<> ")
+    
+print("successfully file1 is created")
+print()
+with open("Answers.txt","w+") as file2:
+    file2.write("Answers")
+    file2.write("\n1-B) print(type({}))'")
+    file2.write("\n2-C) ()")
+print("successfully file is created")
+#after creating now im opening first "Questions.txt" then "Answers.txt" file
+file1=open("Questions.txt","+r")
+file2=open("Answers.txt","+r")
+q=file1.read()
+qlines=q.split('\n')
+for lines in qlines:
+    print(lines)
+qq=file2.read()
+qlines=qq.split('\n')
+
+for lines in qlines:
+    print(lines)
+#my output is
+'''
+successfully file1 is created
+
+successfully file is created
+Q1.print(type({}))
+ A.<class'list'> 
+ B.<class'dict'>
+ C.<class'set'>
+ D.Error
+ Q2.Which of the following is used to create a tuple in python?
+ A.[] 
+ B.{} 
+ C.() 
+ D.<> 
+Answers
+1-B) print(type({}))'
+2-C) ()
+'''
+print()
+
+
+
 
 
 

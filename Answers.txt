@@ -1,0 +1,3 @@
+Answers
+1-B) print(type({}))'
+2-C) ()

@@ -1,0 +1,10 @@
+Q1.print(type({}))
+ A.<class'list'> 
+ B.<class'dict'>
+ C.<class'set'>
+ D.Error
+ Q2.Which of the following is used to create a tuple in python?
+ A.[] 
+ B.{} 
+ C.() 
+ D.<> 
