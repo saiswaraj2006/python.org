@@ -631,8 +631,27 @@ Answers
 '''
 print()
 
+#to copy a file using shutil module
+#by using the shutil.move() function,we can move a file
+#first importing the shutil
+import shutil
+#shutil.move("cap5.txt","cap55.txt")
+#after execution it rename as cap55.txt
+import os
+import datetime
 
+#  to Get file stats
+stats = os.stat("basics.txt")
 
+# Convert timestamps to readable format
+created = datetime.datetime.fromtimestamp(stats.st_ctime)
+modified = datetime.datetime.fromtimestamp(stats.st_mtime)
+accessed = datetime.datetime.fromtimestamp(stats.st_atime)
+
+print("Created:", created)
+print("Modified:", modified)
+print("Accessed:", accessed)
+#it returns file created , modified, accessed time and the date 
 
 
 
