@@ -652,6 +652,27 @@ print("Created:", created)
 print("Modified:", modified)
 print("Accessed:", accessed)
 #it returns file created , modified, accessed time and the date 
+#seek() concept
+
+#the file.seek(,) is a method is used to move the file pointer 
+#in this method it has offset-used for how many bytes to move
+#whence=the reference point from which the offset is applied
+#the whence has 0 means from the beginning of the file
+#1 means from the current file position 
+#2 means from the end of the file
+#file.seek(20,1) means 20 for moving 20 bytes
+#1 is to relative to the current position
+with open("alphabets.txt","w") as file:
+    file.write("abcdefghijklmnopqrstuvwxyz")
+
+
+with open("alphabets.txt","rb") as file:
+    before_seek=file.read(5)#before seek method
+    print(before_seek)
+    file.seek(5)                # move pointer to the 6th byte (index 5)
+    data = file.read(5)         # read 5 bytes from there
+    print(data)
+
 
 
 
