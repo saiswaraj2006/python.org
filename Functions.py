@@ -73,6 +73,51 @@ def details(**kwargs):
     for key, value in kwargs.items():
         print(f"{key}: {value}")
 details(name="siksha",age=20,city="Bombay")
+#output is-
+'''
+name: siksha
+age: 20
+city: Bombay
+'''
+#it gives output has func(a=1,b=2) etc
+
+#Lambda Function or Anonymous Function
+#A Lambda function is an anonymous function (no name) created using the lambda keyword
+#syntax:
+#lambda arguments: expression
+add=lambda x:x**2
+print(add(x=9))#output=81
+
+multiplying=lambda z,x:z*x
+print(multiplying(3,898))
+#in above code i used multiple Arguments 
+#the output=2694
+
+notice=lambda: print("Tomorrow is holiday on the occasion of Diwali! \n so school is opened on 19-05-2026")
+notice()
+#solving the real time problems 
+#1-question 
+'''
+1. you have a list of students with their attendance percentage :
+attendance=[("Ravi",85),("Ananya",72),("Kiran",60),("Meena",95)]
+Use filter() with lambda to find students who have less than 75% attendance (and need to be warned)'''
+#so using lambda and filter functions trace out the below 75% attendance student(and need to be warned)
+attendance=[("Ravi",85),("Ananya",72),("Kiran",60),("Meena",95)]
+less_75=list(filter(lambda student: student[1]<75, attendance))
+print(less_75)
+for name, marks in less_75:
+    print(f"Warning:{name} your attendance is {marks}% so, please improve.")
+#the output is
+'''
+[('Ananya', 72), ('Kiran', 60)]
+Warning:Ananya your attendance is 72% so, please improve
+Warning:Kiran your attendance is 60% so, please improve
+'''
+#and i need to greet the above 75% students so again using the filter function
+above_75=list(filter(lambda  student: student[1]>=75, attendance))
+print(above_75)
+for name,marks in above_75:
+    print(f"Great job {name} your attendance is {marks}% keep it up well done")
 
 
 
