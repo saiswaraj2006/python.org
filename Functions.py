@@ -118,6 +118,52 @@ above_75=list(filter(lambda  student: student[1]>=75, attendance))
 print(above_75)
 for name,marks in above_75:
     print(f"Great job {name} your attendance is {marks}% keep it up well done")
+#output=[('Ravi', 85), ('Meena', 95)]
+#Great job Ravi your attendance is 85% keep it up well done
+#Great job Meena your attendance is 95% keep it up well done
+#write a function that displays a string repeatedly.
+def func():
+    for i in range(5):
+        
+        print(i,"hello world")#here i=0 then print "hello world" and function call itself recursively
+func()
+#here how to calculate the sport analytics (strike rate)
+def strike_rate_calculator(runs,balls_faced):
+    return(runs/balls_faced)*100
+print(int(strike_rate_calculator(50,33)))
+#output=151
+#write a function to check even or odd number
+def tester():
+   # num=int(input("enter the random number:"))
+    if num%2==0:
+        return "Even"
+    else:
+        return "Odd"
+#print(tester())#it prints the whatever function returned in the console
+#output:
+'''
+enter the random number:567839
+Odd'''
+#squaring a number
+def square(num):
+    return num*num
+print(square(34))
+#output=1156
+#cubing a number
+def cubing(num):
+    return num**3
+print(cubing(6))
+#output=216
+#finding the maximum of the given numbers by using the function
+def find_max(a,b,c):
+    if (a>b)and(a>c):
+        return a
+    elif (b>a)and(b>c):
+        return b
+    else:
+        return c
+print(find_max(45,22,29))
+
 
 
 
