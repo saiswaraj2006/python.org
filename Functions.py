@@ -163,6 +163,44 @@ def find_max(a,b,c):
     else:
         return c
 print(find_max(45,22,29))
+#output=45
+#write a program to check whether it is a palindrome or not
+#palindrome is a string which is same meaning when the string is reversed also.
+def palindrome_check(text):
+    return text==text[::-1]
+print(palindrome_check("madam"))
+#output=True
+
+#sum of the digits
+def sum_of_digits(n):
+    total=0
+    while n>0:
+        r=n%10
+        total+=r
+        n//=10#it removes the last digit
+    return total
+print(sum_of_digits(1213))
+#output=7
+#for counting the vowels in the given string
+def counting_vowels(text):
+    count=0
+    vowels="aeiouAEIOU"
+    for i in text:
+        if i in vowels:
+            count+=1
+    return count
+print(counting_vowels("HE IS A GOOD BOY"))
+#for counting the consonants in the given string
+def counting_consonants(text):
+    count=0
+    vowels="aeiouAEIOU"
+    for j in text:
+        if j.isalpha() and j not in vowels:
+            count+=1
+    return count
+print(counting_consonants("HE IS A GOOD BOY"))
+
+
 
 
 
