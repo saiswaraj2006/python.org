@@ -130,7 +130,7 @@ func()
 #here how to calculate the sport analytics (strike rate)
 def strike_rate_calculator(runs,balls_faced):
     return(runs/balls_faced)*100
-print(int(strike_rate_calculator(50,33)))
+#print(int(strike_rate_calculator(50,33)))
 #output=151
 #write a function to check even or odd number
 def tester():
@@ -147,12 +147,12 @@ Odd'''
 #squaring a number
 def square(num):
     return num*num
-print(square(34))
+#print(square(34))
 #output=1156
 #cubing a number
 def cubing(num):
     return num**3
-print(cubing(6))
+#print(cubing(6))
 #output=216
 #finding the maximum of the given numbers by using the function
 def find_max(a,b,c):
@@ -162,13 +162,13 @@ def find_max(a,b,c):
         return b
     else:
         return c
-print(find_max(45,22,29))
+#print(find_max(45,22,29))
 #output=45
 #write a program to check whether it is a palindrome or not
 #palindrome is a string which is same meaning when the string is reversed also.
 def palindrome_check(text):
     return text==text[::-1]
-print(palindrome_check("madam"))
+#print(palindrome_check("madam"))
 #output=True
 
 #sum of the digits
@@ -179,7 +179,7 @@ def sum_of_digits(n):
         total+=r
         n//=10#it removes the last digit
     return total
-print(sum_of_digits(1213))
+#print(sum_of_digits(1213))
 #output=7
 #for counting the vowels in the given string
 def counting_vowels(text):
@@ -189,7 +189,8 @@ def counting_vowels(text):
         if i in vowels:
             count+=1
     return count
-print(counting_vowels("HE IS A GOOD BOY"))
+#print(counting_vowels("HE IS A GOOD BOY"))
+#output=6
 #for counting the consonants in the given string
 def counting_consonants(text):
     count=0
@@ -198,10 +199,26 @@ def counting_consonants(text):
         if j.isalpha() and j not in vowels:
             count+=1
     return count
-print(counting_consonants("HE IS A GOOD BOY"))
+#print(counting_consonants("HE IS A GOOD BOY"))
+#output=6
+#write a code on finding the largest number in the list
+def finding_largest(num):
+    max_num=num[0]
+    for i in num:
+        if i>max_num:
+            max_num=i
+    return max_num
+print(finding_largest([13,54,99,12,15]))
+#output=99
+#by using max() function
+def finding_max(numbers):
+    return max(numbers)
+print(finding_max([13,54,99,12,15]))
+#output=99
+#finding the second largest number
+def finding_second_largest(num):
+    new_num=sorted(num)
+    return new_num[-2]
+print(finding_second_largest([12,45,7,89,23]))
 
-
-
-
-
-
+    
