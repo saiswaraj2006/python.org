@@ -220,5 +220,48 @@ def finding_second_largest(num):
     new_num=sorted(num)
     return new_num[-2]
 print(finding_second_largest([12,45,7,89,23]))
+#if i need the 3 rd largest then just set the -2 to -3 in slicing
+#checking is a number is prime or not
+def is_prime(n):
+    if n<=1:
+        return False
+    for i in range(2,int(n**0.5)+1):
+        if n%i==0:
+            return False
+        return True
+print(is_prime(23))#True
+
+#for generating all primes in a particular range
+
+def primes_in_range(start,end):
+    #creating a new empty list for storing result
+    primes=[]
+    for num in range(start,end+1):
+        if num<=1:
+            return False
+        if num>1:
+            for i in range(2,int(num**0.5)+1):
+                if num%i==0:
+                    
+                    break
+            else:
+                    primes.append(num)
+    return primes
+print(primes_in_range(200,300))
+#output is=[211, 223, 227, 229, 233, 239, 241, 251, 257, 263, 269, 271, 277, 281, 283, 293]
+#Write a program to swap two numbers
+def swap_numbers(a,b):
+    a,b=b,a
+    print("first number:",a)
+    print("second number",b)
+a=int(input("Enter the first number:"))
+b=int(input("\n Enter the second number:"))
+print("after swapping")
+swap_numbers(a,b)
+
+            
+
+
+         
 
     
