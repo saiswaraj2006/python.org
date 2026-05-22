@@ -250,14 +250,28 @@ def primes_in_range(start,end):
 print(primes_in_range(200,300))
 #output is=[211, 223, 227, 229, 233, 239, 241, 251, 257, 263, 269, 271, 277, 281, 283, 293]
 #Write a program to swap two numbers
-def swap_numbers(a,b):
-    a,b=b,a
-    print("first number:",a)
-    print("second number",b)
-a=int(input("Enter the first number:"))
-b=int(input("\n Enter the second number:"))
-print("after swapping")
-swap_numbers(a,b)
+#def swap_numbers(a,b):
+#    a,b=b,a
+#    print("first number:",a)
+#    print("second number",b)
+#a=int(input("Enter the first number:"))
+#b=int(input("\n Enter the second number:"))
+#print("after swapping")
+#swap_numbers(a,b)
+def nth_fibonacci(n):
+    if n <= 0:
+        return "Invalid input"
+    elif n == 1:
+        return 0
+    elif n == 2:
+        return 1
+    else:
+        a, b = 0, 1
+        for _ in range(3, n+1):
+            a, b = b, a + b
+        return b
+
+print(nth_fibonacci(5))
 
             
 
