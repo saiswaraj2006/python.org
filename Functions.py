@@ -258,6 +258,8 @@ print(primes_in_range(200,300))
 #b=int(input("\n Enter the second number:"))
 #print("after swapping")
 #swap_numbers(a,b)
+#write a code for nth Fibonacci function 
+#nth Fibonacci function gives the Fibonacci number at position n
 def nth_fibonacci(n):
     if n <= 0:
         return "Invalid input"
@@ -267,13 +269,50 @@ def nth_fibonacci(n):
         return 1
     else:
         a, b = 0, 1
-        for _ in range(3, n+1):
-            a, b = b, a + b
+        for _ in range(3, n+1):#'_' means we don't care about the loop variable, just the number of iteration
+            a, b = b, a + b#here assigning the a to b and b to old 'a+b'
         return b
 
 print(nth_fibonacci(5))
+#it returns the 5th fibonacci number by using the function
+#the output=3
+#if i take 8 then the output is '8' means 7th term in the sequence
+import math
+def is_perfect_square(n):
+    root=int(math.sqrt(n))
+    return root*root==n
+print(is_perfect_square(675))#False
+print(is_perfect_square(36))#True
+#i also used normal exponential form
+def check_perfect_square(n):
+    
+    root=int(n**0.5)
+    return True
+print(is_perfect_square(36))#True
+#another by assigning method
+def check_perfect_square(n):
+    root=int(n**0.5)
+    return root*root==n
+print(check_perfect_square(56))
+#output=False
+#PROBLEM
+#Check Harshad Number
+#A Harshad number is divisible by the sum of its digits.
+#Write is_harshad(n) to check if a number is Harshad.
+#Example:18→sum of digits=9→18%9==0→True.
+           
+def harshad_number(n):
+    sum=0
+    temp=n
+    while temp>0:
+        sum+=temp%10
+        temp//=10
+    return n%sum==0
+print(harshad_number(18))#True
+print(harshad_number(5567392010))#False
+    
 
-            
+    
 
 
          
