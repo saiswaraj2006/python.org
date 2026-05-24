@@ -310,9 +310,31 @@ def harshad_number(n):
     return n%sum==0
 print(harshad_number(18))#True
 print(harshad_number(5567392010))#False
-    
+#write a program to convert time into minutes.
+def minutes_counter(hrs,min):
+    minutes=hrs*60+min
+    return  minutes
+h=int(input("enter the hours:"))
+m=int(input("enter the minutes:"))
+hm=minutes_counter(h,m)
+print("total minutes:",hm)
+'''output=
+enter the hours:10
+enter the minutes:42
+total minutes: 642
+'''
 
-    
+#write a program to check the eligibility of the vote 
+def vote_eligibility(age):
+    if age>=18:
+        print("you are eligible to vote.")
+    else:
+        print("you are not eligible to vote because you are minor.\nyou are eligible after",18-age,"years")
+    return age
+age=int(input("Enter your age:"))
+print(vote_eligibility(age))
+            
+
 
 
          
