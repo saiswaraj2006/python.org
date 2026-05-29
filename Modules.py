@@ -45,3 +45,31 @@ img = Image.open("photo1.jpeg")
 img = img.resize((200, 200))
 img.save("small_photo.jpeg")
 
+#runs tasks automatically
+import schedule
+import time
+count=0
+def remainder():
+    global count#i declared count as global 
+    
+    print("please wake up!")
+    count+=1
+    if count>=2:
+#the code exits the loop after 2 prints
+        exit()
+schedule.every(5).seconds.do(remainder)
+
+while True:
+    schedule.run_pending()
+    time.sleep(1)
+#without using the schedule module
+
+
+import time
+count=0
+while count<2:
+    print("Please Wake Up!")
+    count+=1
+    time.sleep(5)
+
+    
