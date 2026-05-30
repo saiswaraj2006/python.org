@@ -40,36 +40,77 @@ print(df)
 0  Soumya  Marriage
 1   Priya  Marriage
 '''
-from PIL import Image
-img = Image.open("photo1.jpeg")
-img = img.resize((200, 200))
-img.save("small_photo.jpeg")
+#from PIL import Image
+#img = Image.open("photo1.jpeg")
+#img = img.resize((200, 200))
+#img.save("small_photo.jpeg")
 
 #runs tasks automatically
-import schedule
-import time
-count=0
-def remainder():
-    global count#i declared count as global 
+#import schedule
+#import time
+#count=0
+#def remainder():
+    #global count#i declared count as global 
     
-    print("please wake up!")
-    count+=1
-    if count>=2:
+    #print("please wake up!")
+   # count+=1
+  #  if count>=2:
 #the code exits the loop after 2 prints
-        exit()
-schedule.every(5).seconds.do(remainder)
+ #       exit()
+#schedule.every(5).seconds.do(remainder)
 
-while True:
-    schedule.run_pending()
-    time.sleep(1)
-#without using the schedule module
+#while True:
+    #schedule.run_pending()
+    #time.sleep(1)
+#for fetching the data  from the websites 
+#im importing requests
+import requests
+from bs4 import BeautifulSoup
+response=requests.get("https://www.readthetale.com")
+print("status:",response.status_code)
+print("First 100 chars:",response.text[:100])
+#soup=BeautifulSoup(response.text,"html.parser")
+#print("page title:",soup.title.text)#it gets the title 
+#print("page text:",soup.get_text()[:400])
+#above line prints the first 400 chars
 
-
-import time
-count=0
-while count<2:
-    print("Please Wake Up!")
-    count+=1
-    time.sleep(5)
+#Pandas
+import pandas as pd
+data={"NAME":["Sai","Shiva","Swaroop"],"EVENT":["Marriage","Birthday","House Warming Ceremony"]}
+df=pd.DataFrame(data)
+print(pd)
+ #above line prints the pandas module obj
+print(df["NAME"])
+print(df["EVENT"])#it prints the  EVENT column 
+print(df.head(1))#prints the first row
+print("_______________")
+print(df.head(2))
+print("_______________")
+print(df.head(3))
+#output=
+'''
+0        Sai
+1      Shiva
+2    Swaroop
+Name: NAME, dtype: str
+0                  Marriage
+1                  Birthday
+2    House Warming Ceremony
+Name: EVENT, dtype: str
+  NAME     EVENT
+0  Sai  Marriage
+_______________
+    NAME     EVENT
+0    Sai  Marriage
+1  Shiva  Birthday
+_______________
+      NAME                   EVENT
+0      Sai                Marriage
+1    Shiva                Birthday
+2  Swaroop  House Warming Ceremony
+'''
+birthday_guest=df[df["EVENT"]=="Birthday"]
+print(birthday_guest)
+#it filters and prints where the EVENT ="Birthday"
 
     
