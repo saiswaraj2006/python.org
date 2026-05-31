@@ -33,8 +33,8 @@ print(power(23,3))#returns:12167.0
 
 #3.external modules
 import pandas as pd
-df = pd.DataFrame({"Name": ["Soumya", "Priya"], "Event": ["Marriage", "Marriage"]})
-print(df)
+#df = pd.DataFrame({"Name": ["Soumya", "Priya"], "Event": ["Marriage", "Marriage"]})
+#print(df)
 #it returns 
 '''  Name     Event
 0  Soumya  Marriage
@@ -65,28 +65,28 @@ print(df)
 #for fetching the data  from the websites 
 #im importing requests
 import requests
-from bs4 import BeautifulSoup
-response=requests.get("https://www.readthetale.com")
-print("status:",response.status_code)
-print("First 100 chars:",response.text[:100])
+#from bs4 import BeautifulSoup
+#response=requests.get("https://www.readthetale.com")
+#print("status:",response.status_code)
+#print("First 100 chars:",response.text[:100])
 #soup=BeautifulSoup(response.text,"html.parser")
 #print("page title:",soup.title.text)#it gets the title 
 #print("page text:",soup.get_text()[:400])
 #above line prints the first 400 chars
 
 #Pandas
-import pandas as pd
-data={"NAME":["Sai","Shiva","Swaroop"],"EVENT":["Marriage","Birthday","House Warming Ceremony"]}
-df=pd.DataFrame(data)
-print(pd)
+#import pandas as pd
+#data={"NAME":["Sai","Shiva","Swaroop"],"EVENT":["Marriage","Birthday","House Warming Ceremony"]}
+#df=pd.DataFrame(data)
+#print(pd)
  #above line prints the pandas module obj
-print(df["NAME"])
-print(df["EVENT"])#it prints the  EVENT column 
-print(df.head(1))#prints the first row
-print("_______________")
-print(df.head(2))
-print("_______________")
-print(df.head(3))
+#print(df["NAME"])
+#print(df["EVENT"])#it prints the  EVENT column 
+#print(df.head(1))#prints the first row
+#print("_______________")
+#print(df.head(2))
+#print("_______________")
+#print(df.head(3))
 #output=
 '''
 0        Sai
@@ -109,8 +109,22 @@ _______________
 1    Shiva                Birthday
 2  Swaroop  House Warming Ceremony
 '''
-birthday_guest=df[df["EVENT"]=="Birthday"]
-print(birthday_guest)
+#birthday_guest=df[df["EVENT"]=="Birthday"]
+#print(birthday_guest)
 #it filters and prints where the EVENT ="Birthday"
 
-    
+#output=  
+# NAME     EVENT
+#1  Shiva  Birthday
+
+import pandas as pd
+df=pd.DataFrame({"lang_Name":["Dutch","French",],"origin_place":["West_Germanic","France"]})
+print(df)
+print(df.columns)
+print(df.shape)#it prints tuple of (rows,columns)
+#output=(2,2)
+new_df=df.assign(hook=["u","y"])
+print(new_df)
+#it prints new column
+print(df.head(3))#it prints first 3 rows
+print(df.tail(1))
