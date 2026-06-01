@@ -127,4 +127,31 @@ new_df=df.assign(hook=["u","y"])
 print(new_df)
 #it prints new column
 print(df.head(3))#it prints first 3 rows
-print(df.tail(1))
+print(df.tail(1))#it prints last row
+#for sorting alphabetically
+print("After sorting\n",df.sort_values("lang_Name"))
+#above the output is same because it was already in alphabetical form
+df["Name_length"]=df["lang_Name"].apply(len)
+print(df)
+#above line prints the length of the lang_name column
+#if i need the length of the origin_place
+#then
+df["origin_place_length"]=df["origin_place"].apply(len)
+print(df)
+
+#DYNAMIC IMPORTS
+#dynamic imports means we load the modules at the runtime, not at the top
+#of the file
+#we don't know which module will need until the program runs.
+#Example problem 
+#creating a string
+module_name="math"#it is string 
+math_module=__import__(module_name)
+print(math_module.sqrt(16))
+print(math_module.pow(16,2))#importing the math_module then runs
+
+#using the importlib
+import importlib
+module_name="random"
+random_module=importlib.import_module(module_name)
+print(random_module.randint(1,10))
