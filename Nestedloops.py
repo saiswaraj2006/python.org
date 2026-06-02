@@ -672,7 +672,8 @@ with open("alphabets.txt","rb") as file:
     file.seek(5)                # move pointer to the 6th byte (index 5)
     data = file.read(5)         # read 5 bytes from there
     print(data)
-
+#my output is=b'abcde'
+#b'fghij'
 
 
 

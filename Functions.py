@@ -333,6 +333,8 @@ def vote_eligibility(age):
     return age
 age=int(input("Enter your age:"))
 print(vote_eligibility(age))
+
+
             
 
 
