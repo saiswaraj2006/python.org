@@ -156,3 +156,7 @@ module_name="random"
 random_module=importlib.import_module(module_name)
 print(random_module.randint(1,10))
 #randint(1,10) is the function starts from1 to 10 then it prints randomly one integer from that limit
+
+#for exact date and time
+import datetime
+print(datetime.datetime.now())
