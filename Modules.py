@@ -160,3 +160,14 @@ print(random_module.randint(1,10))
 #for exact date and time
 import datetime
 print(datetime.datetime.now())
+#it prints the exact date and time with milliseconds 
+from math import *
+print(square_root(4))
+print(factorial(7))
+def fact_total():
+    a=factorial(3)
+    b=factorial(4)
+    return a+b
+print(fact_total())
+
+
