@@ -165,9 +165,36 @@ from math import *
 print(square_root(4))
 print(factorial(7))
 def fact_total():
-    a=factorial(3)
-    b=factorial(4)
-    return a+b
+    a=factorial(3)#3 factorial=6
+    b=factorial(4)#4 factorial=24
+    return a+b #it returns the total of a and b
 print(fact_total())
+
+#SET MATRIX ZERO PROBLEM
+'''
+Approach= first create a matrix, then track which rows and columns are zeroes in the matrix 
+through loop once after finding all original 0's.
+Loop through the matrix again to change those  entire rows and columns to 0.
+'''
+def setZeroes(matrix):
+    #to get the size of the matrix
+    num_rows=len(matrix)
+    num_cols=len(matrix[0])
+    zero_rows=[]
+    zero_cols=[]
+    for r in range(num_rows):
+        for c in range(num_cols):
+            if matrix[r][c]==0:
+                zero_rows.append(r)
+                zero_cols.append(c)
+    #for turning rows and columns into zeroes
+    for r in range(num_rows):
+        for c in range(num_cols):
+            if r in zero_rows or c in zero_cols:
+                matrix[r][c]=0
+my_matrix=[[1,1,1],[1,0,1],[1,1,1]]
+setZeroes(my_matrix)
+print(my_matrix)
+
 
 
