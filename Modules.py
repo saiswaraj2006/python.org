@@ -195,6 +195,40 @@ def setZeroes(matrix):
 my_matrix=[[1,1,1],[1,0,1],[1,1,1]]
 setZeroes(my_matrix)
 print(my_matrix)
+#output=[[1, 0, 1], [0, 0, 0], [1, 0, 1]]
+#using built in function 
+import keyword
+#for checking the given string is a special keyword in python or not
+print(keyword.iskeyword("if"))#True
+print(keyword.iskeyword("is"))#True
+print(keyword.iskeyword("apple"))#False
+#above one returns False because given string is not keyword in the python
 
+#For counting how many times item appear in a list
+#so importing the collections counter
+from collections import Counter
+items=["apple","banana","apple","kiwi","kiwi","apple","grapes","mango","mango","papaya","orange","grapes","grapes"]
+#for counting all the items automatically
+no_of_fruits=Counter(items)
+print(no_of_fruits)
+'''output=Counter({'apple': 3, 'grapes': 3, 'kiwi': 2, 'mango': 2, 'banana': 1, 'papaya': 1, 'orange': 1})
+'''
+#for statistics solving the mean ,median ,mode for weighted graphs by using the 
+#built in module name called statistics
+import statistics
+Std_Marks=[99,45,88,85,76,59,67]
+#for calculating average of Std_Marks(mean)
+print(statistics.mean(Std_Marks))
+#output=74.14285714285714
+#for finding the most common grade(mode)
+print(statistics.mode(Std_Marks))
+#output=99
+print(statistics.median(Std_Marks))
+#output=76
 
+#for finding the performance and machine of my laptop
+import platform
+print(platform.system())
+#Windows
+print(platform.processor())
 
