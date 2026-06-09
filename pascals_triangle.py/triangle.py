@@ -11,3 +11,11 @@ def pascals_triangle(n):
     for row in triangle:
         print(" ".join(map(str, row)))
 pascals_triangle(5)
+'''
+output=
+1
+1 1
+1 2 1
+1 3 3 1
+1 4 6 4 1
+'''

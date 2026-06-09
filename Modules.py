@@ -176,41 +176,41 @@ Approach= first create a matrix, then track which rows and columns are zeroes in
 through loop once after finding all original 0's.
 Loop through the matrix again to change those  entire rows and columns to 0.
 '''
-def setZeroes(matrix):
-    #to get the size of the matrix
-    num_rows=len(matrix)
-    num_cols=len(matrix[0])
-    zero_rows=[]
-    zero_cols=[]
-    for r in range(num_rows):
-        for c in range(num_cols):
-            if matrix[r][c]==0:
-                zero_rows.append(r)
-                zero_cols.append(c)
-    #for turning rows and columns into zeroes
-    for r in range(num_rows):
-        for c in range(num_cols):
-            if r in zero_rows or c in zero_cols:
-                matrix[r][c]=0
-my_matrix=[[1,1,1],[1,0,1],[1,1,1]]
-setZeroes(my_matrix)
-print(my_matrix)
+#def setZeroes(matrix):
+#    #to get the size of the matrix
+#    num_rows=len(matrix)
+#    num_cols=len(matrix[0])
+#    zero_rows=[]
+#    zero_cols=[]
+#    for r in range(num_rows):
+#        for c in range(num_cols):
+#            if matrix[r][c]==0:
+#                zero_rows.append(r)
+#                zero_cols.append(c)
+#    #for turning rows and columns into zeroes
+#    for r in range(num_rows):
+#       for c in range(num_cols):
+#            if r in zero_rows or c in zero_cols:
+#                matrix[r][c]=0
+#my_matrix=[[1,1,1],[1,0,1],[1,1,1]]
+#setZeroes(my_matrix)
+#print(my_matrix)
 #output=[[1, 0, 1], [0, 0, 0], [1, 0, 1]]
 #using built in function 
 import keyword
 #for checking the given string is a special keyword in python or not
-print(keyword.iskeyword("if"))#True
-print(keyword.iskeyword("is"))#True
-print(keyword.iskeyword("apple"))#False
+#print(keyword.iskeyword("if"))#True
+#print(keyword.iskeyword("is"))#True
+#print(keyword.iskeyword("apple"))#False
 #above one returns False because given string is not keyword in the python
 
 #For counting how many times item appear in a list
 #so importing the collections counter
 from collections import Counter
-items=["apple","banana","apple","kiwi","kiwi","apple","grapes","mango","mango","papaya","orange","grapes","grapes"]
+#items=["apple","banana","apple","kiwi","kiwi","apple","grapes","mango","mango","papaya","orange","grapes","grapes"]
 #for counting all the items automatically
-no_of_fruits=Counter(items)
-print(no_of_fruits)
+#no_of_fruits=Counter(items)
+#print(no_of_fruits)
 '''output=Counter({'apple': 3, 'grapes': 3, 'kiwi': 2, 'mango': 2, 'banana': 1, 'papaya': 1, 'orange': 1})
 '''
 #for statistics solving the mean ,median ,mode for weighted graphs by using the 
@@ -218,17 +218,31 @@ print(no_of_fruits)
 import statistics
 Std_Marks=[99,45,88,85,76,59,67]
 #for calculating average of Std_Marks(mean)
-print(statistics.mean(Std_Marks))
+#print(statistics.mean(Std_Marks))
 #output=74.14285714285714
 #for finding the most common grade(mode)
-print(statistics.mode(Std_Marks))
+#print(statistics.mode(Std_Marks))
 #output=99
-print(statistics.median(Std_Marks))
+#print(statistics.median(Std_Marks))
 #output=76
 
 #for finding the performance and machine of my laptop
 import platform
-print(platform.system())
+#print(platform.system())
 #Windows
-print(platform.processor())
+#print(platform.processor())
+
+from collections import defaultdict
+#it tells python to automatically create an empty list[] for any new key
+
+student_grades=defaultdict(list)
+#now i can append grades immediately without checking if the name exists first
+student_grades["Aravind"].append(94)
+student_grades["Anuv"].append(95)
+student_grades["chandu"].append(76)
+print(f"{student_grades}:")
+#output=defaultdict(<class 'list'>, {'Aravind': [94], 'Anuv': [95], 'chandu': [76]}):
+#or
+print(dict(student_grades))
+
 
