@@ -6,6 +6,6 @@ def compress_pdf(pages, out_path):
     for page in pages:
         writer.add_page(page)
     # Example: remove metadata for smaller size
-    writer.remove_metadata()
+    writer.add_metadata({})
     with open(out_path, "wb") as f:  
         writer.write(f)
