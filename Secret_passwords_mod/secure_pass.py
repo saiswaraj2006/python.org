@@ -61,5 +61,7 @@ print(de)
 #deque([-3, -4, -1, -2])
 #or
 re=deque([1,2,3,4])
-re.rotate(-2)
+re.rotate(-2)#because the sign is Negative so it shifts to 2 steps left side
 print(re)
+#output=deque([3, 4, 1, 2])
+

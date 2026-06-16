@@ -9,3 +9,5 @@ print(logic.division(10,20))
 #output=0.5
 #now 2. using a=0 then
 print(logic.division(0,20))
+#output=0 
+#because it goes to else block 

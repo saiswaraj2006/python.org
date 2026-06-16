@@ -244,5 +244,6 @@ print(f"{student_grades}:")
 #output=defaultdict(<class 'list'>, {'Aravind': [94], 'Anuv': [95], 'chandu': [76]}):
 #or
 print(dict(student_grades))
+#output={'Aravind': [94], 'Anuv': [95], 'chandu': [76]}
 
 

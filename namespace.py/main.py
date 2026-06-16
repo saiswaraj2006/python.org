@@ -5,4 +5,8 @@ import Module2
 #are namespaced so i get error when i run the above line
 print(Module1.repeat_x(3))
 print(Module2.repeat_x(3))
+#now above one is importing with modules name specially so i got output for both modules
+#output=
+#6
+#9
 

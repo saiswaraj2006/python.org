@@ -20,3 +20,9 @@ else:
 # Run this if your code generates new script files on the fly
 importlib.invalidate_caches()
 print(" Finder cache cleared! Python can now see newly created files.")
+'''output=
+ Success: Found the module blueprint for 'math'!
+Square root of 81: 9.0
+ Finder cache cleared! Python can now see newly created files.
+ '''
+
