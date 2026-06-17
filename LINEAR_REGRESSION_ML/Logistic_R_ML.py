@@ -1,4 +1,7 @@
 #logistic regression 
+#it just classifies pass/fail 
+#regression means finding the relationship between input(x) and output(y) to predict
+#numbers
 import pandas as pd
 from sklearn.linear_model import LogisticRegression
 data=pd.DataFrame({
