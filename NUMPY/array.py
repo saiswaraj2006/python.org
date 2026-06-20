@@ -129,3 +129,28 @@ Diagonal Matrix
  [ 0 20  0]
  [ 0  0 30]]
  '''
+arr1=np.full(2,5)
+print(arr1)
+#output
+#[5,5]
+arr2=np.full([2,4],5)
+#here 2-no of rows and 4-columns
+print(arr2)
+#output
+'''
+[[5 5 5 5]
+ [5 5 5 5]]
+'''
+ #np.random.rand()
+#random floats
+rand_floats=np.random.rand(10)
+print(rand_floats)
+'''[0.44848438 0.55034688 0.6713754  0.76368271 0.59532601 0.87562625
+ 0.01808912 0.49953579 0.69170794 0.61482208]'''
+r=np.random.rand(2,3)
+print(r)
+#[[0.63133428 0.15141598 0.85784764]
+ #[0.88946587 0.99047183 0.62735648]]
+# Standard normal distribution
+rand_norm = np.random.randn(3, 3)
+print("\nRandom Normal:\n", rand_norm)
