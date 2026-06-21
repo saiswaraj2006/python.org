@@ -152,5 +152,15 @@ print(r)
 #[[0.63133428 0.15141598 0.85784764]
  #[0.88946587 0.99047183 0.62735648]]
 # Standard normal distribution
-rand_norm = np.random.randn(3, 3)
+rand_norm = np.random.randn(2, 3)#random number floats
 print("\nRandom Normal:\n", rand_norm)
+'''Random Normal:
+ [[-0.02221549 -0.20470077 -1.22842614]
+ [-0.24063546 -0.81742814 -0.06097168]]'''
+
+#random.randint(range) for random number printing
+rr=np.random.randint(10,39)#start, stop, dimension
+print(rr)
+#36
+rr_new=np.random.randint(10,39, size=(3,2))
+print(rr_new)
