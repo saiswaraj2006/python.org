@@ -32,3 +32,5 @@ print(a%b)
 print(a**b)
 #[  1  32 729]
 print(a**2)
+#[1 4 9]
+
