@@ -65,4 +65,5 @@ print(matrix[0:2,0:2])
 #i need [[5 6]
          #[8 9]]
 print(matrix[1:, 1: ])
-#i need [[]]
+
+#INDEX ARRAYS->Advanced Indexing

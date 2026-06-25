@@ -61,3 +61,12 @@ print(reshaped)
 ravel[0]=50
 print(ravel)
 print(reshaped)
+#output
+'''
+[50  2  3  4  5  6]
+
+[[50  2  3]
+ [ 4  5  6]]
+'''
+#here it changes the reshaped array also 
+#if i want a safe copy then i use flatten()

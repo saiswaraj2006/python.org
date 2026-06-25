@@ -162,5 +162,10 @@ print("\nRandom Normal:\n", rand_norm)
 rr=np.random.randint(10,39)#start, stop, dimension
 print(rr)
 #36
-rr_new=np.random.randint(10,39, size=(3,2))
+rr_new=np.random.randint(10,39, size=(3,2))#it prints with in range by dimensions
 print(rr_new)
+'''
+[[18 35]
+ [25 21]
+ [31 28]]
+'''

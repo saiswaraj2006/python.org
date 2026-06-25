@@ -1,0 +1,6 @@
+numpy is a library which is used in the python for efficient handling of large,multi-dimensional arrays and matrices
+this numpy library provides faster numerical operations much faster than python
+
+This library can handle N-dimensional arrays(ndarray) like flexible container for numerical data
+Mathematical functions like vectorization and matrix multiplication for very large matrices.
+also used for statistical operations
