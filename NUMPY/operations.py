@@ -80,5 +80,52 @@ print(np.concatenate((a,b),axis=0))
 print(np.concatenate((a,b),axis=1))
 #it prints in horizontal stack
 #instead of concatenate we can also use stack() function to stack the arrays
-print(np.stack((a,b),axis=0))
-print(np.stack((a,b),axis=1))
+print(np.stack((a,b),axis=0))#axis=0 means row wise
+print(np.stack((a,b),axis=1))#axis=1 means column wise
+
+#splitting the array into multiple arrays
+
+import numpy as np
+arr=np.array([1,2,3,4,5,6])
+print(np.split(arr,3))#splits the array into 3 parts
+#output 
+'''[array([1, 2]), array([3, 4]), array([5, 6])]'''
+print(np.split(arr,2))
+#output
+'''[array([1, 2, 3]), array([4, 5, 6])]'''
+print(np.split(arr,6))
+#output
+'''[array([1]), array([2]), array([3]), array([4]), array([5]), array([6])]'''
+#here it splits the array into equal parts, if the array cannot be split into equal parts then it will raise an error
+print(np.hsplit(arr,3))
+#it splits the array into 3 parts horizontally
+#output
+
+'''[array([1, 2]), array([3, 4]), array([5, 6])]'''
+print()
+print(np.vsplit(arr.reshape(2,3),2))#here i changed the shape of the array to 2,3 because 
+#vsplit() function can only split the array vertically if the array has 2 or more rows
+#output 
+
+'''[array([[1, 2, 3]]), array([[4, 5, 6]])]'''
+
+#REPEATING THE ARRAY
+import numpy as np
+arr=np.array([[1,2],[3,4]])
+print(np.repeat(arr,3))
+print(np.shape(arr))#2
+print(np.repeat(arr,3,axis=0))#repeats the array 3 times along the rows
+#output
+'''
+[[1 2]
+ [1 2]
+ [1 2]
+ [3 4]
+ [3 4]
+ [3 4]]'''
+print(np.repeat(arr,3,axis=1))
+#output
+''' [[1 1 1 2 2 2]
+ [3 3 3 4 4 4]]'''  
+#tilling the array->it repeats the array along the specified axis
+print(np.tile(arr,3))
