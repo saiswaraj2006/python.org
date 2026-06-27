@@ -32,4 +32,5 @@ print(arr1)
 copy=arr1.copy()
 copy[0]=100
 print(copy[0])#100
-print(arr1[0])#1
+print(arr1[0])#1 because copy is a new array and it does not affect the original array
+

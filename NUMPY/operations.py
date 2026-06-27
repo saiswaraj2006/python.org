@@ -129,3 +129,8 @@ print(np.repeat(arr,3,axis=1))
  [3 3 3 4 4 4]]'''  
 #tilling the array->it repeats the array along the specified axis
 print(np.tile(arr,3))
+#output
+'''[[1 2 1 2 1 2]
+ [3 4 3 4 3 4]]'''
+
+
