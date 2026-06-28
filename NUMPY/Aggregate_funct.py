@@ -26,3 +26,11 @@ print(np.cumsum(arr))
 print(np.cumprod(arr))
 #it returns the cumulative product of the elements in the array
 #like 1, 1*2=2, 1*2*3=6
+new_arr=np.array([[1,2,4,5],
+                  [2,3,4,5]])
+print(np.shape(new_arr))
+#(2, 4)
+print(np.cumsum(new_arr))
+#1,1+2=3,3+4=7,7+5=12,12+2=14,14+3=17 etc..
+#output=[ 1  3  7 12 14 17 21 26]
+print(np.cumprod(new_arr))
