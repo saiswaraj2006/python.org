@@ -34,3 +34,4 @@ print(np.cumsum(new_arr))
 #1,1+2=3,3+4=7,7+5=12,12+2=14,14+3=17 etc..
 #output=[ 1  3  7 12 14 17 21 26]
 print(np.cumprod(new_arr))
+#[   1    2    8   40   80  240  960 4800]

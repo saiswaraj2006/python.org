@@ -63,7 +63,9 @@ print(two_D_array[c])
 rows=np.take(two_D_array,[0,2],axis=0)
 print("Rows 0 and 2:\n",rows)
 '''
-
+Rows 0 and 2:
+ [[ 1  2 33]
+ [12 32 61]]
 '''
 arr=np.array([1,2,3,5,0])
 
