@@ -33,7 +33,34 @@ my_arr=np.array([2.1,3,np.nan,np.inf,-np.inf,0,45])
 print("Nan check:",np.isnan(my_arr))
 print("inf check:",np.isinf(my_arr))
 print("Finite check:",np.isfinite(my_arr))
+'''
+Nan check: [False False  True False False False False]
+inf check: [False False False  True  True False False]
+Finite check: [ True  True False False False  True  True]
+'''
 
 #Flitter out nan and inf
 cleaned_arr=my_arr[np.isfinite(my_arr)]
 print("clean array:",cleaned_arr)
+'''
+clean array: [ 2.1  3.   0.  45. ]
+'''
+new_array=np.nan_to_num(my_arr)
+print("my_arr",my_arr)
+print(new_array)
+#here when i use nan_to_num method then the 'not a number' function is changed to the any 0 value
+#and the +inf->changed to very large number
+#-inf->changed to very large negative number
+'''
+[ 2.10000000e+000  3.00000000e+000  0.00000000e+000  1.79769313e+308
+ -1.79769313e+308  0.00000000e+000  4.50000000e+001]
+'''
+print("Before changed",np.isfinite(my_arr))
+print("After changed:",np.isfinite(new_array))
+'''
+Before changed [ True  True False False False  True  True]
+After changed: [ True  True  True  True  True  True  True]
+'''
+#so,here After changed there are all finite values in array
+print(np.isnan(my_arr))
+print(np.isnan(new_array))
