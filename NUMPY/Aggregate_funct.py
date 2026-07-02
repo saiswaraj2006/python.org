@@ -35,3 +35,26 @@ print(np.cumsum(new_arr))
 #output=[ 1  3  7 12 14 17 21 26]
 print(np.cumprod(new_arr))
 #[   1    2    8   40   80  240  960 4800]
+
+#now after learning dealing with nan(not a number )
+#now the aggregate functions that ignore NaN
+#np.nanmean()
+#np.nanmax()
+#np.nanmin()
+#np.nansum()
+arr=np.array([1,np.nan,3,5])
+print(np.nanmean(arr))
+#3.0 even though it has nan it ignores and do the function 
+a=np.array([34,12,np.nan,0,73,4,34])
+print("max=",np.nanmax(a))
+#max= 73.0
+print("min_value:",np.nanmin(a))
+#min_value: 0.0
+
+arr=np.array([1,np.nan,np.inf,4,3])
+filtered_arr=np.isfinite(arr)
+print(arr[filtered_arr])
+#[1. 4. 3.]
+
+arr=np.array([np.nan,np.inf,2,45,100,36])
+print(np.nansum(arr))
