@@ -64,3 +64,9 @@ After changed: [ True  True  True  True  True  True  True]
 #so,here After changed there are all finite values in array
 print(np.isnan(my_arr))
 print(np.isnan(new_array))
+'''
+[False False  True False False False False]
+[False False False False False False False]
+'''
+#here clearly i see there is no not a number values are present and all are in finite values
+

@@ -58,3 +58,5 @@ print(arr[filtered_arr])
 
 arr=np.array([np.nan,np.inf,2,45,100,36])
 print(np.nansum(arr))
+#inf
+#because my array already have infinite value so the any number + with inf ->inf only
