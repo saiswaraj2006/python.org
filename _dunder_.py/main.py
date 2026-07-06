@@ -23,3 +23,4 @@ print(n)
 #but __len__ function is there which is used 
 nn=str1.__len__()
 print(nn)
+#now the output of both is same 5

@@ -9,10 +9,21 @@ class car:
     def __init__(self,color,tyres):
         self.color=color
         self.tyres=tyres
-    def __str__(self,color,tyres):
+    def __repr__(self):
         return f"car=(color={self.color},tyres={self.tyres})"
+    def __str__(self):
+        return f"{self.color} {self.tyres}"
 #now creating new car object
-my_car=car(color="Blue",tyres=4)
+my_car=car('Blue',4)
 print(my_car.color)#Blue
 print(my_car.tyres)#4
+print(str(my_car))#Blue 4
+print(repr(my_car))#car=(color=Blue,tyres=4)
+#__repr()__
+#the representation method used for developer_friendly output in debugging
 
+#and without typing the __str__ i can use direct typing like
+print(my_car)
+#Blue 4
+#because print() calls __str__
+print(end="")
