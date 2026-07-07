@@ -27,3 +27,47 @@ print(my_car)
 #Blue 4
 #because print() calls __str__
 print(end="")
+
+#Arithmetic operators
+class Items:
+    def __init__(self,name,value):
+        self.name=name
+        self.value=value
+    def __sub__(self, other):
+        if isinstance(other,Items) and self.name==other.name:
+            return Items(self.name,self.value - other.value)
+        raise ValueError("cannot sub items of different types")
+    def __add__(self,other):
+        if isinstance(other,Items) and self.name==other.name:
+            return Items(self.name,self.value + other.value)
+        raise ValueError("cannot add items of different types")
+    def __gt__(self, other):
+        if isinstance(other,Items) and self.name==other.name:
+            return self.value > other.value
+        else:
+            return ValueError("cannot compare the items of different types.")
+    def __lt__(self, other):
+        if isinstance(other,Items) and self.name==other.name:
+            return self.value < other.value
+        else:
+            return ValueError("cannot compare the items of different types.")
+    def __repr__(self):
+        return f"Items(name='{self.name}', value={self.value})"
+my_Items1=Items(name="Toyota",value=50) 
+my_Items2=Items(name="Tata",value=55) 
+my_Items3=Items(name="Tesla",value=70)
+my_Items4=Items(name="Toyota",value=64)
+my_Items5=Items(name="Tata",value=34)
+#comparing the which item will be greater 
+print(my_Items1 < my_Items4)#True
+#if i tried with different items
+print(my_Items1 < my_Items2)
+#it returns value error
+#output:
+#cannot compare the items of different types.
+sum=my_Items2 + my_Items5
+print(sum)
+print(my_Items2 - my_Items5)
+
+ 
+
