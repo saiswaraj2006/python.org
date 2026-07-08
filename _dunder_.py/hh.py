@@ -67,7 +67,9 @@ print(my_Items1 < my_Items2)
 #cannot compare the items of different types.
 sum=my_Items2 + my_Items5
 print(sum)
+#Items(name='Tata', value=89)
 print(my_Items2 - my_Items5)
+#Items(name='Tata', value=21)
 
  
 
