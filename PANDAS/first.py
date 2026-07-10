@@ -58,3 +58,42 @@ emp_salaries={
 
 s2=pd.Series(emp_salaries,name="salaries")
 print(s2)
+'''
+Name: Fruits, dtype: int64
+Ramesh     4500
+Priya     52500
+Arjun     60000
+Sneha     48000
+Kiran     55000
+Meena     47500
+Vivek     50000
+Anjali    58000
+Rohit     62000
+Kavya     46500
+Name: salaries, dtype: int64
+'''
+ #CONDITIONAL SELECTION
+print(s2[s2>50000])
+#it prints all greater than valued rows with name
+'''
+Priya     52500
+Arjun     60000
+Kiran     55000
+Anjali    58000
+Rohit     62000
+Name: salaries, dtype: int64
+'''
+print(s2[s2>=46500])
+#it prints all greater than or equal to 46500
+'''
+Priya     52500
+Arjun     60000
+Sneha     48000
+Kiran     55000
+Meena     47500
+Vivek     50000
+Anjali    58000
+Rohit     62000
+Kavya     46500
+Name: salaries, dtype: int64
+'''

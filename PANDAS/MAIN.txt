@@ -1,0 +1,14 @@
+###Pandas
+In the phase of learning pandas library im learning 
+•Why PANDAS?
+•Import datasets
+↳ In this dealing with [csv,excel,sql]
+
+•Data cleaning
+↳ Missing values ;invalid values
+
+
+•Size mutability
+•Reshaping and pivoting of datasets
+•Efficient manipulation and extraction
+•Statistical analysis
