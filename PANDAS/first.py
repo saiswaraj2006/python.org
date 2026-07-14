@@ -210,7 +210,7 @@ print(df.drop("Math",axis=1))
 #here in above dataset the entire 'Math' col
 #now i need to remove the 'sai' row in students
 print(df.drop(2,axis=0,inplace=True))#inplace is used to modify the data set after changes
-print(df)
+#print(df)
 '''
   students  Math  Science  English  History
 0     Ravi    85       88       80       70
@@ -219,7 +219,7 @@ print(df)
 '''
 #here i already deleted the math col but it is there because i dont use inplace=True so it 
 #returns new dataset
-print(df.shape)
+#print(df.shape)
 new_data={
     "EmployeeID": [101, 102, 103, 104, 105],
     "Name": ["Alice", "Bob", "Charlie", "David", "Eve"],
@@ -240,7 +240,7 @@ df=pd.DataFrame(new_data)
 [5 rows x 5 columns]'''
 #for checking other inf
 #information about my datatype using info()
-print(df.info())
+#print(df.info())
 #output:
 '''
 <class 'pandas.DataFrame'>
@@ -259,7 +259,7 @@ None'''
 
 #Broadcasting in Pandas
 df["Salary"]=df["Salary"]+5000
-print(df["Salary"])
+#print(df["Salary"])
 '''
 0    55000.0
 1        NaN
@@ -276,4 +276,19 @@ df.rename(columns={"EmployeeID":"Emp_ID"},inplace=True)
 #now my col name of EmployeeID is changed to the Emp_ID
 df.rename(columns={"Department":"Dept"},inplace=True)
 #print(df)
-print(df["Salary"].unique())
+#print(df["Salary"].unique())
+#[55000.    nan 65000. 60000.]
+print(df["Dept"].value_counts())#this function returns the number of counts the particular col have
+'''
+Dept
+HR           1
+Finance      1
+IT           1
+Marketing    1
+Name: count, dtype: int64'''
+print(df)
+#i want to create a new col
+df["retired emp"]=df["Emp_ID"]
+print(df)
+#cleaning
+print(df.isnull().sum())
