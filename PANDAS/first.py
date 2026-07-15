@@ -288,7 +288,82 @@ Marketing    1
 Name: count, dtype: int64'''
 print(df)
 #i want to create a new col
-df["retired emp"]=df["Emp_ID"]
-print(df)
+#df["retired emp"]=df["Emp_ID"]
+#print(df)
 #cleaning
 print(df.isnull().sum())
+#in the above line the function calculates how many null values has contains each col
+
+'''
+Emp_ID         0
+Name           0
+Dept           1
+Salary         2
+JoiningDate    1
+retired emp    0
+dtype: int64'''
+
+#if i want to delete that all null rows simply by using the function
+#print(df.dropna())
+'''   Emp_ID   Name Dept   Salary JoiningDate
+0     101  Alice   HR  55000.0  2020-01-15'''
+print(df["Salary"].fillna(df["Salary"].mean()))#i want to fill all the null values with the 0
+
+#i have 2 null values in the salary columns i want to fill with the 
+#mean of the all salaries then i got the new table 
+'''
+0    55000.0
+1    60000.0
+2    65000.0
+3    60000.0
+4    60000.0
+Name: Salary, dtype: float64
+'''
+print(df["Salary"].fillna(df["Salary"].median))
+#we have two types of fills
+#forward fill-it fills from top to bottom
+#ex
+'''
+Salary
+0 50000
+1 40000
+2 NaN
+3 49000
+4 62000'''
+#in the above table when i used the forward fill then top to bottom 
+#Here i have Null at 2 nd index value it will be replaced by the top index value
+#which is =40000
+
+#BACKWARD fill
+#similarly when i used the backward one it is going to replace with the 49000
+#because from bottom to top
+data={"salary":
+    [40000,
+    50000,
+    np.nan,
+    49000,
+    30000]}
+dd=pd.DataFrame(data)
+print(dd)
+#my data is
+'''
+    salary
+0  40000.0
+1  50000.0
+2      NaN
+3  49000.0
+4  30000.0
+'''
+#performing the 'Forward Fill'
+print(dd["salary"].fillna(dd["salary"].ffill()))
+#my output is
+'''
+0    40000.0
+1    50000.0
+2    50000.0
+3    49000.0
+4    30000.0
+Name: salary, dtype: float64
+'''
+#Backward fill
+print(dd["salary"].fillna(dd["salary"].bfill()))
