@@ -366,4 +366,17 @@ print(dd["salary"].fillna(dd["salary"].ffill()))
 Name: salary, dtype: float64
 '''
 #Backward fill
-print(dd["salary"].fillna(dd["salary"].bfill()))
+print(dd["salary"].fillna(dd["salary"].bfill(),inplace=True))
+'''
+0    40000.0
+1    50000.0
+2    49000.0
+3    49000.0
+4    30000.0
+Name: salary, dtype: float64
+'''
+#now above i replaced the nan rows
+dd['Name'].replace("Alice","Sunny",inplace=True)
+print(dd)
+print(dd.columns)
+
