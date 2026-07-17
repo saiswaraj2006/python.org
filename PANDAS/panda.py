@@ -35,9 +35,9 @@ new_row=pd.DataFrame([{"Name":"Roshan",
                        "Gpa_Marks":8.7
                        }])
 df=pd.concat([df, new_row],ignore_index=True)
-print(df)
+#print(df)
 #now i need the students who got 8.5 above
-print(df['Gpa_Marks']>=8.5)
+#print(df['Gpa_Marks']>=8.5)
 '''
 0     True
 1     True
@@ -47,7 +47,7 @@ print(df['Gpa_Marks']>=8.5)
 5     True
 Name: Gpa_Marks, dtype: bool
 '''
-print(df.iloc[::2])
+#print(df.iloc[::2])
 '''
      Name Course     Fee  Gpa_Marks  Discount_Fee   City
 0    Arun     AI  150000       10.0      135000.0    HYD
@@ -55,4 +55,24 @@ print(df.iloc[::2])
 4  Shreya     AI  150000        7.5      135000.0    HYD
 '''
 df["Name"]=df["Name"].replace("Arun","Ajay")
+#print(df)#now here it will be changed in the original data
+#Duplicates:
+#checking all duplicates values
+print(df)
+#dd=df.drop_duplicates()->for remove duplicates
+#print(dd)
+
+#invalid values
+#lambda-> function
+df["Discount_Fee"]=df["Discount_Fee"].apply(lambda x: x*0.9 if x>=120000 else x)
+print(df)
+'''
+     Name Course     Fee  Gpa_Marks  Discount_Fee   City
+0    Ajay     AI  150000       10.0      121500.0    HYD--- these three cols has been given again 10% of discount when the condition is true
+1  Charan     DS  120000        9.9      108000.0    WGL
+2  Swathi     DS  120000        9.9      108000.0  DELHI
+3   Hasan     CS  135000        8.0      109350.0    KZP---
+4  Shreya     AI  150000        7.5      121500.0    HYD---
+5  Roshan     AI  150000        8.7           NaN    NaN
+'''
 print(df)
