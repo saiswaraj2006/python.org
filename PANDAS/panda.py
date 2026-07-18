@@ -75,4 +75,39 @@ print(df)
 4  Shreya     AI  150000        7.5      121500.0    HYD---
 5  Roshan     AI  150000        8.7           NaN    NaN
 '''
+print(df)#when i print the real table the above 10% discount col is updated successfully
+
+#apply and lambda
+#first adding the age column
+df["Age"]=[19,20,21,20,19,20]
 print(df)
+df["Age"]=df["Age"].apply(lambda x:x-1)
+print(df)
+
+#JOINS
+#Merges
+
+import pandas as pd
+
+# Sample DataFrame
+data = {
+    'Name': ['Alice', 'Bob', 'Charlie', 'David'],
+    'Age': [25, 32, 18, 47],
+    'Salary': [50000, 60000, 30000, 80000]
+}
+df = pd.DataFrame(data)
+
+# Example 1: Apply lambda to a column
+# Increase salary by 10%
+df['Updated_Salary'] = df['Salary'].apply(lambda x: x * 1.10)
+
+# Example 2: Apply lambda across rows
+# Categorize age groups
+df['Age_Group'] = df['Age'].apply(lambda x: 'Young' if x < 30 else 'Adult')
+
+# Example 3: Apply lambda with multiple columns using axis=1
+# Create a custom description
+df['Description'] = df.apply(lambda row: f"{row['Name']} is {row['Age']} years old and earns {row['Salary']}", axis=1)
+
+print(df)
+
