@@ -110,4 +110,23 @@ df['Age_Group'] = df['Age'].apply(lambda x: 'Young' if x < 30 else 'Adult')
 df['Description'] = df.apply(lambda row: f"{row['Name']} is {row['Age']} years old and earns {row['Salary']}", axis=1)
 
 print(df)
+'''
+      Name  ...                              Description
+0    Alice  ...    Alice is 25 years old and earns 50000
+1      Bob  ...      Bob is 32 years old and earns 60000
+2  Charlie  ...  Charlie is 18 years old and earns 30000
+3    David  ...    David is 47 years old and earns 80000
 
+[4 rows x 6 columns]'''
+
+d=pd.DataFrame([{
+    "Name":[20,4,18,4,8,25],
+    "Group":['Major','Minor','Major','Minor','Minor','Major']
+}])
+f=pd.DataFrame([{
+    'Class':['B.tech','pri_School','B.tech','Pri_School','Pri_School','M.tech']
+
+}])
+print(f)
+#now im merging both data sets into one
+print(pd.concat([d,f]))
