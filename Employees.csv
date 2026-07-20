@@ -1,0 +1,11 @@
+EmployeeID,Name,Gender,Age,Department,salary,PerformanceRating
+101,Aarav,Male,26,HR,45000,4.5
+102,Priya,Female,31,IT,65000,4.8
+103,Rohan,Male,28,Finance,55000,4.2
+104,Meera,Female,36,Marketing,70000,4.9
+105,Vikram,Male,29,IT,62000,4.4
+106,Sneha,Female,40,HR,75000,4.9
+107,Arjun,Male,33,Finance,68000,3.5
+108,Kavya,Female,27,Marketing,52000,4.2
+109,Rahul,Male,32,IT,66000,3.5
+110,Ananya,Female,25,HR,48000,4.0
