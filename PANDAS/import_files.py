@@ -45,4 +45,31 @@ print(data.size)
 #70
 #size->means no of elements in the data
 print(data.iloc[::2])
-print(data.info())
+print(data.info())#i have 0 null count-NaN
+
+data=pd.read_csv("C:/Users/saisw/Downloads/ipl/matches-selected-columns.csv")
+print(data.head())
+#all are null values
+'''
+   id  season  city  ...  team1  team2  toss_winner
+0 NaN     NaN   NaN  ...    NaN    NaN          NaN
+1 NaN     NaN   NaN  ...    NaN    NaN          NaN
+2 NaN     NaN   NaN  ...    NaN    NaN          NaN
+3 NaN     NaN   NaN  ...    NaN    NaN          NaN
+4 NaN     NaN   NaN  ...    NaN    NaN          NaN
+
+[5 rows x 10 columns]
+'''
+print(data.fillna(0,inplace=True))
+print(data.head())
+'''
+    id  season  city  date  match_type  player_of_match  venue  team1  team2  toss_winner
+0  0.0     0.0   0.0   0.0         0.0              0.0    0.0    0.0    0.0          0.0
+1  0.0     0.0   0.0   0.0         0.0              0.0    0.0    0.0    0.0          0.0
+2  0.0     0.0   0.0   0.0         0.0              0.0    0.0    0.0    0.0          0.0
+3  0.0     0.0   0.0   0.0         0.0              0.0    0.0    0.0    0.0          0.0
+4  0.0     0.0   0.0   0.0         0.0              0.0    0.0    0.0    0.0          0.0'''
+#so here now those null values is fill with some values
+print(data.isnull().sum())
+#now my 10 columns has 0 null values 
+
