@@ -73,3 +73,42 @@ print(data.head())
 print(data.isnull().sum())
 #now my 10 columns has 0 null values 
 
+import pandas as pd
+import numpy as np
+
+# Sample dataset with missing values
+import pandas as pd
+import numpy as np
+
+data = {
+    'Name': ['Alice', 'Bob', 'Charlie', 'David', 'Eve'],
+    'Age': [25, np.nan, 30, 22, np.nan],
+    'Score': [85, 90, np.nan, 88, 76],
+    'City': ['Hyderabad', 'Delhi', np.nan, 'Mumbai', 'Chennai']
+}
+
+df = pd.DataFrame(data)
+
+# Clean column names
+df.columns = df.columns.str.strip()
+
+# Interpolate numeric columns
+df[['Age','Score']] = df[['Age','Score']].interpolate()
+
+print("\nAfter Interpolation:")
+print(df)
+'''
+After Interpolation:
+      Name   Age  Score       City
+0    Alice  25.0   85.0  Hyderabad
+1      Bob  27.5   90.0      Delhi
+2  Charlie  30.0   89.0        NaN
+3    David  22.0   88.0     Mumbai
+4      Eve  22.0   76.0    Chennai
+'''
+#above only integers are filled with some values
+# There is no strings are filled  
+print(df.isnull())
+df['City']=df['City'].ffill()
+print(df)
+
