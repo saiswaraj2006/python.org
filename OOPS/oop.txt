@@ -1,0 +1,19 @@
+#The object oriented programming  is used to map with real world scenarios
+**object-> object is an real world entity
+but before creating object we can create the class
+because class is a blueprint for creating object
+
+Creating class
+class classname:
+Eg. class Student:
+classname is always starts with capital letter
+
+#creating object(instance)
+
+object name=classname()
+Eg. s1=Student()
+print(s1.name)
+
+•CONSTRUCTOR
+constructor is a self block code which is always executed when object is created
+in oops __init__() function is always executed 

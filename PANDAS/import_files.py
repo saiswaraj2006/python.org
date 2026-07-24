@@ -110,5 +110,12 @@ After Interpolation:
 # There is no strings are filled  
 print(df.isnull())
 df['City']=df['City'].ffill()
-print(df)
-
+print(df)#now null is filled with the above column element
+'''
+     Name   Age  Score       City
+0    Alice  25.0   85.0  Hyderabad
+1      Bob  27.5   90.0      Delhi
+2  Charlie  30.0   89.0      Delhi
+3    David  22.0   88.0     Mumbai
+4      Eve  22.0   76.0    Chennai
+'''
