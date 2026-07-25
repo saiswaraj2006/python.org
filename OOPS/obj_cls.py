@@ -51,3 +51,41 @@ C1=Car("Mercedes","Royal Blue")
 C2=Car(obj=C1)#copy constructor
 #because im copying the C1 to C2 
 print(C2.Brand,C2.color)
+#Mercedes Royal Blue
+#class attribute
+#this is used when same attributes for many number of objects then it is used
+
+#instance attribute
+#this instance is different for every object when created
+
+class Student:
+    clg_name="XYZ Institute"
+    def __init__(self,name,roll_no):
+        self.name=name
+        self.roll_no=roll_no
+s1=Student(name="Roshan",roll_no=22)
+s2=Student(name="Pallavi",roll_no=54)
+print(s1.name,"from",s1.clg_name,"and his roll_no is",s1.roll_no)
+print(s2.name,s2.roll_no)
+'''
+Roshan from XYZ Institute and his roll_no is 22
+Pallavi 54
+'''
+#but above i include a str line which is "and his roll_no is"
+#but i want to include in my attributes for boys 
+#and another with "her" for girls
+class Student:
+    clg_name="XYZ Institute"
+    he="and his roll_no is"
+    she="and her roll_no is"
+    fr="from"
+    def __init__(self,name,roll_no):
+        self.name=name
+        self.roll_no=roll_no
+      
+s1=Student(name="Priya",roll_no=28)
+s2=Student(name="Mani",roll_no=34)
+s3=Student(name="Varshini",roll_no=30)
+print(s1.name,s1.fr,s1.clg_name,s1.she,s1.roll_no)
+print(s2.name,s2.fr,s2.clg_name,s2.he,s2.roll_no)
+print(s3.name,s3.fr,s3.clg_name,s3.she,s3.roll_no)
