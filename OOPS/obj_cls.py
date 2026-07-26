@@ -89,3 +89,22 @@ s3=Student(name="Varshini",roll_no=30)
 print(s1.name,s1.fr,s1.clg_name,s1.she,s1.roll_no)
 print(s2.name,s2.fr,s2.clg_name,s2.he,s2.roll_no)
 print(s3.name,s3.fr,s3.clg_name,s3.she,s3.roll_no)
+'''
+Priya from XYZ Institute and her roll_no is 28
+Mani from XYZ Institute and his roll_no is 34
+Varshini from XYZ Institute and her roll_no is 30
+'''
+#Methods
+#methods are functions that belongs to objects
+class Education:
+    def __init__(self,name,marks):
+        self.name=name
+        self.marks=marks
+    def welcome(self):
+        print("Welcome student!",self.name)
+    def get_marks(self):
+        return self.marks
+s1=Education(name="Divya",marks=99)
+s1.welcome()#calling the method
+#Welcome student! Divya
+print(s1.get_marks())
