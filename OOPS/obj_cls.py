@@ -108,3 +108,65 @@ s1=Education(name="Divya",marks=99)
 s1.welcome()#calling the method
 #Welcome student! Divya
 print(s1.get_marks())
+#99
+
+#PROBLEM SOLVING
+#create student class that takes name & marks of 3 subjects as arguments
+#in constructor. Then create a method to print the average.
+
+class Student:
+
+    def __init__(self,name,marks):
+        self.name=name
+        self.marks=marks
+    def avg(self):
+        sum=0
+        for i in self.marks:
+            sum+=i
+        print("Hi",stu1.name,"your avg marks is",sum/3)
+
+stu1=Student("Pallavi",[89,90,95])
+print(stu1.name,stu1.marks)
+stu1.avg()
+#output:
+'''
+Pallavi [89, 90, 95]
+Hi Pallavi your avg marks is 91.33333333333333
+'''
+#STATIC METHODS 
+#static methods are the methods that don't use the self 
+#parameter (works at class level)
+
+#by using @staticmethod
+#             ↘this is decorator which convert a function into static method
+#example
+class Stu:
+    def __init__(self,name,marks):
+        self.name=name
+        self.marks=marks
+    @staticmethod
+    def wishes():
+        print("Hello Good Morning!")
+s1=Stu(name="Vamshi",marks=99)
+print(s1)
+s1.wishes()
+#oops
+#1. Abstraction 
+class Car:
+    def not_start(self):
+        self.color="Yellow"
+        self.Accelerator=False
+        self.brk=False
+        self.clutch=False
+    def start(self):
+        self.clutch=True
+        self.clutch=True
+    print("car is started")
+c1=Car()
+c1.start()
+#car is started 
+#it doesn't print the unnecessary ones 
+
+
+
+
