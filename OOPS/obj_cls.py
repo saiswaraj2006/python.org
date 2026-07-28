@@ -167,6 +167,33 @@ c1.start()
 #car is started 
 #it doesn't print the unnecessary ones 
 
+#problem:
+#Create Account class with 2 attributes- balance & account no.
+#create methods for debit,credit & printing the balance.
+
+class Account:
+    def __init__(self,balance,acc_no):
+        self.balance=balance
+        self.acc_no=acc_no
+    def debit(self,amount=0):
+        self.balance-=amount
+        print(self.balance)
+        
+    def credit(self,amount=0):
+        self.balance+=amount
+        print(self.balance)
+
+t1=Account(balance=50000,acc_no=123456789)
+print(t1.acc_no)
+#123456789
+t1.credit(amount=20000)
+#70000
+t1.debit(amount=30000)#40000
+
+
+
+
+
 
 
 
