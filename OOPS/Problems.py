@@ -81,3 +81,23 @@ Lib.borrow_book(m2,book1)
 '''
 SUV returned Happiness
 Dinesh borrowed Happiness'''
+
+#Create a student class with attributes for name and marks .Add methods to:
+#display student details
+#calculate whether the student has passed(marks>=40)
+class Student:
+    def __init__(self,name,marks):
+        self.name=name
+        self.marks=marks
+    def student_details(self):
+        if self.marks>=40:
+            print(f"{self.name} is Passed,and congras!")
+        else:
+            print(f"{self.name} is Fail,Best of Luck")
+        return self.name,self.marks
+s1=Student("Ravi",40)
+s2=Student("Reshma",39)
+s1.student_details()
+s2.student_details()
+        
+    
