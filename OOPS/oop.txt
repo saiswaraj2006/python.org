@@ -17,3 +17,15 @@ print(s1.name)
 •CONSTRUCTOR
 constructor is a self block code which is always executed when object is created
 in oops __init__() function is always executed 
+
+                            oops
+                              ↡
+       —————————————————————————————————————————————————— 
+       |                 |                |              |
+Abstraction       Encapsulation     Inheritance      Polymorphism
+
+
+Abstraction- Hiding the details of a  class and only showing the essential features to the user
+Ex. car showing the essential details like color,model name
+
+Encapsulation- Wrapping data and functions into a single unit(object)

@@ -139,3 +139,56 @@ print("Rectangle 2 Perimeter:", rect2.perimeter())
 
 # Compare areas
 rect1.compare_area(rect2)
+'''
+Rectangle 1 Area: 50
+Rectangle 1 Perimeter: 30
+Rectangle 2 Area: 56
+Rectangle 2 Perimeter: 30
+The other rectangle has a larger area'''
+
+#problem
+'''
+Create a Dog class with attributes for name and age. Add methods to:
+
+Make the dog bark
+Check if the dog is a puppy (age < 2)
+
+'''
+class Dog:
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+
+    def bark(self):
+        print(f"{self.name} says: Woof! Woof!")
+
+    def is_puppy(self):
+        if self.age < 2:
+            print(f"{self.name} is a puppy.")
+        else:
+            print(f"{self.name} is not a puppy.")
+
+    def display(self):
+        print(f"Dog Name: {self.name}, Age: {self.age}")
+
+
+# Example usage
+dog1 = Dog("Pup", 1)
+dog2 = Dog("Max", 4)
+
+dog1.display()
+dog1.bark()
+dog1.is_puppy()
+
+dog2.display()
+dog2.bark()
+dog2.is_puppy()
+#output:
+'''
+Dog Name: Pup, Age: 1
+Pup says: Woof! Woof!
+Pup is a puppy.
+Dog Name: Max, Age: 4
+Max says: Woof! Woof!
+Max is not a puppy'''
+
