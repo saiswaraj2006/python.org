@@ -192,3 +192,39 @@ Dog Name: Max, Age: 4
 Max says: Woof! Woof!
 Max is not a puppy'''
 
+#Question 2: Online Shopping Cart
+'''
+Model a shopping cart system with Product, CartItem, and ShoppingCart classes.
+Implement adding items, removing items, and calculating total price.
+'''
+class Product:
+    def __init__(self, name, price):
+        self.name=name
+        self.price=price
+class CartItem:
+    def __init__(self,product,quantity):
+        self.product=product
+        self.quantity=quantity
+    def get_total(self):
+        return self.product.price * self.quantity
+class ShoppingCart:
+    def __init__(self):
+        self.items=[]
+    def add_items(self,product,quantity):
+        self.items.append(CartItem(product,quantity))
+        print(f"Added {quantity} x {product.name} to cart.")
+    def remove_item(self, product):
+        self.items=[item for item in self.items if item.product!=product]
+        print(f"Removed {product.name} from cart.")
+    def calculate_total(self):
+        total=sum(item.get_total() for item in self.items)
+        print(f"Total price: ${total}")
+        return total
+p1=Product("Laptop", 50000)
+p2=Product("Headphones", 2000)
+cart=ShoppingCart()
+cart.add_items(p1, 1)
+cart.add_items(p2, 2)
+cart.calculate_total()
+cart.remove_item(p2)
+cart.calculate_total()
