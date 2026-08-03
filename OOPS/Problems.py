@@ -228,3 +228,62 @@ cart.add_items(p2, 2)
 cart.calculate_total()
 cart.remove_item(p2)
 cart.calculate_total()
+
+#i'm creating the Hotel Booking system
+#my implementation is with room,customer name,hotel,booking and checking functionality
+class Room:
+    
+    def __init__(self,room_no,price):
+        self.room_no=room_no
+        self.is_booked=False
+        self.price=price
+    
+    def book(self):
+        if not self.is_booked:
+            self.is_booked = True
+            return True
+        return False
+    def checkout(self):
+        if self.is_booked:
+            self.is_booked=False
+            return True
+        return False
+class Customer:
+    def __init__(self, name):
+        self.name = name
+        self.booked_rooms = []
+    def book_room(self, room):
+        if room.book():
+            self.booked_rooms.append(room)
+            print(f"{self.name} booked Room {room.room_no} for ₹{room.price}")
+        else:
+            print(f"Room {room.room_no} is already booked.")
+    def checkout_room(self,room):
+        if room in self.booked_rooms and room.checkout():
+            self.booked_rooms.remove(room)
+            print(f"{self.name} checked out from Room {room.room_no}")
+        else:
+            print(f"{self.name} cannot checkout Room {room.room_no}")
+    
+class Hotel:
+    def __init__(self,name):
+        self.name=name
+        self.rooms=[]
+    def add_room(self,room):
+        self.rooms.append(room)
+    def list_available_rooms(self):
+        print("Availability Rooms:")
+        for room in self.rooms:
+            if not room.is_booked:
+                print(f"Room {room.room_no} - ${room.price}")
+hotel=Hotel("Dhaba Hotel")
+room1=Room(101,2000)
+room2=Room(102,2100)
+hotel.add_room(room1)
+hotel.add_room(room2)
+cust1=Customer("Dhruv")
+cust1.book_room(room1)
+cust1.book_room(room2)
+cust1.checkout_room(room1)
+hotel.list_available_rooms()
+        
