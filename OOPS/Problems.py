@@ -286,4 +286,69 @@ cust1.book_room(room1)
 cust1.book_room(room2)
 cust1.checkout_room(room1)
 hotel.list_available_rooms()
-        
+#question
+#-----------------------------------#
+'''
+Design a system to manage students and courses in a school. You need three classes:
+Student → stores student details (name, roll number, enrolled courses).
+Course → stores course details (course name, course code, enrolled students).
+School → manages students and courses.
+requirements
+A student can enroll in multiple courses.
+
+A course can have multiple students.
+
+The school should be able to list all students in a course and all courses a student is enrolled in.
+'''
+class Student:
+    def __init__(self,name,roll_no):
+        self.name=name
+        self.roll_no=roll_no
+        self.courses=[]
+    def enroll(self,course):
+        if course not in self.courses:
+            self.courses.append(course)
+            course.add_student(self)
+            print(f"{self.name} enrolled in {course.course_name}")
+        else:
+            print(f"{self.name} is already enrolled in {course.course_name}")
+    def list_courses(self):
+        print(f"{self.name}'s courses:")
+        for course in self.courses:
+            print(f"- {course.course_name}")       
+class Course:
+    def __init__(self,course_name,course_code):
+        self.course_name=course_name
+        self.course_code=course_code
+        self.students=[]
+    def add_student(self,student):
+        if student not in self.students:
+            self.students.append(student)
+    def list_students(self):
+        print(f"students in {self.course_name}")
+        for student in self.students:
+            print(f"- {student.name}")
+class School:
+    def __init__(self,name):
+        self.name=name
+        self.students=[]
+        self.courses=[]
+    def add_student(self, student):
+        self.students.append(student)
+    def add_course(self,course):
+        self.courses.append(course)
+#Example usage
+school=School("NATIONAL HIGH SCHOOL")
+s1=Student("Dhanush",101)
+s2=Student("Shreyansh",102)
+c1=Course("Mathematics","MATH101")
+c2=Course("Science","SCI102")
+school.add_student(s1)
+school.add_student(s2)
+school.add_course(c1)
+school.add_course(c2)
+s1.enroll(c1)
+s2.enroll(c2)
+s2.enroll(c1)
+s1.list_courses()
+c1.list_students()
