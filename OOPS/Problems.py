@@ -352,3 +352,41 @@ s2.enroll(c2)
 s2.enroll(c1)
 s1.list_courses()
 c1.list_students()
+#today about learning the abstraction example
+#abstraction is about to hiding the important details while implementation and exposing
+#only the essential features
+from abc import ABC, abstractmethod
+# Abstract base class
+class Shape(ABC):
+    @abstractmethod #defining the method
+    def area(self):#in my above class the subclassses are area and perimeter
+        pass
+
+    @abstractmethod
+    def perimeter(self):
+        pass
+
+# Concrete class implementing abstract methods
+class Rectangle(Shape):
+    def __init__(self, width, height):
+        self.width = width
+        self.height = height
+
+    def area(self):
+        return self.width * self.height
+
+    def perimeter(self):
+        return 2 * (self.width + self.height)
+
+# Usage
+rect = Rectangle(10, 5)
+print("Area:", rect.area())          # Area: 50
+print("Perimeter:", rect.perimeter()) # Perimeter: 30
+#here im hiding the internal formula used in area and perimeter finding
+#the actual calculation is hidden the subclass
+'''
+output:
+Area: 50
+Perimeter: 30
+'''
+print()
