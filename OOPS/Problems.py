@@ -390,3 +390,105 @@ Area: 50
 Perimeter: 30
 '''
 print()
+#i already done the bank balanced system
+''' question
+Design a system to manage bank accounts. You need three classes: 
+Account → stores account number, balance, and methods for deposit/withdraw.
+Customer → represents a customer with a name and multiple accounts.
+Bank → manages customers and allows transfers between accounts.
+
+Requirements:
+
+A customer can open multiple accounts.
+
+Deposits and withdrawals should update the balance correctly.
+
+Transfers should only work if the sender has enough funds.
+
+The bank should be able to list all customers and their accounts.
+'''
+
+class Account:
+    def __init__(self,acc_no,balance=0):
+        self.acc_no=acc_no
+        self.balance=balance
+    def deposit(self,amount):
+        self.balance+=amount
+        return f"{amount}$ is credited new balance is:{self.balance}$"
+    def withdraw(self,amount):
+        
+        if amount<=self.balance:
+            self.balance-=amount
+            return f"{amount}$ is debited from your {self.acc_no} and new balance is:{self.balance}$"
+            
+        else:
+            return "insufficient amount to withdraw!"
+            
+    def get_balance(self):
+        return self.balance
+    
+class Customer:
+    def __init__(self,name):
+        self.name=name
+        self.accounts=[]
+    def open_acc(self,account):
+        self.accounts.append(account)
+        print(f"{self.name} opened account {account.acc_no}")
+    def list_accounts(self):
+        print(f"{self.name}'s Account:")
+        for acc in self.accounts:
+            print(f"Account {acc.acc_no}, Balance:{acc.balance}$")
+
+class Bank:
+    def __init__(self, name):
+        self.name = name
+        self.customers = []
+
+    def add_customer(self, customer):
+        self.customers.append(customer)
+
+   
+    def transfer(self, from_account, to_account, amount):
+        result = from_account.withdraw(amount)
+        if "debited" in result:
+            print(result)
+            print(to_account.deposit(amount))
+            print(f"Transferred {amount}₹ from {from_account.acc_no} to {to_account.acc_no}")
+        else:
+            print(result)
+
+
+    def list_customers(self):
+        print(f"Customers of {self.name}:")
+        for cust in self.customers:
+            print(f"-{cust.name}")
+
+
+# Example usage
+bank = Bank("State Bank of India")
+
+cust1 = Customer("Sai")
+cust2 = Customer("Roy")
+
+acc1 = Account(101, 5000)
+acc2 = Account(102, 2000)
+
+cust1.open_acc(acc1)
+cust2.open_acc(acc2)
+
+bank.add_customer(cust1)
+bank.add_customer(cust2)
+
+acc1.deposit(2000)
+acc1.withdraw(3000)
+bank.transfer(acc1, acc2, 1000)
+
+cust1.list_accounts()
+cust2.list_accounts()
+print(acc1.deposit(2000))
+print(acc1.withdraw(3000))
+bank.transfer(acc1, acc2, 1000)
+
+
+
+
