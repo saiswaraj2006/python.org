@@ -450,13 +450,10 @@ class Bank:
    
     def transfer(self, from_account, to_account, amount):
         result = from_account.withdraw(amount)
+        print(result)
         if "debited" in result:
-            print(result)
             print(to_account.deposit(amount))
-            print(f"Transferred {amount}₹ from {from_account.acc_no} to {to_account.acc_no}")
-        else:
-            print(result)
-
+            print(f"Transferred {amount}$ from {from_account.acc_no} to {to_account.acc_no}")
 
     def list_customers(self):
         print(f"Customers of {self.name}:")
@@ -479,15 +476,15 @@ cust2.open_acc(acc2)
 bank.add_customer(cust1)
 bank.add_customer(cust2)
 
-acc1.deposit(2000)
-acc1.withdraw(3000)
-bank.transfer(acc1, acc2, 1000)
+msg1=acc1.deposit(2000)
+print(msg1)
+msg2=acc1.withdraw(3000)
+print(msg2)
+print(bank.transfer(acc1, acc2, 1000))
 
 cust1.list_accounts()
 cust2.list_accounts()
-print(acc1.deposit(2000))
-print(acc1.withdraw(3000))
-bank.transfer(acc1, acc2, 1000)
+
 
 
 
