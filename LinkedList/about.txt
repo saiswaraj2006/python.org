@@ -1,0 +1,18 @@
+The linked list in python is not built in we want to create
+it manually.
+
+-------LINKED LIST-------
+A LINKED LIST s a linear data structure where elements (Called nodes) are 
+connected using references (pointers).
+Each node has: Data (the value it stores)
+Next(a reference to the next node)
+
+linked list don't store elements in contiguous memory. They're flexible for 
+insertion and deletion but slower for random access.
+
+
+-> by using oops create the lined list manually one by one
+in order↡ 
+        ↳Node class(data + next)
+        .LinkedList class(head+methods: insert, delete, traverse)
+        

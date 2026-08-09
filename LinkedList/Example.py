@@ -27,3 +27,33 @@ ll.insert_at_end(10)
 ll.insert_at_end(20)
 ll.insert_at_end(30)
 ll.display()
+#output: 10->20->30->None
+
+#insert at beginning 
+#means aat head node
+class Node:
+    def __init__(self, data):
+        self.data = data
+        self.next = None   # pointer to next node
+
+class LinkedList:
+    def __init__(self):
+        self.head = None   # start of the list
+
+    def insert_at_beginning(self, data):
+        new_node = Node(data)
+        new_node.next = self.head   # link new node to current head
+        self.head = new_node        # update head to new node
+
+    def display(self):
+        temp = self.head
+        while temp:
+            print(temp.data, end=" -> ")
+            temp = temp.next
+        print("None")
+ll = LinkedList()
+ll.insert_at_beginning(30)
+ll.insert_at_beginning(20)
+ll.insert_at_beginning(10)
+ll.display()
+
