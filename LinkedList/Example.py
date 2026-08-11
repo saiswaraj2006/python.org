@@ -91,7 +91,7 @@ ll.insert_at_beginning(30)
 ll.insert_at_beginning(20)
 ll.insert_at_beginning(10)
 
-ll.display()          # 10 -> 20 -> 30 -> None
+ll.display()   # 10 -> 20 -> 30 -> None
 ll.delete_at_beginning()
-ll.display()          # 20 -> 30 -> None
+ll.display()# 20 -> 30 -> None
 
