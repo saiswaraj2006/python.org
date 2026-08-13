@@ -1,0 +1,6 @@
+A way to handle errors instead of crashing the program
+The Keywords :
+try: The Block of code to test the program
+except: Block of code to handle errors
+finally: Block that always executes.
+raise: Used to throw an exception manually

@@ -83,12 +83,40 @@ print(divide_number(10,0))
 '''
 Error: Cannot divide by zero.
 Operation complete.
-None'''
+'''
 print(divide_number("tt",2))
 '''
 Error: Inputs must be numbers.
 Operation complete.
-None'''
+'''
+#Question-2
+'''
+Write a Python function read_file(filename) that:
+
+Opens a file in read mode.
+Raises a FileNotFoundError if the file does not exist.
+Prints the file content if it exists.
+Handles any other unexpected errors gracefully.
+Always prints "File operation complete" at the end (using finally).'''
+from openpyxl import load_workbook
+def file_excel(filename):
+    try:
+        #trying to open the workbook
+        workbook=load_workbook(filename)
+        sheet=workbook.active
+        #printing the first 5 rows as a sample
+        for row in sheet.iter_rows(min_row=1, max_row=5, values_only=True):
+            print(row)
+
+    except FileNotFoundError:
+        print("Error: File not found")
+    except Exception as e:
+        print("Unexpected error:",e)
+    finally:
+        print("Excel File operation complete.")
+file_excel("C:/Users/saisw/OneDrive/Documents/Book1.xlsx")
+#it prints the first five lines
+
 
 
 
