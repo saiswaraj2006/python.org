@@ -98,7 +98,9 @@ Raises a FileNotFoundError if the file does not exist.
 Prints the file content if it exists.
 Handles any other unexpected errors gracefully.
 Always prints "File operation complete" at the end (using finally).'''
-from openpyxl import load_workbook
+
+
+'''from openpyxl import load_workbook
 def file_excel(filename):
     try:
         #trying to open the workbook
@@ -115,7 +117,46 @@ def file_excel(filename):
     finally:
         print("Excel File operation complete.")
 file_excel("C:/Users/saisw/OneDrive/Documents/Book1.xlsx")
+
+'''
 #it prints the first five lines
+'''
+Write a Python function validate_excel(filename) that:
+
+Opens the given Excel file using openpyxl.
+Reads the first column of the active sheet.
+Raises a ValueError if any cell in the first column is empty.
+Prints "Validation complete" at the end (using finally).
+'''
+from openpyxl import load_workbook
+def validate_excel(filename):
+    try:
+        workbook=load_workbook(filename)
+        sheet=workbook.active
+        for col in sheet.iter_cols(min_col=1, max_col=2,values_only=True):
+            print(col)
+    except ValueError:
+        print("Error: The First column is empty.")
+    finally:
+        print("Validation is complete")
+validate_excel("Book1.xlsx")
+#now for validate and sum of all ages if valid
+#and returns "summation complete" at end
+from openpyxl import load_workbook
+def validate_and_sum(filename):
+    try:
+        workbook=load_workbook(filename)
+        sheet=workbook.active
+        for col in sheet.iter_cols(min_col=2,max_col=2,values_only=True):
+            print(f"sum of all ages is :{sum(col)}")
+    except ValueError:
+        print("Error: The second col is empty.")
+    finally:
+        print("validation is completed")
+validate_and_sum("Book1.xlsx")#sum of all ages is :277
+
+
+
 
 
 
