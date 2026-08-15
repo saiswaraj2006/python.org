@@ -155,6 +155,36 @@ def validate_and_sum(filename):
         print("validation is completed")
 validate_and_sum("Book1.xlsx")#sum of all ages is :277
 
+#now im checking the both columns (names)-must not be empty
+#and ages column must be numeric(int or float)
+#raise a valueerror if the any one fails
+#if all rows are valid prints the rows in format
+#and at last return "data validation complete" in finally block
+from openpyxl import load_workbook
+def validate_excel_data(filename):
+    try:
+        workbook=load_workbook(filename)
+        sheet=workbook.active
+        for row in sheet.iter_rows(min_col=1,max_col=2,values_only=True):
+            name,age=row
+            if name is  None:
+                raise ValueError("Empty cell found in first column")
+            if not isinstance(age, (int, float)):
+                raise ValueError("Age must be a number")
+            print(f"Name: {name}, Age: {age}")
+    except FileNotFoundError:
+        print("Error: File not found.")
+    except ValueError as e:
+        print(f"Error: {e}")
+    except Exception as e:
+        print("Unexpected error:", e)
+    finally:
+        print("Data Validation Complete.")
+validate_excel_data("Book1.xlsx")
+
+
+
+
 
 
 
