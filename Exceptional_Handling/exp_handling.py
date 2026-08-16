@@ -128,6 +128,7 @@ Reads the first column of the active sheet.
 Raises a ValueError if any cell in the first column is empty.
 Prints "Validation complete" at the end (using finally).
 '''
+'''
 from openpyxl import load_workbook
 def validate_excel(filename):
     try:
@@ -139,9 +140,10 @@ def validate_excel(filename):
         print("Error: The First column is empty.")
     finally:
         print("Validation is complete")
-validate_excel("Book1.xlsx")
+validate_excel("Book1.xlsx")'''
 #now for validate and sum of all ages if valid
 #and returns "summation complete" at end
+'''
 from openpyxl import load_workbook
 def validate_and_sum(filename):
     try:
@@ -153,13 +155,14 @@ def validate_and_sum(filename):
         print("Error: The second col is empty.")
     finally:
         print("validation is completed")
-validate_and_sum("Book1.xlsx")#sum of all ages is :277
+validate_and_sum("Book1.xlsx")'''#sum of all ages is :277
 
 #now im checking the both columns (names)-must not be empty
 #and ages column must be numeric(int or float)
 #raise a valueerror if the any one fails
 #if all rows are valid prints the rows in format
 #and at last return "data validation complete" in finally block
+'''
 from openpyxl import load_workbook
 def validate_excel_data(filename):
     try:
@@ -181,6 +184,46 @@ def validate_excel_data(filename):
     finally:
         print("Data Validation Complete.")
 validate_excel_data("Book1.xlsx")
+'''
+#for three cols
+
+from openpyxl import load_workbook
+
+def validate_excel_data(filename):
+    errors = []
+    try:
+        workbook = load_workbook(filename)
+        sheet = workbook.active
+        
+        for row in sheet.iter_rows(min_row=2, min_col=1, max_col=3, values_only=True):
+            name, age, city = row
+            
+            if name is None:
+                errors.append("Empty cell found in first column")
+                continue
+            if city is None:
+                errors.append("Empty cell found in third column")
+                continue
+            if not isinstance(age, (int, float)):
+                errors.append("Age must be a number")
+                continue
+            
+            print(f"Name: {name}, Age: {age}, City: {city}")
+    
+    except FileNotFoundError:
+        print("Error: File not found.")
+    except Exception as e:
+        print("Unexpected error:", e)
+    finally:
+        if errors:
+            print("Errors found:")
+            for err in errors:
+                print(f"- {err}")
+        
+        print("Data Validation Complete.")
+# Run
+validate_excel_data("Book1.xlsx")
+
 
 
 
