@@ -224,6 +224,44 @@ def validate_excel_data(filename):
 # Run
 validate_excel_data("Book1.xlsx")
 
+'''
+Modify the validator so that it skips invalid rows instead of stooping or collecting them. In other words
+-> If a row fails validation(empty None , non- numeric Age, empty city),ignore it
+->only print ignore it.
+->At the end , show sa summary count of how many rows were valid and how many were skipped.
+'''
+from openpyxl import load_workbook
+
+def validate_excel_data_skip_invalid(filename):
+    valid_count = 0
+    invalid_count = 0
+    
+    try:
+        workbook = load_workbook(filename)
+        sheet = workbook.active
+        
+        # Skip header row 
+        for row_idx, row in enumerate(sheet.iter_rows(min_row=2, min_col=1, max_col=3, values_only=True), start=2):
+            name, age, city = row
+            
+            # Validation checks and counts the invalid ones
+            if name is None or city is None or not isinstance(age, (int, float)):
+                invalid_count += 1
+                continue  # ✅ Skip invalid row
+            
+            print(f"Name: {name}, Age: {age}, City: {city}")
+            valid_count += 1
+    
+    except FileNotFoundError:
+        print("Error: File not found.")
+    except Exception as e:
+        print("Unexpected error:", e)
+    finally:
+        print(f"\nSummary: Valid rows = {valid_count}, Skipped rows = {invalid_count}")
+        print("Data Validation Complete.")
+validate_excel_data_skip_invalid("Book1.xlsx")
+
+
 
 
 
