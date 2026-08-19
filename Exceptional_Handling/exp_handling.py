@@ -322,8 +322,62 @@ def validate_and_split(filename):
 validate_and_split("Book1.xlsx")
 
 
+#now after validation and saving the excel file ,also export the cleanedData
+# sheet into a CSV file called CleanedData.csv
+#and prints a message "Cleaned data exported to CleanedData.csv"
+from openpyxl import load_workbook, Workbook
+import csv
+def validate_and_split(filename):
+    workbook = load_workbook(filename)
+    sheet = workbook.active
+    # Create new sheets
+    if "ValidRows" in workbook.sheetnames:
+        valid_ws = workbook["ValidRows"]
+    else:
+        valid_ws = workbook.create_sheet("ValidRows")
+    if "InvalidRows" in workbook.sheetnames:
+        invalid_ws = workbook["InvalidRows"]
+    else:
+        invalid_ws = workbook.create_sheet("InvalidRows")
+    if "CleanedData" in workbook.sheetnames:
+        cleaned_ws=workbook["CleanedData"]
+    else:
+        cleaned_ws=workbook.create_sheet("CleanedData")
+       # Add headers
+    valid_ws.append(("Name", "Age", "City"))
+    invalid_ws.append(("Row", "Name", "Age", "City", "Error"))
+    cleaned_ws.append(("Name","Age","City"))
+    valid_count = 0
+    invalid_count = 0
+    for row_idx, row in enumerate(sheet.iter_rows(min_row=2, min_col=1, max_col=3, values_only=True), start=2):
+        name, age, city = row
+        if name is None:
+            invalid_ws.append((row_idx, name, age, city, "Empty cell found in first column"))
+            invalid_count += 1
+            continue
+        if city is None:
+            invalid_ws.append((row_idx, name, age, city, "Empty cell found in third column"))
+            invalid_count += 1
+            continue
+        if not isinstance(age, (int, float)):
+            invalid_ws.append((row_idx, name, age, city, "Age must be a number"))
+            invalid_count += 1
+            continue
+        #here  after row validation CleanedData
+        valid_ws.append((name, age, city))
+        cleaned_ws.append((name,age,city))
+        valid_count += 1
+    workbook.save("UPGRADED_Book1.xlsx")
+    #now im saving the excel sheet into "CleanedData.csv" file
+    with open("CleanedData.csv","w",newline="") as f:
+        writer=csv.writer(f)
+        for row in cleaned_ws.iter_rows(values_only=True):
+            writer.writerow(row)
 
-
+    print(f"Valid rows: {valid_count}, Invalid rows: {invalid_count}")
+    print("Validation complete. Results written to 'ValidRows' and 'InvalidRows' sheets.")
+    print("Cleaned data exported to CleanedData.csv")
+validate_and_split("Book1.xlsx")
 
 
 
