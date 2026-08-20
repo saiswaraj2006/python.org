@@ -349,17 +349,21 @@ def validate_and_split(filename):
     cleaned_ws.append(("Name","Age","City"))
     valid_count = 0
     invalid_count = 0
+    error_log=[]
     for row_idx, row in enumerate(sheet.iter_rows(min_row=2, min_col=1, max_col=3, values_only=True), start=2):
         name, age, city = row
         if name is None:
+            msg="Empty cell was found in first column"
             invalid_ws.append((row_idx, name, age, city, "Empty cell found in first column"))
             invalid_count += 1
             continue
         if city is None:
+            msg="Empty cell found in third column"
             invalid_ws.append((row_idx, name, age, city, "Empty cell found in third column"))
             invalid_count += 1
             continue
         if not isinstance(age, (int, float)):
+            msg="Age must be a number"
             invalid_ws.append((row_idx, name, age, city, "Age must be a number"))
             invalid_count += 1
             continue
@@ -373,11 +377,16 @@ def validate_and_split(filename):
         writer=csv.writer(f)
         for row in cleaned_ws.iter_rows(values_only=True):
             writer.writerow(row)
+    #writes errors to log file
+    with open("errors.log","w") as f:
+        for entry in error_log:
+            f.write(entry+"\n")
 
     print(f"Valid rows: {valid_count}, Invalid rows: {invalid_count}")
     print("Validation complete. Results written to 'ValidRows' and 'InvalidRows' sheets.")
     print("Cleaned data exported to CleanedData.csv")
-validate_and_split("Book1.xlsx")
+    print("Error logged to errors.log")
+validate_and_split("Book1.xlsx")#it creates the .csv file
 
 
 
