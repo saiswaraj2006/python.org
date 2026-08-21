@@ -327,6 +327,7 @@ validate_and_split("Book1.xlsx")
 #and prints a message "Cleaned data exported to CleanedData.csv"
 from openpyxl import load_workbook, Workbook
 import csv
+from datetime import datetime
 def validate_and_split(filename):
     workbook = load_workbook(filename)
     sheet = workbook.active
@@ -379,13 +380,18 @@ def validate_and_split(filename):
             writer.writerow(row)
     #writes errors to log file
     with open("errors.log","w") as f:
-        for entry in error_log:
-            f.write(entry+"\n")
+        if error_log:
+            for entry in error_log:
+                f.write(entry+"\n")
+        else:#printing the exact date,time with seconds if there is no errors
+            f.write("No errors found. All rows are valid .\n")
+        f.write(F"\n Validation run at: {datetime.now().strftime('%Y-%M-%D %H:%M:%S')}\n")
 
     print(f"Valid rows: {valid_count}, Invalid rows: {invalid_count}")
     print("Validation complete. Results written to 'ValidRows' and 'InvalidRows' sheets.")
     print("Cleaned data exported to CleanedData.csv")
     print("Error logged to errors.log")
+
 validate_and_split("Book1.xlsx")#it creates the .csv file
 
 
