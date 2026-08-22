@@ -320,8 +320,6 @@ def validate_and_split(filename):
     print(f"Valid rows: {valid_count}, Invalid rows: {invalid_count}")
     print("Validation complete. Results written to 'ValidRows' and 'InvalidRows' sheets.")
 validate_and_split("Book1.xlsx")
-
-
 #now after validation and saving the excel file ,also export the cleanedData
 # sheet into a CSV file called CleanedData.csv
 #and prints a message "Cleaned data exported to CleanedData.csv"
@@ -356,16 +354,19 @@ def validate_and_split(filename):
         if name is None:
             msg="Empty cell was found in first column"
             invalid_ws.append((row_idx, name, age, city, "Empty cell found in first column"))
+            error_log.append(f"Row {row_idx}:{row}->{msg}")
             invalid_count += 1
             continue
         if city is None:
             msg="Empty cell found in third column"
             invalid_ws.append((row_idx, name, age, city, "Empty cell found in third column"))
+            error_log.append(f"Row {row_idx}:{row}->{msg}")
             invalid_count += 1
             continue
         if not isinstance(age, (int, float)):
             msg="Age must be a number"
             invalid_ws.append((row_idx, name, age, city, "Age must be a number"))
+            error_log.append(f"Row {row_idx}:{row}->{msg}")
             invalid_count += 1
             continue
         #here  after row validation CleanedData
@@ -378,21 +379,30 @@ def validate_and_split(filename):
         writer=csv.writer(f)
         for row in cleaned_ws.iter_rows(values_only=True):
             writer.writerow(row)
+    #crating time stamped log filename
+    
+    timestamp=datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+    log_filename="errors.log"#i used default file name because every time i run the
+    #function rewrites the my file as per my date and time I run
     #writes errors to log file
-    with open("errors.log","w") as f:
+    with open(log_filename,"w") as f:
         if error_log:
             for entry in error_log:
                 f.write(entry+"\n")
         else:#printing the exact date,time with seconds if there is no errors
             f.write("No errors found. All rows are valid .\n")
-        f.write(F"\n Validation run at: {datetime.now().strftime('%Y-%M-%D %H:%M:%S')}\n")
-
+        f.write(F"\n Validation run at: {datetime.now().strftime('%Y-%m-%d_%H:%M:%S')}\n")
+        f.write("-"*40+"\n")
+#In error.log if there is no error then the above line with the exact time and date is print
     print(f"Valid rows: {valid_count}, Invalid rows: {invalid_count}")
     print("Validation complete. Results written to 'ValidRows' and 'InvalidRows' sheets.")
     print("Cleaned data exported to CleanedData.csv")
-    print("Error logged to errors.log")
+    print(f"Error logged to {log_filename} ")
 
 validate_and_split("Book1.xlsx")#it creates the .csv file
+
+
+
 
 
 

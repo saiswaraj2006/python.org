@@ -1,3 +1,6 @@
-No errors found. All rows are valid .
+Row 4:(None, 28, 'KZJ')->Empty cell was found in first column
+Row 7:(None, 35, 'SEC')->Empty cell was found in first column
+Row 10:(None, 31, 'HYD')->Empty cell was found in first column
 
- Validation run at: 2026-48-08/21/26 22:48:07
+ Validation run at: 2026-08-22_22:53:48
+----------------------------------------
