@@ -326,6 +326,7 @@ validate_and_split("Book1.xlsx")
 from openpyxl import load_workbook, Workbook
 import csv
 from datetime import datetime
+from openpyxl.chart import PieChart, Reference
 def validate_and_split(filename):
     workbook = load_workbook(filename)
     sheet = workbook.active
@@ -342,10 +343,17 @@ def validate_and_split(filename):
         cleaned_ws=workbook["CleanedData"]
     else:
         cleaned_ws=workbook.create_sheet("CleanedData")
+    if "Summary" in workbook.sheetnames:
+        summary_ws=workbook["Summary"]
+    else:
+        summary_ws=workbook.create_sheet("Summary")
+        #clears old summary
+    summary_ws.delete_rows(1, summary_ws.max_row)
        # Add headers
     valid_ws.append(("Name", "Age", "City"))
     invalid_ws.append(("Row", "Name", "Age", "City", "Error"))
     cleaned_ws.append(("Name","Age","City"))
+
     valid_count = 0
     invalid_count = 0
     error_log=[]
@@ -373,6 +381,20 @@ def validate_and_split(filename):
         valid_ws.append((name, age, city))
         cleaned_ws.append((name,age,city))
         valid_count += 1
+    #write summary sheet
+    summary_ws.append(("Metric","Count"))
+    summary_ws.append(("Valid rows",valid_count))
+    summary_ws.append(("Invalid rows",invalid_count))
+    summary_ws.append(("Validation run at",datetime.now().strftime("%Y-%m-%d %H:%M:%S")))
+    #now adding a pie chart 
+    chart=PieChart()
+    data=Reference(summary_ws,min_col=2,min_row=2, max_row=3)  # counts
+    labels = Reference(summary_ws, min_col=1, min_row=2, max_row=3)  # labels
+    chart.add_data(data, titles_from_data=False)
+    chart.set_categories(labels)
+    chart.title = "Validation Results"
+    summary_ws.add_chart(chart, "E2")  # place chart at cell E2
+    
     workbook.save("UPGRADED_Book1.xlsx")
     #now im saving the excel sheet into "CleanedData.csv" file
     with open("CleanedData.csv","w",newline="") as f:
@@ -391,8 +413,8 @@ def validate_and_split(filename):
                 f.write(entry+"\n")
         else:#printing the exact date,time with seconds if there is no errors
             f.write("No errors found. All rows are valid .\n")
-        f.write(F"\n Validation run at: {datetime.now().strftime('%Y-%m-%d_%H:%M:%S')}\n")
-        f.write("-"*40+"\n")
+        f.write(f"\n Validation run at: {datetime.now().strftime('%Y-%m-%d_%H:%M:%S')}\n")
+        f.write(f"summary: Valid rows={valid_count},Invalid rows={invalid_count}\n")
 #In error.log if there is no error then the above line with the exact time and date is print
     print(f"Valid rows: {valid_count}, Invalid rows: {invalid_count}")
     print("Validation complete. Results written to 'ValidRows' and 'InvalidRows' sheets.")
@@ -400,6 +422,7 @@ def validate_and_split(filename):
     print(f"Error logged to {log_filename} ")
 
 validate_and_split("Book1.xlsx")#it creates the .csv file
+
 
 
 
