@@ -424,6 +424,44 @@ def validate_and_split(filename):
 validate_and_split("Book1.xlsx")#it creates the .csv file
 
 
+from openpyxl import load_workbook
+from openpyxl.chart import BarChart, Reference
+from datetime import datetime
+
+def add_history(filename, valid_count, invalid_count):
+    workbook = load_workbook(filename)
+    
+    # Create or open History sheet
+    if "History" in workbook.sheetnames:
+        history_ws = workbook["History"]
+    else:
+        history_ws = workbook.create_sheet("History")
+        history_ws.append(("Run Date", "Valid Rows", "Invalid Rows"))
+    
+    # Append new run data
+    history_ws.append((
+        datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+        valid_count,
+        invalid_count
+    ))
+    
+    # Add/update bar chart
+    chart = BarChart()
+    data = Reference(history_ws, min_col=2, min_row=2, max_row=history_ws.max_row, max_col=3)
+    cats = Reference(history_ws, min_col=1, min_row=2, max_row=history_ws.max_row)
+    chart.add_data(data, titles_from_data=True)
+    chart.set_categories(cats)
+    chart.title = "Validation History"
+    chart.y_axis.title = "Row Count"
+    chart.x_axis.title = "Run Date"
+    
+    history_ws.add_chart(chart, "E2")
+    
+    workbook.save(filename)
+    print("History updated with latest run.")
+
+# Example usage after validation:
+add_history("UPGRADED_Book1.xlsx", valid_count=7, invalid_count=3)
 
 
 
