@@ -3,7 +3,33 @@ import matplotlib.pyplot as plt
 
 x = [1, 2, 3, 4, 5]# X-axis values
 y = [2, 4, 6, 8, 10]# Y-axis values
+#adding labels
+plt.plot(x, y,marker="o",color="blue",linestyle='--')# Create a line plot
+plt.title("Simple Line Plot")
 
-plt.plot(x, y)# Create a line plot
-plt.savefig("simplelinegraph.svg")
-plt.show()# Displays the plot
+plt.xlabel("X values")
+plt.ylabel("Y Values")
+#plt.show()
+#now adding labels and title
+
+#now BAR CHART
+#categories=["Valid Rows","Invalid Rows"]
+#counts=[7,3]
+#plt.bar(categories,counts,color=["green","red"])
+#plt.title("Validation Results")
+#plt.ylabel("Row Count")
+#plt.show()
+
+#PIE CHART
+labels=["Valid","Invalid"]
+sizes=[7,3]
+colors=["yellow","brown"]
+plt.pie(sizes,labels=labels,colors=colors,autopct='%1.1f%%',wedgeprops={"edgecolor":"black"})
+#the parameter autopct='%1.1f%%' controls how the percentage labels are displayed on each slice
+# autopct=automatic percentage
+# to print percentage value on each slice
+# '%=placeholder for a value
+# 1.1f means one digit before the decimal, ex=25.0% like that
+# %%= prints a literal percentage sign  
+plt.title("Validation Results")
+plt.show()

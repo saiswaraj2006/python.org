@@ -1,0 +1,20 @@
+using the->import matplotlib.pyplot as plt 
+line i can use matplotlib library 
+
+~MATPLOTLIB~
+•Matplotlib is one of the most widely used python libraries for data visualization.
+•It gives th ability to create everything from simple line plots to complex multi-panel figures.
+
+Line plots: trends over time or sequences.
+
+Bar charts: comparisons between categories.
+
+Histograms: distributions of values.
+
+Scatter plots: relationships between variables.
+
+Pie charts: proportions.
+
+Subplots: multiple plots in one figure.
+
+Customization: colors, markers, labels, legends, annotations.
