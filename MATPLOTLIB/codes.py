@@ -24,7 +24,7 @@ plt.ylabel("Y Values")
 labels=["Valid","Invalid"]
 sizes=[7,3]
 colors=["yellow","brown"]
-plt.pie(sizes,labels=labels,colors=colors,autopct='%1.1f%%',wedgeprops={"edgecolor":"black"})
+plt.pie(sizes,labels=labels,colors=colors,autopct='%1.1f%%',wedgeprops={"edgecolor":"black"})#wedge props means border
 #the parameter autopct='%1.1f%%' controls how the percentage labels are displayed on each slice
 # autopct=automatic percentage
 # to print percentage value on each slice
@@ -33,3 +33,31 @@ plt.pie(sizes,labels=labels,colors=colors,autopct='%1.1f%%',wedgeprops={"edgecol
 # %%= prints a literal percentage sign  
 plt.title("Validation Results")
 plt.show()
+'''
+A pie chart with percentages (autopct)
+
+Black outlines around each slice
+
+A legend outside the chart so labels don't overlap'''
+import matplotlib.pyplot as plt
+
+# Data
+sizes = [7, 3]
+labels = ["Valid Rows", "Invalid Rows"]
+colors = ["green", "red"]
+
+# Pie chart with borders
+plt.pie(
+    sizes,
+    labels=None,  # hide labels inside
+    colors=colors,
+    autopct='%1.1f%%',
+    wedgeprops={"edgecolor": "black", "linewidth": 2}  # black borders
+)
+
+# Add legend outside
+plt.legend(labels, loc="upper right", bbox_to_anchor=(1.2, 1))
+plt.title("Validation Results")
+plt.show()
+
+
