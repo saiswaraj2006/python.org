@@ -47,17 +47,44 @@ labels = ["Valid Rows", "Invalid Rows"]
 colors = ["green", "red"]
 
 # Pie chart with borders
-plt.pie(
-    sizes,
-    labels=None,  # hide labels inside
-    colors=colors,
-    autopct='%1.1f%%',
-    wedgeprops={"edgecolor": "black", "linewidth": 2}  # black borders
-)
+#plt.pie(
+#   sizes,
+#    labels=None,  # hide labels inside
+#    colors=colors,
+#   autopct='%1.1f%%',
+#    wedgeprops={"edgecolor": "black", "linewidth": 2}  # black borders
+#)
 
 # Add legend outside
-plt.legend(labels, loc="upper right", bbox_to_anchor=(1.2, 1))
-plt.title("Validation Results")
+#plt.legend(labels, loc="upper right", bbox_to_anchor=(1.2, 1))
+#plt.title("Validation Results")
+#plt.show()
+
+
+import matplotlib.pyplot as plt
+
+# Data
+sizes = [7, 3]
+labels = ["Valid Rows", "Invalid Rows"]
+colors = ["green", "red"]
+
+# Create a figure with 1 row, 2 columns
+fig, axes = plt.subplots(1, 2, figsize=(10, 5))
+
+# Pie chart on the left
+axes[0].pie(
+    sizes,
+    labels=labels,
+    colors=colors,
+    autopct='%1.1f%%',
+    wedgeprops={"edgecolor": "black", "linewidth": 2}
+)
+axes[0].set_title("Validation Results (Pie)")
+
+# Bar chart on the right
+axes[1].bar(labels, sizes, color=colors, edgecolor="black")
+axes[1].set_title("Validation Results (Bar)")
+axes[1].set_ylabel("Row Count")
+
+plt.tight_layout()
 plt.show()
-
-
