@@ -87,4 +87,19 @@ axes[1].set_title("Validation Results (Bar)")
 axes[1].set_ylabel("Row Count")
 
 plt.tight_layout()
+plt.show()#it prints piechart and bar chart 
+
+import matplotlib.pyplot as plt
+import numpy as np
+
+# Generate some sample data (like ages)
+ages = np.random.randint(18, 60, 100)  # 100 random ages between 18 and 60
+
+# Create histogram
+plt.hist(ages, bins=10, color="skyblue", edgecolor="black")
+
+plt.title("Age Distribution")
+plt.xlabel("Age")
+plt.ylabel("Frequency")
 plt.show()
+
