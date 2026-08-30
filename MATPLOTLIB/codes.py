@@ -19,7 +19,7 @@ plt.ylabel("Y Values")
 #plt.title("Validation Results")
 #plt.ylabel("Row Count")
 #plt.show()
-
+'''
 #PIE CHART
 labels=["Valid","Invalid"]
 sizes=[7,3]
@@ -32,7 +32,7 @@ plt.pie(sizes,labels=labels,colors=colors,autopct='%1.1f%%',wedgeprops={"edgecol
 # 1.1f means one digit before the decimal, ex=25.0% like that
 # %%= prints a literal percentage sign  
 plt.title("Validation Results")
-plt.show()
+plt.show()'''
 '''
 A pie chart with percentages (autopct)
 
@@ -60,7 +60,7 @@ colors = ["green", "red"]
 #plt.title("Validation Results")
 #plt.show()
 
-
+'''
 import matplotlib.pyplot as plt
 
 # Data
@@ -87,8 +87,8 @@ axes[1].set_title("Validation Results (Bar)")
 axes[1].set_ylabel("Row Count")
 
 plt.tight_layout()
-plt.show()#it prints piechart and bar chart 
-
+plt.show()#it prints piechart and bar chart '''
+'''
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -96,10 +96,33 @@ import numpy as np
 ages = np.random.randint(18, 60, 100)  # 100 random ages between 18 and 60
 
 # Create histogram
-plt.hist(ages, bins=10, color="skyblue", edgecolor="black")
+plt.hist(ages, bins=10, color="skyblue", edgecolor="black")#the bin divides the  data
+#into 10 intervals (so that i can increase/decrease for more/less )
 
 plt.title("Age Distribution")
 plt.xlabel("Age")
 plt.ylabel("Frequency")
+plt.show()#HISTOGRAM
+#above histogram is reveals distributions (normal, skewed, uniform, etc.)
+#also essential for data cleaning (spotting outliers)'''
+
+
+#Scatter plots 
+#this plots are perfect ofr showing relationships between two variables , which is super 
+#important in ML 
+#eg. : age vs exam score ,feature correlations.
+import matplotlib.pyplot as plt
+import numpy as np
+
+# Sample data: age vs exam score
+ages = np.random.randint(18, 60, 50)#50 random ages
+scores = np.random.randint(40, 100, 50)#50 random exam scores
+
+plt.scatter(ages, scores, color="purple", edgecolor="black")
+
+plt.title("Age vs Exam Score")
+plt.xlabel("Age")
+plt.ylabel("Score")
 plt.show()
+
 
