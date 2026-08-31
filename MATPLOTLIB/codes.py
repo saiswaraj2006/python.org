@@ -108,21 +108,41 @@ plt.show()#HISTOGRAM
 
 
 #Scatter plots 
-#this plots are perfect ofr showing relationships between two variables , which is super 
+#this plots are perfect for showing relationships between two variables , which is super 
 #important in ML 
 #eg. : age vs exam score ,feature correlations.
 import matplotlib.pyplot as plt
 import numpy as np
 
 # Sample data: age vs exam score
-ages = np.random.randint(18, 60, 50)#50 random ages
-scores = np.random.randint(40, 100, 50)#50 random exam scores
+#ages = np.random.randint(18, 60, 50)#50 random ages
+#scores = np.random.randint(40, 100, 50)#50 random exam scores
 
-plt.scatter(ages, scores, color="purple", edgecolor="black")
+#plt.scatter(ages, scores, color="purple", edgecolor="black")
 
-plt.title("Age vs Exam Score")
+#plt.title("Age vs Exam Score")
+#plt.xlabel("Age")
+#plt.ylabel("Score")
+#plt.show()
+import matplotlib.pyplot as plt
+import numpy as np
+
+# Sample data: age vs exam score
+ages = np.random.randint(18, 60, 50)        # 50 random ages
+scores = np.random.randint(40, 100, 50)     # 50 random exam scores
+
+# Scatter plot
+plt.scatter(ages, scores, color="purple", edgecolor="black", label="Data Points")
+
+# Fit a simple linear regression line
+m, b = np.polyfit(ages, scores, 1)  # slope (m) and intercept (b)
+plt.plot(ages, m*ages + b, color="orange", linewidth=2, label="Trend Line")
+#polyfit means simple linear regression line
+plt.title("Age vs Exam Score with Trend Line")
 plt.xlabel("Age")
 plt.ylabel("Score")
+plt.legend()
 plt.show()
+
 
 
