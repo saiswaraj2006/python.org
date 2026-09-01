@@ -128,21 +128,62 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 # Sample data: age vs exam score
-ages = np.random.randint(18, 60, 50)        # 50 random ages
-scores = np.random.randint(40, 100, 50)     # 50 random exam scores
+#ages = np.random.randint(18, 60, 50)        # 50 random ages
+#scores = np.random.randint(40, 100, 50)     # 50 random exam scores
 
 # Scatter plot
-plt.scatter(ages, scores, color="purple", edgecolor="black", label="Data Points")
+#plt.scatter(ages, scores, color="purple", edgecolor="black", label="Data Points")
 
 # Fit a simple linear regression line
-m, b = np.polyfit(ages, scores, 1)  # slope (m) and intercept (b)
-plt.plot(ages, m*ages + b, color="orange", linewidth=2, label="Trend Line")
+#m, b = np.polyfit(ages, scores, 1)  # slope (m) and intercept (b)
+#plt.plot(ages, m*ages + b, color="orange", linewidth=2, label="Trend Line")
 #polyfit means simple linear regression line
-plt.title("Age vs Exam Score with Trend Line")
-plt.xlabel("Age")
-plt.ylabel("Score")
-plt.legend()
+#plt.title("Age vs Exam Score with Trend Line")
+#plt.xlabel("Age")
+#plt.ylabel("Score")
+#plt.legend()
+#plt.show()
+
+import matplotlib.pyplot as plt
+import numpy as np
+valid_count=7
+invalid_count=3
+sizes=[valid_count,invalid_count]
+labels=["valid","invalid"]
+colors=["yellow","pink"]
+ages=np.random.randint(18,60,100)
+scores=np.random.randint(40,100,100)
+#for 2*2 layout
+fig,axes=plt.subplots(2,2,figsize=(10,8))
+#for pie chart
+axes[0,0].pie(
+    sizes,
+    labels=labels,
+    colors=colors,
+    autopct='%1.1f%%',
+    wedgeprops={"edgecolor":"black"}
+)
+axes[0,0].set_title("Validation Results (pie)")
+#for Bar chart
+axes[0,1].bar(labels,sizes,color=colors,edgecolor="black")
+axes[0, 1].set_title("Validation Results (Bar)")
+axes[0, 1].set_ylabel("Row Count")
+
+# Histogram
+axes[1, 0].hist(ages, bins=10, color="skyblue", edgecolor="black")
+axes[1, 0].set_title("Age Distribution")
+axes[1, 0].set_xlabel("Age")
+axes[1, 0].set_ylabel("Frequency")
+
+# Scatter plot
+axes[1, 1].scatter(ages, scores, color="purple", edgecolor="black")
+axes[1, 1].set_title("Age vs Score")
+axes[1, 1].set_xlabel("Age")
+axes[1, 1].set_ylabel("Score")
+
+plt.tight_layout()
 plt.show()
+
 
 
 
