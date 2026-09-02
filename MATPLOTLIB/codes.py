@@ -1,6 +1,6 @@
 #importing package 
 import matplotlib.pyplot as plt
-
+'''
 x = [1, 2, 3, 4, 5]# X-axis values
 y = [2, 4, 6, 8, 10]# Y-axis values
 #adding labels
@@ -9,7 +9,7 @@ plt.title("Simple Line Plot")
 
 plt.xlabel("X values")
 plt.ylabel("Y Values")
-#plt.show()
+#plt.show()'''
 #now adding labels and title
 
 #now BAR CHART
@@ -182,7 +182,28 @@ axes[1, 1].set_xlabel("Age")
 axes[1, 1].set_ylabel("Score")
 
 plt.tight_layout()
+plt.savefig("mini dashboard.svg")
 plt.show()
+
+
+
+import turtle
+#the turtle library is used for graphics and drawing
+
+screen = turtle.Screen()
+screen.bgcolor("BEIGE")
+
+pen = turtle.Turtle()
+pen.color("BROWN")
+pen.pensize(3)       # thicker, smoother lines
+pen.speed(5)         # visible animation (1 slow → 10 fast, 0 instant)
+
+for i in range(36):
+    pen.circle(100)#draws a circle with radius 100
+    pen.left(10)#rotates the pen 10 degrees left after each circle
+
+screen.mainloop()
+
 
 
 
