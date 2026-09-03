@@ -143,7 +143,7 @@ import numpy as np
 #plt.ylabel("Score")
 #plt.legend()
 #plt.show()
-
+'''
 import matplotlib.pyplot as plt
 import numpy as np
 valid_count=7
@@ -183,10 +183,10 @@ axes[1, 1].set_ylabel("Score")
 
 plt.tight_layout()
 plt.savefig("mini dashboard.svg")
-plt.show()
+plt.show()'''
 
 
-
+'''
 import turtle
 #the turtle library is used for graphics and drawing
 
@@ -203,8 +203,24 @@ for i in range(36):
     pen.left(10)#rotates the pen 10 degrees left after each circle
 
 screen.mainloop()
+'''
+import matplotlib.pyplot as plt
+x = [1, 2, 3, 4]
+y = [10, 20, 25, 30]
 
-
+# Plot
+plt.plot(x, y, color="blue", marker="D", linestyle="--", label="Data Line")
+#marker="D" -> draws diamond shapes at each point on the line 
+#label="Data line" means it is used in the legend box to show the line and understood to the user or viewers
+#color="blue" use to line connecting the points will be blue 
+# Add labels and title
+plt.xlabel("X-axis")
+plt.ylabel("Y-axis")
+plt.title(" Simple Line Plot")
+# Show legend
+plt.legend()
+# Display
+plt.show()
 
 
 
