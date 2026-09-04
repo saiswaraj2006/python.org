@@ -204,6 +204,7 @@ for i in range(36):
 
 screen.mainloop()
 '''
+'''
 import matplotlib.pyplot as plt
 x = [1, 2, 3, 4]
 y = [10, 20, 25, 30]
@@ -221,6 +222,36 @@ plt.title(" Simple Line Plot")
 plt.legend()
 # Display
 plt.show()
+'''
 
+import matplotlib.pyplot as plt
 
+categories = ["Valid", "Invalid", "Missing"]
+values = [50, 30,16]
 
+plt.bar(categories, values, color=["green", "red" ,"lightblue"], edgecolor="black")
+
+plt.title("Bar Chart Example")
+plt.xlabel("Category")
+plt.ylabel("Count")
+plt.show()
+
+#pie chart
+import matplotlib.pyplot as plt
+labels=["Pass","Fail","Absent"]
+numbers=[87,9,4]
+colors=["lightgreen","Red","Brown"]
+plt.pie(
+    numbers,
+    labels=labels,
+    labeldistance=1.1, #moves labels printing distance to backwards 
+    colors=colors,
+    autopct="%1.1f%%",
+     #shows the percentage automatically
+    pctdistance=0.85, #places labels outward
+    startangle=90,#starts with 90 degrees angle
+    wedgeprops={"edgecolor":"black"}#outline for slices is black
+)
+plt.legend(loc="lower right",fontsize=12,title="exam results",bbox_to_anchor=(1.3,0.8))
+plt.title("Pie chart")
+plt.show()
