@@ -223,7 +223,7 @@ plt.legend()
 # Display
 plt.show()
 '''
-
+'''
 import matplotlib.pyplot as plt
 
 categories = ["Valid", "Invalid", "Missing"]
@@ -234,8 +234,8 @@ plt.bar(categories, values, color=["green", "red" ,"lightblue"], edgecolor="blac
 plt.title("Bar Chart Example")
 plt.xlabel("Category")
 plt.ylabel("Count")
-plt.show()
-
+plt.show()'''
+'''
 #pie chart
 import matplotlib.pyplot as plt
 labels=["Pass","Fail","Absent"]
@@ -255,3 +255,28 @@ plt.pie(
 plt.legend(loc="lower right",fontsize=12,title="exam results",bbox_to_anchor=(1.3,0.8))
 plt.title("Pie chart")
 plt.show()
+'''
+import matplotlib.pyplot as plt
+import numpy as np
+
+# Generate random exam scores
+scores = np.random.randint(40, 100, 50)
+
+plt.hist(scores, bins=10, color="skyblue", edgecolor="blue")
+plt.title("Day 3: Histogram of Exam Scores")
+plt.xlabel("Score Range")
+plt.ylabel("Number of Students")
+plt.show()
+#here above bins=10 means divides scores into 10 ranges
+#edgecolor="blue" means outlines bars for clarity
+# Example: Study hours vs exam marks
+study_hours = [2, 3, 4, 5, 6, 7, 8]
+marks = [50, 55, 60, 65, 70, 80, 85]
+
+plt.scatter(study_hours, marks, color="red", marker="o", label="Data Points")
+plt.title("Day 3: Scatter Plot - Study vs Marks")
+plt.xlabel("Study Hours")
+plt.ylabel("Marks")
+plt.legend()
+plt.show()
+
