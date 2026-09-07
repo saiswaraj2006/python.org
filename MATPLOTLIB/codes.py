@@ -292,6 +292,23 @@ ax1.plot(x, y1, color="blue")
 ax1.set_title("Sine Wave")
 ax2.plot(x, y2, color="red")
 ax2.set_title("Cosine Wave")
+fig, axs = plt.subplots(2, 2, figsize=(8, 6))
+
+axs[0, 0].plot(x, y1, color="blue")
+axs[0, 0].set_title("Sine")
+
+axs[0, 1].plot(x, y2, color="red")
+axs[0, 1].set_title("Cosine")
+
+axs[1, 0].bar([1,2,3], [3,5,7], color="green")
+axs[1, 0].set_title("Bar Chart")
+
+axs[1, 1].pie([40,30,30], labels=["A","B","C"], autopct="%1.1f%%")
+axs[1, 1].set_title("Pie Chart")
+
+
+
 plt.tight_layout()
-plt.show()
+plt.show()#the plot has two subplots ax1 has sine and ax2 has cosine waves it will be shown aas output
+
 
