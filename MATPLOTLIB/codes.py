@@ -280,6 +280,7 @@ plt.xlabel("Study Hours")
 plt.ylabel("Marks")
 plt.legend()
 plt.show()'''
+'''
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -310,5 +311,34 @@ axs[1, 1].set_title("Pie Chart")
 
 plt.tight_layout()
 plt.show()#the plot has two subplots ax1 has sine and ax2 has cosine waves it will be shown aas output
+'''
+import matplotlib.pyplot as plt
+import numpy as np
+import matplotlib.gridspec as gridspec
+
+# Define data first
+x = np.linspace(0, 10, 100)#100 points between 0 and 10
+y1 =np.sin(x)# sine values
+y2 =np.cos(x)#cosine values
+
+# Create figure with GridSpec
+fig = plt.figure(figsize=(8, 6))
+gs = gridspec.GridSpec(2, 2)
+
+ax1 = fig.add_subplot(gs[0, :])#top row full width
+ax2 = fig.add_subplot(gs[1, 0])#bottom left
+ax3 = fig.add_subplot(gs[1, 1])#bottom right
+#Plot data
+ax1.plot(x, y1, color="blue", label="sin(x)")
+ax1.set_title("Wide Sine Plot")
+ax1.legend()
+ax2.scatter(x, y1, color="purple", marker="o")
+ax2.set_title("Scatter")
+ax3.hist(y1, bins=20, color="orange", edgecolor="black")
+ax3.set_title("Histogram")
+#Add shared title
+fig.suptitle("Day 4: GridSpec Dashboard", fontsize=14, fontweight="bold")
+plt.tight_layout(rect=[0, 0, 1, 0.95])#leave space for suptitle
+plt.show()
 
 
