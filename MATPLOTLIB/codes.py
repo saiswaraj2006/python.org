@@ -312,6 +312,7 @@ axs[1, 1].set_title("Pie Chart")
 plt.tight_layout()
 plt.show()#the plot has two subplots ax1 has sine and ax2 has cosine waves it will be shown aas output
 '''
+'''
 import matplotlib.pyplot as plt
 import numpy as np
 import matplotlib.gridspec as gridspec
@@ -339,6 +340,19 @@ ax3.set_title("Histogram")
 #Add shared title
 fig.suptitle("Day 4: GridSpec Dashboard", fontsize=14, fontweight="bold")
 plt.tight_layout(rect=[0, 0, 1, 0.95])#leave space for suptitle
+plt.show()
+'''
+import matplotlib.pyplot as plt
+import numpy as np
+
+x = np.linspace(0, 10, 100)
+y = np.sin(x)
+#plt.style.use("ggplot")#light gray gridlines appears automatically and it is already predefined so saves the time 
+plt.style.use("dark_background")     #the plot has dark background      
+plt.plot(x, y, color="blue", label="sin(x)")
+plt.title("Styled Plot Example")
+plt.legend()
+plt.savefig("dark_background.png",dpi=200)
 plt.show()
 
 
