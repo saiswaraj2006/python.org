@@ -342,6 +342,7 @@ fig.suptitle("Day 4: GridSpec Dashboard", fontsize=14, fontweight="bold")
 plt.tight_layout(rect=[0, 0, 1, 0.95])#leave space for suptitle
 plt.show()
 '''
+'''
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -354,5 +355,23 @@ plt.title("Styled Plot Example")
 plt.legend()
 plt.savefig("dark_background.png",dpi=200)
 plt.show()
+'''
+import matplotlib.pyplot as plt
+import numpy as np
+from mpl_toolkits.mplot3d import Axes3D
+
+fig = plt.figure(figsize=(8,6))
+ax = fig.add_subplot(111, projection="3d")
+
+x = np.linspace(-5, 5, 100)
+y = np.linspace(-5, 5, 100)
+X, Y = np.meshgrid(x, y)
+Z = np.sin(np.sqrt(X**2+ Y**2))
+
+ax.plot_surface(X, Y, Z, cmap="inferno", edgecolor="none")
+ax.set_title(" 3D Surface Plot")
+plt.savefig("3D map.png",dpi=200)
+plt.show()
+
 
 
