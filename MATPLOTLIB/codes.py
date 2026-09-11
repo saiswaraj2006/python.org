@@ -356,6 +356,7 @@ plt.legend()
 plt.savefig("dark_background.png",dpi=200)
 plt.show()
 '''
+'''
 import matplotlib.pyplot as plt
 import numpy as np
 from mpl_toolkits.mplot3d import Axes3D
@@ -372,6 +373,26 @@ ax.plot_surface(X, Y, Z, cmap="inferno", edgecolor="none")
 ax.set_title(" 3D Surface Plot")
 plt.savefig("3D map.png",dpi=200)
 plt.show()
+'''
+#boxplot
+import matplotlib.pyplot as plt
+import numpy as np
 
+# Create data with some extreme values
+data = np.append(np.random.normal(50, 10, 100), [10, 120])
+
+plt.boxplot(data)
+plt.title("Boxplot with Outliers")
+#plt.show()
+#Heatmap
+#Heatmaps for showing matrix-like data(correlations,confusions matrices,etc.)
+import matplotlib.pyplot as plt
+data=np.random.rand(6,6)
+plt.imshow(data,cmap="plasma",interpolation="nearest")
+plt.colorbar(label="Intensity")
+plt.title("Heatmap example",style="italic",fontweight="bold",color="red",pad=15)
+#pad=15 is the distance between title and plot 
+plt.savefig("Heatmap example.png",dpi=500)
+plt.show()
 
 
