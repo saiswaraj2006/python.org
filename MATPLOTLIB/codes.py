@@ -375,6 +375,7 @@ plt.savefig("3D map.png",dpi=200)
 plt.show()
 '''
 #boxplot
+'''
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -383,9 +384,11 @@ data = np.append(np.random.normal(50, 10, 100), [10, 120])
 
 plt.boxplot(data)
 plt.title("Boxplot with Outliers")
+'''
 #plt.show()
 #Heatmap
 #Heatmaps for showing matrix-like data(correlations,confusions matrices,etc.)
+'''
 import matplotlib.pyplot as plt
 data=np.random.rand(6,6)
 plt.imshow(data,cmap="plasma",interpolation="nearest")
@@ -393,6 +396,35 @@ plt.colorbar(label="Intensity")
 plt.title("Heatmap example",style="italic",fontweight="bold",color="red",pad=15)
 #pad=15 is the distance between title and plot 
 plt.savefig("Heatmap example.png",dpi=500)
-plt.show()
+plt.show()'''
+import matplotlib.pyplot as plt
+import numpy as np
 
+x = np.linspace(0, 10, 100)
+#linspace for generating the 100 evenly spaced numbers between range 0-10
+y = np.sin(x)
+plt.scatter(x, y, c=y, cmap="Set2", s=80, edgecolor="black")
+#s=80 in .scatter means the size of the marker s=80 is the size of dots ie 80 is medium
+#c=y means the sin(x) values determine the color
+#combined with cmap="Set2",points with higher values are one color,lower values another
+plt.colorbar(label="sin(x) value")
+plt.title("Scatter with Colormap")
+plt.show()
+'''
+CONTOUR PLOTS
+A contour plot is used to represent 3D data in 2D form by drawing lines(contours) that
+connect points of equal value.Think of it like a map of elevation'''
+
+import matplotlib.pyplot as plt
+import numpy as np
+
+x = np.linspace(-5, 5, 100)
+y = np.linspace(-5, 5, 100)
+X, Y = np.meshgrid(x, y)
+Z = np.sin(np.sqrt(X**2 + Y**2))
+
+plt.contourf(X, Y, Z, cmap="plasma")   # filled contours
+plt.colorbar(label="Intensity")
+plt.title("Contour Plot Example")
+plt.show()
 
