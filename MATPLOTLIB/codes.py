@@ -397,6 +397,8 @@ plt.title("Heatmap example",style="italic",fontweight="bold",color="red",pad=15)
 #pad=15 is the distance between title and plot 
 plt.savefig("Heatmap example.png",dpi=500)
 plt.show()'''
+''
+'''
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -411,10 +413,12 @@ plt.colorbar(label="sin(x) value")
 plt.title("Scatter with Colormap")
 plt.show()
 '''
+'''
 CONTOUR PLOTS
 A contour plot is used to represent 3D data in 2D form by drawing lines(contours) that
 connect points of equal value.Think of it like a map of elevation'''
 
+'''
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -426,5 +430,19 @@ Z = np.sin(np.sqrt(X**2 + Y**2))
 plt.contourf(X, Y, Z, cmap="plasma")   # filled contours
 plt.colorbar(label="Intensity")
 plt.title("Contour Plot Example")
+plt.show()
+'''
+
+import matplotlib.pyplot as plt
+import numpy as np
+
+x = np.linspace(-5, 5, 100)
+y = np.linspace(-5, 5, 100)
+X, Y = np.meshgrid(x, y)
+Z = np.sin(np.sqrt(X**2 + Y**2))
+plt.imshow(Z, cmap="inferno", extent=[-5,5,-5,5], origin="lower")
+plt.colorbar(label="Value")
+plt.contour(X, Y, Z, colors="white", linewidths=0.7)
+plt.title("Heatmap + Contour Overlay")
 plt.show()
 
