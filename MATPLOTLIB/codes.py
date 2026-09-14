@@ -432,7 +432,7 @@ plt.colorbar(label="Intensity")
 plt.title("Contour Plot Example")
 plt.show()
 '''
-
+'''
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -444,5 +444,28 @@ plt.imshow(Z, cmap="inferno", extent=[-5,5,-5,5], origin="lower")
 plt.colorbar(label="Value")
 plt.contour(X, Y, Z, colors="white", linewidths=0.7)
 plt.title("Heatmap + Contour Overlay")
+plt.show()
+'''
+#problem question
+#Create a contour plot of sin(sqrt(x^2+y^2)).
+
+import matplotlib.pyplot as plt
+import numpy as np
+
+#Step 1:Creating the  grid
+x = np.linspace(-5, 5, 200)   # X range
+y = np.linspace(-5, 5, 200)   # Y range
+X, Y = np.meshgrid(x, y)
+#the above one creates a grid of coordinates points from two 1D arrays.
+#mainly used in contour plots, surface plots
+#Step 2:Computing  Z values
+Z = np.sin(np.sqrt(X**2 + Y**2))
+
+#Step3:Plot contour
+plt.contourf(X, Y, Z, levels=30, cmap="plasma")#draws the filled contours plots 
+plt.colorbar(label="sin(sqrt(x²+y²))")
+plt.title("Contour Plot of sin(sqrt(x²+y²))")
+plt.xlabel("X-axis")
+plt.ylabel("Y-axis")
 plt.show()
 
