@@ -473,18 +473,14 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 import matplotlib.gridspec as gridspec
-
-# Data
 x = np.linspace(0, 10, 100)
 y1 = np.sin(x)
 y2 = np.cos(x)
 df = pd.DataFrame({"Subject":["Math","Physics","Chemistry","Biology"],
                    "Marks":[85,90,78,88]})
-
 # Layout
 fig = plt.figure(figsize=(10,8))
-gs = gridspec.GridSpec(2,2)
-
+gs = gridspec.GridSpec(3,3)
 # Top wide plot
 ax1 = fig.add_subplot(gs[0,:])
 ax1.plot(x, y1, label="sin(x)", color="blue")
@@ -492,21 +488,25 @@ ax1.plot(x, y2, label="cos(x)", color="red")
 ax1.set_title("Line Plots")
 ax1.legend()
 ax1.grid(True, linestyle=":")
-
-# Bottom left: scatter with colormap
+# Bottom left:scatter with colormap
 ax2 = fig.add_subplot(gs[1,0])
 sc = ax2.scatter(x, y1, c=y1, cmap="coolwarm", s=60, edgecolor="black")
 fig.colorbar(sc, ax=ax2, label="sin(x)")
 ax2.set_title("Scatter with Colormap")
-
-# Bottom right: bar chart from Pandas
+#at the Bottom right:bar chart from Pandas
 ax3 = fig.add_subplot(gs[1,1])
 df.plot(kind="bar", x="Subject", y="Marks", ax=ax3, color="skyblue", legend=False)
 ax3.set_title("Marks by Subject")
+ax4=fig.add_subplot(gs[1,2])
+ax4.hist(y1,bins=20,color="brown",edgecolor="yellow")
+ax4.set_xlabel("subjects")
+ax4.set_ylabel("Marks")
+ax4.set_title("Histogram",fontweight="bold")
 
 # Shared title
-fig.suptitle("Day 8: Real‑World Dashboard", fontsize=16, fontweight="bold")
+fig.suptitle("Real-World Dashboard", fontsize=16, fontweight="bold")
 plt.tight_layout(rect=[0,0,1,0.95])
 plt.show()
+
 
 
