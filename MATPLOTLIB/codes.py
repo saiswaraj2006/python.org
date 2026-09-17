@@ -469,6 +469,7 @@ plt.xlabel("X-axis")
 plt.ylabel("Y-axis")
 plt.show()
 '''
+'''
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
@@ -507,6 +508,23 @@ ax4.set_title("Histogram",fontweight="bold")
 fig.suptitle("Real-World Dashboard", fontsize=16, fontweight="bold")
 plt.tight_layout(rect=[0,0,1,0.95])
 plt.show()
+'''
 
-
-
+#solving the problem
+import matplotlib.pyplot as plt
+data=[30,25,20,15,10]
+subject=['Python','Java','C++','JavaScript','Ruby']
+color=['gold','yellowgreen','lightcoral','lightskyblue','violet']
+#creating the pie chart
+plt.pie(
+    data,
+    labels=subject,
+    colors=color,
+    autopct="%1.1f%%",
+    startangle=140,
+    wedgeprops={'edgecolor':'black','linewidth':0.5}
+)
+plt.title("Programming Language Popularity",fontweight="bold")
+plt.legend(loc="upper left")
+plt.axis()
+plt.show()
