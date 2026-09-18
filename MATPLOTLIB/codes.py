@@ -469,7 +469,7 @@ plt.xlabel("X-axis")
 plt.ylabel("Y-axis")
 plt.show()
 '''
-'''
+
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
@@ -486,6 +486,14 @@ gs = gridspec.GridSpec(3,3)
 ax1 = fig.add_subplot(gs[0,:])
 ax1.plot(x, y1, label="sin(x)", color="blue")
 ax1.plot(x, y2, label="cos(x)", color="red")
+ax1.annotate("Peak of sin(x)",#annotate() add text labels with arrow pointing 
+#specific points in plots,and it is perfect for the highlighting peaks,thoughs and some imp datapoints
+            xy=(np.pi/2,1),#here x=pi/2,y=1 at that point the highlight appears
+            xytext=(2,1.2),#at this point the text will be placed slighly to right and above of the arrow
+            arrowprops=dict(facecolor="black",shrink=0.05),
+            )#arrowprops means the arrow and styles it into balck color
+#shrink uses for"how much the arrow is "pulled back" from the text and the point
+#the 0.05 means touches to the point (the smaller the value nearer to the point)
 ax1.set_title("Line Plots")
 ax1.legend()
 ax1.grid(True, linestyle=":")
@@ -493,23 +501,42 @@ ax1.grid(True, linestyle=":")
 ax2 = fig.add_subplot(gs[1,0])
 sc = ax2.scatter(x, y1, c=y1, cmap="coolwarm", s=60, edgecolor="black")
 fig.colorbar(sc, ax=ax2, label="sin(x)")
+ax2.scatter([5], [np.sin(5)], color="gold", s=200, edgecolor="black", zorder=5)
+ax2.text(5, np.sin(5)+0.1, "Special Point", fontsize=9, ha="center")
+
 ax2.set_title("Scatter with Colormap")
 #at the Bottom right:bar chart from Pandas
 ax3 = fig.add_subplot(gs[1,1])
 df.plot(kind="bar", x="Subject", y="Marks", ax=ax3, color="skyblue", legend=False)
 ax3.set_title("Marks by Subject")
 ax4=fig.add_subplot(gs[1,2])
-ax4.hist(y1,bins=20,color="brown",edgecolor="yellow")
+counts,bins,patches =ax4.hist(y1,bins=20,color="brown",edgecolor="yellow")
+max_count=np.max(counts)
+
+max_bin_center=(bins[np.argmax(counts)]+bins[np.argmax(counts)+1])/2
+#annotate
+ax4.annotate(
+    "Highest value",
+    xy=(max_bin_center,max_count),
+    xytext=(max_bin_center+0.2, max_count+2),
+    arrowprops=dict(facecolor="brown",shrink=0.05),
+
+)
 ax4.set_xlabel("subjects")
 ax4.set_ylabel("Marks")
 ax4.set_title("Histogram",fontweight="bold")
 
 # Shared title
 fig.suptitle("Real-World Dashboard", fontsize=16, fontweight="bold")
-plt.tight_layout(rect=[0,0,1,0.95])
-plt.show()
-'''
+plt.style.use("ggplot")   # also has 'seaborn', 'dark_background'
 
+
+plt.tight_layout(rect=[0,0,1,0.95])
+fig.savefig("dashboard.png", dpi=300, bbox_inches="tight")
+
+plt.show()
+
+'''
 #solving the problem
 import matplotlib.pyplot as plt
 data=[30,25,20,15,10]
@@ -526,5 +553,6 @@ plt.pie(
 )
 plt.title("Programming Language Popularity",fontweight="bold")
 plt.legend(loc="upper left")
-plt.axis()
+plt.axis()#ensures the pie chart is drawn as circle
 plt.show()
+'''
