@@ -556,3 +556,26 @@ plt.legend(loc="upper left")
 plt.axis()#ensures the pie chart is drawn as circle
 plt.show()
 '''
+from matplotlib.widgets import Slider
+import matplotlib.pyplot as plt
+import numpy as np
+
+x = np.linspace(0, 10, 1000)
+freq = 1
+y = np.sin(freq * x)
+
+fig, ax = plt.subplots()
+plt.subplots_adjust(bottom=0.25)
+line, = ax.plot(x, y)
+
+# Slider axis
+ax_slider = plt.axes([0.2, 0.1, 0.65, 0.03])  # position of slider
+slider = Slider(ax_slider, "Frequency", 0.1, 5.0, valinit=freq)
+
+# Update function
+def update(val):
+    line.set_ydata(np.sin(slider.val * x))  # redraw with new frequency
+    fig.canvas.draw_idle()
+
+slider.on_changed(update)
+plt.show()
