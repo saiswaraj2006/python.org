@@ -469,7 +469,7 @@ plt.xlabel("X-axis")
 plt.ylabel("Y-axis")
 plt.show()
 '''
-
+'''
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
@@ -535,7 +535,7 @@ plt.tight_layout(rect=[0,0,1,0.95])
 fig.savefig("dashboard.png", dpi=300, bbox_inches="tight")
 
 plt.show()
-
+'''
 '''
 #solving the problem
 import matplotlib.pyplot as plt
@@ -556,10 +556,10 @@ plt.legend(loc="upper left")
 plt.axis()#ensures the pie chart is drawn as circle
 plt.show()
 '''
+'''
 from matplotlib.widgets import Slider
 import matplotlib.pyplot as plt
 import numpy as np
-
 x = np.linspace(0, 10, 1000)
 freq = 1
 y = np.sin(freq * x)
@@ -567,7 +567,14 @@ y = np.sin(freq * x)
 fig, ax = plt.subplots()
 plt.subplots_adjust(bottom=0.25)
 line, = ax.plot(x, y)
+'''
 
+'''
+slider is a scroll bar  used for drag left or right 
+by defining a range (eg,frequency from 0.1 to 5)
+as i move the slider the values changes and plot redraws with the new value
+'''
+'''
 # Slider axis
 ax_slider = plt.axes([0.2, 0.1, 0.65, 0.03])  # position of slider
 slider = Slider(ax_slider, "Frequency", 0.1, 5.0, valinit=freq)
@@ -579,3 +586,18 @@ def update(val):
 
 slider.on_changed(update)
 plt.show()
+'''
+#plotly dashboards
+import plotly.express as px
+import numpy as np
+import pandas as pd
+x=np.linspace(0,10,100)
+y1=np.sin(x)
+y2=np.cos(x)
+y3=np.tan(x)
+df=pd.DataFrame({
+    "x":x, "sin(x)":y1, "cos(x)":y2 , "tan(x)":y3
+})
+fig=px.line(df,x="x",y=["sin(x)","cos(x)","tan(x)"],
+            title="Interactive sine & cosine line plot")
+fig.show()
