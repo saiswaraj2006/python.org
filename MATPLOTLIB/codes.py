@@ -587,6 +587,7 @@ def update(val):
 slider.on_changed(update)
 plt.show()
 '''
+'''
 #plotly dashboards
 import plotly.express as px
 import numpy as np
@@ -600,4 +601,19 @@ df=pd.DataFrame({
 })
 fig=px.line(df,x="x",y=["sin(x)","cos(x)","tan(x)"],
             title="Interactive sine & cosine line plot")
+fig.show()
+'''
+import plotly.express as px
+import numpy as np
+import pandas as pd
+# Data
+x = np.linspace(0, 10, 100)
+df = pd.DataFrame({"x": x,"sin(x)":np.sin(x),"cos(x)":np.cos(x)})
+# Line plot
+fig = px.line(df, x="x", y=["sin(x)", "cos(x)"], 
+              title="Sine & Cosine with Markers")
+# Add markers to sine line
+fig.update_traces(mode="lines+markers", selector=dict(name="sin(x)"))
+# Style cosine line differently
+fig.update_traces(line=dict(color="red", dash="dot"), selector=dict(name="cos(x)"))
 fig.show()
