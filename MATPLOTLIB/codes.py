@@ -603,6 +603,7 @@ fig=px.line(df,x="x",y=["sin(x)","cos(x)","tan(x)"],
             title="Interactive sine & cosine line plot")
 fig.show()
 '''
+'''
 import plotly.express as px
 import numpy as np
 import pandas as pd
@@ -616,4 +617,36 @@ fig = px.line(df, x="x", y=["sin(x)", "cos(x)"],
 fig.update_traces(mode="lines+markers", selector=dict(name="sin(x)"))
 # Style cosine line differently
 fig.update_traces(line=dict(color="red", dash="dot"), selector=dict(name="cos(x)"))
+fig.show()
+'''
+import plotly.graph_objects as go
+import numpy as np
+
+x = np.linspace(0, 10, 100)
+y1 = np.sin(x)
+y2 = np.cos(x)
+# Create figure with both traces
+fig = go.Figure()
+fig.add_trace(go.Scatter(x=x, y=y1, mode="lines+markers", name="sin(x)", line=dict(color="blue")))
+fig.add_trace(go.Scatter(x=x, y=y2, mode="lines", name="cos(x)", line=dict(color="red", dash="dot")))
+# Add dropdown menu
+fig.update_layout(
+    updatemenus=[
+        dict(
+            buttons=[
+                dict(label="Show Both", method="update", args=[{"visible":[True, True]}]),
+                dict(label="Only sin(x)", method="update", args=[{"visible":[True, False]}]),
+                dict(label="Only cos(x)", method="update", args=[{"visible":[False, True]}]),
+            ],
+            #above three dict for buttons to switch the wave period of both,only cos,or sin 
+            #by selecting the user needed one
+            direction="down",#this is the button options to show at down side 
+            x=0.1, y=0.15
+        )
+    ],
+    title="Interactive Dropdown: Sine & Cosine",
+    xaxis_title="Angle (radians)",
+    yaxis_title="Function value"
+)
+
 fig.show()
