@@ -619,6 +619,9 @@ fig.update_traces(mode="lines+markers", selector=dict(name="sin(x)"))
 fig.update_traces(line=dict(color="red", dash="dot"), selector=dict(name="cos(x)"))
 fig.show()
 '''
+# adding a dropdown menu in Plotly so user can toggle 
+# between showing sine, cosine, or both in the same chart.
+'''
 import plotly.graph_objects as go
 import numpy as np
 
@@ -641,7 +644,8 @@ fig.update_layout(
             #above three dict for buttons to switch the wave period of both,only cos,or sin 
             #by selecting the user needed one
             direction="down",#this is the button options to show at down side 
-            x=0.1, y=0.15
+            x=0.1, y=0.15#this x,y values tells the direction to show the button 
+            #above one at left down side
         )
     ],
     title="Interactive Dropdown: Sine & Cosine",
@@ -649,4 +653,15 @@ fig.update_layout(
     yaxis_title="Function value"
 )
 
+fig.show()
+'''
+import  plotly.graph_objects as go
+import numpy as np
+x=np.linspace(0,10,100)
+y1=np.sin(x)
+y2=np.cos(x)
+fig=go.Figure()
+fig.add_trace(go.Scatter(x=x,y=y1,mode="lines+markers",name="sin(x)",line=dict(color="blue")))
+fig.add_trace(go.Scatter(x=x,y=y2,mode="lines",name="cos(x)",line=dict(color="red",dash="dot")))
+fig.update_layout(title="sine & cosine with add_trace")
 fig.show()
