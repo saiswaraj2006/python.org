@@ -1,4 +1,5 @@
 #dash is perfect for data dashboards this is upon the Plotly
+'''
 from dash import Dash, html, dcc
 
 #Dash --> the main app class(creates my web app)
@@ -22,3 +23,40 @@ app.layout = html.Div([#app.layout defines what the web page looks like
 if __name__ == "__main__":#it starts a local web server
     app.run(debug=True)#debug=True means auto-reloads when i change code 
 #it runs in local 
+'''
+from dash import Dash, dcc, html
+import plotly.express as px
+import pandas as pd
+import numpy as np
+# Sample data
+x = np.linspace(0, 10, 100)
+df = pd.DataFrame({
+    "x": x,
+    "sin(x)": np.sin(x),
+    "cos(x)": np.cos(x),
+    "category": np.random.choice(["A", "B", "C"], size=100),
+    "values": np.random.randint(1, 10, size=100)
+})
+# Create app
+app = Dash(__name__)
+# Layout with multiple charts
+app.layout = html.Div([
+    html.H1("Multi‑Chart Dashboard"),
+    # Line chart
+    dcc.Graph(
+        id="line-chart",
+        figure=px.line(df, x="x", y=["sin(x)", "cos(x)"], title="Sine & Cosine")
+    ),
+    # Bar chart
+    dcc.Graph(
+        id="bar-chart",
+        figure=px.bar(df, x="category", y="values", title="Category Values")
+    ),
+    # Histogram
+    dcc.Graph(
+        id="histogram",
+        figure=px.histogram(df, x="values", nbins=10, title="Value Distribution")
+    )
+])
+if __name__ == "__main__":
+    app.run(debug=True)
