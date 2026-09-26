@@ -24,6 +24,7 @@ if __name__ == "__main__":#it starts a local web server
     app.run(debug=True)#debug=True means auto-reloads when i change code 
 #it runs in local 
 '''
+'''
 from dash import Dash, dcc, html
 import plotly.express as px
 import pandas as pd
@@ -60,3 +61,41 @@ app.layout = html.Div([
 ])
 if __name__ == "__main__":
     app.run(debug=True)
+'''
+from dash import Dash, dcc, html , Input, Output
+import plotly.express as px
+import pandas as pd
+import numpy as np
+from sklearn.linear_model import LinearRegression
+
+# Sample training data
+X = np.array([1, 2, 3, 4, 5]).reshape(-1, 1)
+y = np.array([2, 4, 6, 8, 10])  # y = 2x
+model = LinearRegression().fit(X, y)
+app = Dash(__name__)
+
+app.layout = html.Div([
+    html.H1("ML Prediction Dashboard"),
+
+    # Slider for input value
+    dcc.Slider(
+        id="input-slider",
+        min=0, max=10, step=1, value=5,
+        marks={i: str(i) for i in range(0, 11)}
+    ),
+
+    # Output prediction
+    html.Div(id="prediction-output", style={"fontSize": 24, "marginTop": 20})
+])
+
+# Callback: predict based on slider
+@app.callback(
+    Output("prediction-output", "children"),
+    [Input("input-slider", "value")]
+)
+def update_prediction(x_value):
+    prediction = model.predict([[x_value]])[0]
+    return f"Prediction for x={x_value}: y={prediction:.2f}"
+if __name__ == "__main__":
+    app.run(debug=True)
+
