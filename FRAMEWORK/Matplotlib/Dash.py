@@ -62,6 +62,7 @@ app.layout = html.Div([
 if __name__ == "__main__":
     app.run(debug=True)
 '''
+'''
 from dash import Dash, dcc, html , Input, Output
 import plotly.express as px
 import pandas as pd
@@ -96,6 +97,49 @@ app.layout = html.Div([
 def update_prediction(x_value):
     prediction = model.predict([[x_value]])[0]
     return f"Prediction for x={x_value}: y={prediction:.2f}"
+if __name__ == "__main__":
+    app.run(debug=True)
+'''
+#Dash+ML Visualization Example
+from dash import Dash, dcc, html, Input, Output
+import plotly.graph_objects as go
+import numpy as np
+from sklearn.linear_model import LinearRegression
+#Training data(y=2x)
+X=np.array([1,2,3,4,5]).reshape(-1,1)
+y=np.array([2,4,6,8,10])
+model=LinearRegression().fit(X,y)
+app=Dash(__name__)
+app.layout=html.Div([
+    html.H1("ML Prediction Visualization"),
+    dcc.Slider(
+        id="input_slider",
+        min=0,max=10,step=1,value=5,
+        marks={i:str(i) for i in range(0,11)}
+    ),
+    #graph
+    dcc.Graph(id="Prediction-graph")
+])
+@app.callback(
+    Output("Prediction-graph","figure"),
+    Input("input_slider","value")
+)
+def update_chart(x_value):
+    x_range=np.linspace(0,10,100).reshape(-1,1)
+    y_pred=model.predict(x_range)
+    #prediction point
+    y_point=model.predict([[x_value]])[0]
+    fig=go.Figure()
+    #training data points
+    fig.add_trace(go.Scatter(x=X.flatten(), y=y, mode="markers", name="Training Data"))
+    # Regression line
+    fig.add_trace(go.Scatter(x=x_range.flatten(), y=y_pred, mode="lines", name="Regression Line"))
+    # Predicted point
+    fig.add_trace(go.Scatter(x=[x_value], y=[y_point], mode="markers", 
+                             marker=dict(color="red", size=12), name="Prediction"))
+    fig.update_layout(title=f"Prediction for x={x_value}: y={y_point:.2f}",
+                      xaxis_title="X", yaxis_title="Y")
+    return fig
 if __name__ == "__main__":
     app.run(debug=True)
 
