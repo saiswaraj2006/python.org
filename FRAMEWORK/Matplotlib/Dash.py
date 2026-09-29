@@ -151,6 +151,7 @@ import numpy as np
 from sklearn.linear_model import LinearRegression
 from sklearn.preprocessing import PolynomialFeatures
 from sklearn.pipeline import make_pipeline
+from sklearn.tree import DecisionTreeRegressor#adding the decision regression
 
 # Training data (y = 2x + noise)
 X = np.array([1, 2, 3, 4, 5]).reshape(-1, 1)
@@ -158,6 +159,7 @@ y = np.array([2.2, 3.9, 6.1, 7.8, 10.2])  # slightly noisy
 # Models
 linear_model = LinearRegression().fit(X, y)
 poly_model = make_pipeline(PolynomialFeatures(2), LinearRegression()).fit(X, y)
+tree_model=DecisionTreeRegressor(max_depth=3).fit(X,y)
 # Create app
 app = Dash(__name__)
 app.layout = html.Div([
@@ -167,7 +169,8 @@ app.layout = html.Div([
         id="model-dropdown",
         options=[
             {"label": "Linear Regression", "value": "linear"},
-            {"label": "Polynomial Regression (degree=2)", "value": "poly"}
+            {"label": "Polynomial Regression (degree=2)", "value": "poly"},
+            {"label": "Decision Tree Regression","value":"tree"}
         ],
         value="linear"
     ),
@@ -187,25 +190,36 @@ app.layout = html.Div([
 )
 def update_chart(selected_model, x_value):
     x_range = np.linspace(0, 10, 100).reshape(-1, 1)
-    if selected_model == "linear":#in this at the top the user can choose the LR or PR
+
+    if selected_model == "linear":
         y_pred = linear_model.predict(x_range)
         y_point = linear_model.predict([[x_value]])[0]
         model_name = "Linear Regression"
-    else:
+    elif selected_model == "poly":
         y_pred = poly_model.predict(x_range)
         y_point = poly_model.predict([[x_value]])[0]
         model_name = "Polynomial Regression (degree=2)"
+    else:
+        y_pred = tree_model.predict(x_range)
+        y_point = tree_model.predict([[x_value]])[0]
+        model_name = "Decision Tree Regression"
+
     fig = go.Figure()
+
     # Training data points
     fig.add_trace(go.Scatter(x=X.flatten(), y=y, mode="markers", name="Training Data"))
+
     # Regression line/curve
     fig.add_trace(go.Scatter(x=x_range.flatten(), y=y_pred, mode="lines", name=model_name))
+
     # Predicted point
     fig.add_trace(go.Scatter(x=[x_value], y=[y_point], mode="markers",
                              marker=dict(color="red", size=12), name="Prediction"))
+
     fig.update_layout(title=f"{model_name} → Prediction for x={x_value}: y={y_point:.2f}",
                       xaxis_title="X", yaxis_title="Y")
+
     return fig
+
 if __name__ == "__main__":
     app.run(debug=True)
-
