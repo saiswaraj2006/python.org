@@ -176,15 +176,20 @@ app.layout = html.Div([
     ),
     # Slider for prediction input
     dcc.Slider(
-        id="input-slider",
+        id="input-slider",#id is a string used to connect inputs and outputs in callbacks
+        #above id="input-slider" matches the slider's id
         min=0, max=10, step=1, value=5,
         marks={i: str(i) for i in range(0, 11)}
     ),
-    # Graph output
-    dcc.Graph(id="prediction-graph")
+    html.Div(id="prediction-text",style={"fontSize":22,"marginTop":20}),
+    #div is a container element from dash.html its basically the Dash version of the HTML<div> tag
+    # use it to group content together or display text    
+    # # Graph output
+    dcc.Graph(id="prediction-graph")#matches the graphs's id
 ])
 @app.callback(
-    Output("prediction-graph", "figure"),
+    [Output("prediction-text","children"),
+     Output("prediction-graph", "figure")],
     [Input("model-dropdown", "value"),
      Input("input-slider", "value")]
 )
@@ -203,23 +208,19 @@ def update_chart(selected_model, x_value):
         y_pred = tree_model.predict(x_range)
         y_point = tree_model.predict([[x_value]])[0]
         model_name = "Decision Tree Regression"
-
+    text_output=f"{model_name}-> Prediction for x={x_value}: y={y_point:.2f}"
     fig = go.Figure()
 
     # Training data points
     fig.add_trace(go.Scatter(x=X.flatten(), y=y, mode="markers", name="Training Data"))
-
     # Regression line/curve
     fig.add_trace(go.Scatter(x=x_range.flatten(), y=y_pred, mode="lines", name=model_name))
-
     # Predicted point
     fig.add_trace(go.Scatter(x=[x_value], y=[y_point], mode="markers",
                              marker=dict(color="red", size=12), name="Prediction"))
+    fig.update_layout(xaxis_title="X", yaxis_title="Y")
 
-    fig.update_layout(title=f"{model_name} → Prediction for x={x_value}: y={y_point:.2f}",
-                      xaxis_title="X", yaxis_title="Y")
-
-    return fig
+    return text_output,fig
 
 if __name__ == "__main__":
     app.run(debug=True)
