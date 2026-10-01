@@ -662,6 +662,7 @@ y1=np.sin(x)
 y2=np.cos(x)
 fig=go.Figure()
 fig.add_trace(go.Scatter(x=x,y=y1,mode="lines+markers",name="sin(x)",line=dict(color="blue")))
+#add one dataset (trace) to chart
 fig.add_trace(go.Scatter(x=x,y=y2,mode="lines",name="cos(x)",line=dict(color="red",dash="dot")))
 fig.update_layout(title="sine & cosine with add_trace")
 fig.show()

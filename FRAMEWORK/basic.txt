@@ -1,0 +1,34 @@
+A framework is a structured set of tools, libraries,
+and rules that helps you build applications faster.
+
+Instead of writing everything from scratch, simply use a framework’s ready‑made components.
+
+Framework matters from
+⁘ save time(no need to reinvent the wheel)
+⁘ provide best practices (security,scalability, performance)
+⁘ Make the projects look professional
+
+There are many types of Frameworks for different uses for:
+1. Web applications/apps 
+↳Flask, Django
+
+2. DataDashboards
+↳Dash(built on plotly)
+    ↳Perfect for interactive charts and dashboards
+    
+3. Machine Learning
+↳Scikit-Learn, TensorFlow, PyTorch
+ 
+4. Data Handling
+↳Pandas,NumPy
+
+5.Visualization
+↳Matplotlib, plotly, Seaborn
+    ↳ Framework for charts and plots
+
+6. Web Frontend
+↳React.js or Angular
+    ↳ It connects Python backend with modern web UIs.
+
+
+

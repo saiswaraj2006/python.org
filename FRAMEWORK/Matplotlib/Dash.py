@@ -145,6 +145,7 @@ if __name__ == "__main__":
     app.run(debug=True)
 #the linear model predicts the output by training data it predicts
 '''
+'''
 from dash import Dash, dcc, html, Input, Output
 import plotly.graph_objects as go
 import numpy as np
@@ -224,3 +225,24 @@ def update_chart(selected_model, x_value):
 
 if __name__ == "__main__":
     app.run(debug=True)
+'''
+
+from dash import Dash, html, dcc
+import plotly.express as px
+
+# Sample data
+df = px.data.iris()
+
+app = Dash(__name__)
+
+app.layout = html.Div([
+    html.H1("Simple Graph Example"),
+    dcc.Graph(
+        id="my-graph",
+        figure=px.scatter(df, x="sepal_width", y="sepal_length", color="species")
+    )
+])
+
+if __name__ == "__main__":
+    app.run(debug=True)
+
