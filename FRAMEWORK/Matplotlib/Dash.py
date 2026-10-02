@@ -226,23 +226,39 @@ def update_chart(selected_model, x_value):
 if __name__ == "__main__":
     app.run(debug=True)
 '''
-
+'''
 from dash import Dash, html, dcc
 import plotly.express as px
-
 # Sample data
-df = px.data.iris()
-
+df = px.data.iris()#it is a built in dataset 
+#the iris dataset is a famous dataset in machine learning and statistics
+'''
+'''
+it contains measurements of iris flowers
+sepal_length
+sepal_width
+sepal_length
+petal_width
+species(setosa,versicolor,virginica)
+'''
+'''
 app = Dash(__name__)
-
 app.layout = html.Div([
     html.H1("Simple Graph Example"),
-    dcc.Graph(
-        id="my-graph",
+    dcc.Graph(#this displays a plotly chart.
+        id="my-graph",#gives the graph name so that i can reference it later.
         figure=px.scatter(df, x="sepal_width", y="sepal_length", color="species")
     )
 ])
-
 if __name__ == "__main__":
     app.run(debug=True)
+'''
 
+#example for the loading the iris flower dataset into a pandas
+import pandas as pd
+import matplotlib.pyplot as plt
+import plotly.express as px
+df=px.data.iris()
+print(df.head())#it prints the first five rows of the dataset
+#also printing the last five rows of the dataset by using tail
+print(df.tail())
