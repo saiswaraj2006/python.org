@@ -253,6 +253,7 @@ app.layout = html.Div([
 if __name__ == "__main__":
     app.run(debug=True)
 '''
+'''
 
 #example for the loading the iris flower dataset into a pandas
 import pandas as pd
@@ -262,3 +263,57 @@ df=px.data.iris()
 print(df.head())#it prints the first five rows of the dataset
 #also printing the last five rows of the dataset by using tail
 print(df.tail())
+'''
+''''
+     sepal_length  sepal_width  petal_length  petal_width    species  species_id
+145           6.7          3.0           5.2          2.3  virginica           3
+146           6.3          2.5           5.0          1.9  virginica           3
+147           6.5          3.0           5.2          2.0  virginica           3
+148           6.2          3.4           5.4          2.3  virginica           3
+149           5.9          3.0           5.1          1.8  virginica           3
+'''
+
+
+from dash import Dash, html, dcc, Input, Output
+import plotly.express as px
+
+# Load Iris dataset
+df = px.data.iris()
+
+app = Dash(__name__)
+
+app.layout = html.Div([
+    html.H1("Interactive Iris Dataset Visualization"),
+
+    # Dropdowns for X and Y axes
+    html.Div([
+        html.Label("Select X-axis:"),
+        dcc.Dropdown(
+            id="x-axis-dropdown",
+            options=[{"label": col, "value": col} for col in df.columns if col != "species"],
+            value="sepal_width"
+        ),
+        html.Label("Select Y-axis:"),
+        dcc.Dropdown(
+            id="y-axis-dropdown",
+            options=[{"label": col, "value": col} for col in df.columns if col != "species"],
+            value="sepal_length"
+        )
+    ], style={"width": "40%", "display": "inline-block"}),
+
+    # Graph output
+    dcc.Graph(id="iris-graph")
+])
+
+@app.callback(
+    Output("iris-graph", "figure"),
+    [Input("x-axis-dropdown", "value"),
+     Input("y-axis-dropdown", "value")]
+)
+def update_graph(x_col, y_col):
+    fig = px.scatter(df, x=x_col, y=y_col, color="species",
+                     title=f"Iris Dataset: {x_col} vs {y_col}")
+    return fig
+
+if __name__ == "__main__":
+    app.run(debug=True)
