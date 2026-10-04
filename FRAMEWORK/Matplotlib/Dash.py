@@ -291,6 +291,7 @@ app.layout = html.Div([
         dcc.Dropdown(
             id="x-axis-dropdown",
             options=[{"label": col, "value": col} for col in df.columns if col != "species"],
+            #df.columns has-> ['sepal_length','sepal_width', 'petal_length', 'petal_width', 'species']
             value="sepal_width"
         ),
         html.Label("Select Y-axis:"),
@@ -299,8 +300,22 @@ app.layout = html.Div([
             options=[{"label": col, "value": col} for col in df.columns if col != "species"],
             value="sepal_length"
         )
-    ], style={"width": "40%", "display": "inline-block"}),
+    ], style={"width": "40%", "display": "inline-block","marginRight":"40px"}),
+#Dropdown for chart type
+    html.Div([
+        html.Label("Select Chart Type:"),
+        dcc.Dropdown(
+            id="chart-type-dropdown",
+            options=[
+                {"label":"Scatter Plot","value":"scatter"},
+                {"label":"Box Plot","value":"box"},
+                {"label":"Histogram","value":"histogram"}
+                
+            ],
+            value="scatter"
 
+        )
+    ], style={"width":"40%","display":"inline-block"}),
     # Graph output
     dcc.Graph(id="iris-graph")
 ])
@@ -308,11 +323,19 @@ app.layout = html.Div([
 @app.callback(
     Output("iris-graph", "figure"),
     [Input("x-axis-dropdown", "value"),
-     Input("y-axis-dropdown", "value")]
+     Input("y-axis-dropdown", "value"),
+     Input("chart-type-dropdown","value")]
 )
-def update_graph(x_col, y_col):
-    fig = px.scatter(df, x=x_col, y=y_col, color="species",
-                     title=f"Iris Dataset: {x_col} vs {y_col}")
+def update_graph(x_col, y_col, chart_type):
+    if chart_type=="scatter":
+        fig=px.scatter(df,x=x_col, y=y_col, color="species",
+                       title=f"Scatter Plot: {x_col} vs {y_col}")
+    elif chart_type == "box":
+        fig=px.box(df, x="species",y=x_col,
+                   title=f"Box Plot: {x_col} by species")
+    else: #histogram
+        fig=px.histogram(df,x=x_col,color="species", barmode="overlay",
+                         title=f"Histogram of {x_col}")
     return fig
 
 if __name__ == "__main__":
