@@ -273,7 +273,7 @@ print(df.tail())
 149           5.9          3.0           5.1          1.8  virginica           3
 '''
 
-
+'''
 from dash import Dash, html, dcc, Input, Output
 import plotly.express as px
 
@@ -336,6 +336,65 @@ def update_graph(x_col, y_col, chart_type):
     else: #histogram
         fig=px.histogram(df,x=x_col,color="species", barmode="overlay",
                          title=f"Histogram of {x_col}")
+    return fig
+
+if __name__ == "__main__":
+    app.run(debug=True)
+'''
+from dash import Dash, html, dcc, Input, Output
+import plotly.express as px
+
+# Load Iris dataset
+df = px.data.iris()
+
+app = Dash(__name__)
+
+app.layout = html.Div([
+    html.H1("Iris Dataset Explorer with Tabs"),
+
+    # Dropdowns for X and Y axes
+    html.Div([
+        html.Label("Select X-axis:"),
+        dcc.Dropdown(
+            id="x-axis-dropdown",
+            options=[{"label": col, "value": col} for col in df.columns if col != "species"],
+            value="sepal_width"
+        ),
+        html.Label("Select Y-axis:"),
+        dcc.Dropdown(
+            id="y-axis-dropdown",
+            options=[{"label": col, "value": col} for col in df.columns if col != "species"],
+            value="sepal_length"
+        )
+    ], style={"width": "40%", "marginBottom": "20px"}),
+
+    # Tabs for chart type
+    dcc.Tabs(id="tabs", value="scatter", children=[
+        dcc.Tab(label="Scatter Plot", value="scatter"),
+        dcc.Tab(label="Box Plot", value="box"),
+        dcc.Tab(label="Histogram", value="histogram")
+    ]),
+
+    # Graph output
+    dcc.Graph(id="iris-graph")
+])
+
+@app.callback(
+    Output("iris-graph", "figure"),
+    [Input("x-axis-dropdown", "value"),
+     Input("y-axis-dropdown", "value"),
+     Input("tabs", "value")]
+)
+def update_graph(x_col, y_col, tab_choice):
+    if tab_choice == "scatter":
+        fig = px.scatter(df, x=x_col, y=y_col, color="species",
+                         title=f"Scatter Plot: {x_col} vs {y_col}")
+    elif tab_choice == "box":
+        fig = px.box(df, x="species", y=x_col,
+                     title=f"Box Plot: {x_col} by species")
+    else:  # histogram
+        fig = px.histogram(df, x=x_col, color="species", barmode="overlay",
+                           title=f"Histogram of {x_col}")
     return fig
 
 if __name__ == "__main__":
