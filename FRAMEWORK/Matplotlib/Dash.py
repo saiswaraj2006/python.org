@@ -341,6 +341,10 @@ def update_graph(x_col, y_col, chart_type):
 if __name__ == "__main__":
     app.run(debug=True)
 '''
+#iris dashboard with the tabs
+#for switching between the different views (Scatter, box plot, histograms) 
+#without cluttering
+'''
 from dash import Dash, html, dcc, Input, Output
 import plotly.express as px
 
@@ -370,7 +374,7 @@ app.layout = html.Div([
 
     # Tabs for chart type
     dcc.Tabs(id="tabs", value="scatter", children=[
-        dcc.Tab(label="Scatter Plot", value="scatter"),
+        dcc.Tab(label="Scatter Plot", value="scatter"),#describing the tab names
         dcc.Tab(label="Box Plot", value="box"),
         dcc.Tab(label="Histogram", value="histogram")
     ]),
@@ -396,6 +400,73 @@ def update_graph(x_col, y_col, tab_choice):
         fig = px.histogram(df, x=x_col, color="species", barmode="overlay",
                            title=f"Histogram of {x_col}")
     return fig
+
+if __name__ == "__main__":
+    app.run(debug=True)
+'''
+from dash import Dash, html, dcc, Input, Output, State
+import plotly.express as px
+import pandas as pd
+import io
+import base64
+
+app = Dash(__name__)
+
+app.layout = html.Div([
+    html.H1("Upload Your Dataset Explorer"),
+
+    # File upload component
+    dcc.Upload(
+        id="upload-data",
+        children=html.Div([
+            "Drag and Drop or ",
+            html.A("Select a CSV File")
+        ]),
+        style={
+            "width": "50%", "height": "60px", "lineHeight": "60px",
+            "borderWidth": "1px", "borderStyle": "dashed",
+            "borderRadius": "5px", "textAlign": "center", "margin": "10px"
+        },
+        multiple=False
+    ),
+
+    # Dropdowns for X and Y axes
+    html.Div([
+        dcc.Dropdown(id="x-axis-dropdown", placeholder="Select X-axis"),
+        dcc.Dropdown(id="y-axis-dropdown", placeholder="Select Y-axis")
+    ], style={"width": "50%", "marginTop": "20px"}),
+
+    # Graph output
+    dcc.Graph(id="output-graph")
+])
+
+# Helper function to parse uploaded file
+def parse_contents(contents):
+    content_type, content_string = contents.split(",")
+    decoded = base64.b64decode(content_string)
+    df = pd.read_csv(io.StringIO(decoded.decode("utf-8")))
+    return df
+
+@app.callback(
+    [Output("x-axis-dropdown", "options"),
+     Output("y-axis-dropdown", "options"),
+     Output("output-graph", "figure")],
+    Input("upload-data", "contents"),
+    [State("x-axis-dropdown", "value"),
+     State("y-axis-dropdown", "value")]
+)
+def update_output(contents, x_col, y_col):
+    if contents is None:
+        return [], [], {}
+    df = parse_contents(contents)
+    options = [{"label": col, "value": col} for col in df.columns]
+
+    # Default graph if both axes are chosen
+    if x_col and y_col:
+        fig = px.scatter(df, x=x_col, y=y_col, title=f"{x_col} vs {y_col}")
+    else:
+        fig = {}
+    return options, options, fig
 
 if __name__ == "__main__":
     app.run(debug=True)
