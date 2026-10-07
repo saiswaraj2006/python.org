@@ -408,7 +408,7 @@ from dash import Dash, html, dcc, Input, Output, State
 import plotly.express as px
 import pandas as pd
 import io
-import base64
+import base64#base64 string
 
 app = Dash(__name__)
 
@@ -416,7 +416,7 @@ app.layout = html.Div([
     html.H1("Upload Your Dataset Explorer"),
 
     # File upload component
-    dcc.Upload(
+    dcc.Upload(#this is the upload box it lets user to drag and drop or select a CSV file
         id="upload-data",
         children=html.Div([
             "Drag and Drop or ",
@@ -443,29 +443,36 @@ app.layout = html.Div([
 # Helper function to parse uploaded file
 def parse_contents(contents):
     content_type, content_string = contents.split(",")
-    decoded = base64.b64decode(content_string)
-    df = pd.read_csv(io.StringIO(decoded.decode("utf-8")))
+    decoded = base64.b64decode(content_string)#splits the base64 string into type and actual data.
+    #decodes the base64 back into text
+    df = pd.read_csv(io.StringIO(decoded.decode("utf-8")))#it reads it as a CSV using pandas.read_csv
     return df
-
+#it returns the clean DataFrame(df) ready for plotting
 @app.callback(
     [Output("x-axis-dropdown", "options"),
      Output("y-axis-dropdown", "options"),
      Output("output-graph", "figure")],
     Input("upload-data", "contents"),
-    [State("x-axis-dropdown", "value"),
+    [State("x-axis-dropdown", "value"),#it checks the current dropdown selections(state)
      State("y-axis-dropdown", "value")]
 )
-def update_output(contents, x_col, y_col):
+def update_output(contents, x_col, y_col):#generates dropdowns options and plots the graph.
     if contents is None:
         return [], [], {}
     df = parse_contents(contents)
     options = [{"label": col, "value": col} for col in df.columns]
-
+    fig={}
     # Default graph if both axes are chosen
     if x_col and y_col:
-        fig = px.scatter(df, x=x_col, y=y_col, title=f"{x_col} vs {y_col}")
-    else:
-        fig = {}
+        #try to convert numeric if possible
+        df[x_col]=pd.to_numeric(df[x_col],errors="ignore")
+        df[y_col]=pd.to_numeric(df[y_col],errors="ignore")
+        #if both numeric->scatter plot
+        if pd.api.types.is_numeric_dtype(df[x_col]) and pd.api.types.is_numeric_dtype(df[y_col]):
+            fig=px.scatter(df,x=x_col,y=y_col,title=f"{x_col} vs {y_col}")
+        else:
+            #if one is categorical->box plot
+            fig=px.box(df,x=x_col,y=y_col,title=f"Box Plot:{y_col} vs {x_col}")
     return options, options, fig
 
 if __name__ == "__main__":
