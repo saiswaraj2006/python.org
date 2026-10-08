@@ -404,6 +404,7 @@ def update_graph(x_col, y_col, tab_choice):
 if __name__ == "__main__":
     app.run(debug=True)
 '''
+'''
 from dash import Dash, html, dcc, Input, Output, State
 import plotly.express as px
 import pandas as pd
@@ -475,5 +476,98 @@ def update_output(contents, x_col, y_col):#generates dropdowns options and plots
             fig=px.box(df,x=x_col,y=y_col,title=f"Box Plot:{y_col} vs {x_col}")
     return options, options, fig
 
+if __name__ == "__main__":
+    app.run(debug=True)
+    '''
+from dash import Dash, html, dcc, Input, Output, State
+import plotly.express as px
+import pandas as pd
+import io
+import base64#base64 string
+
+app = Dash(__name__)
+
+app.layout = html.Div([
+    html.H1("Upload Your Dataset Explorer"),
+
+    dcc.Upload(
+        id="upload-data",
+        children=html.Div(["Drag and Drop or ", html.A("Select a CSV File")]),
+        style={
+            "width": "50%", "height": "60px", "lineHeight": "60px",
+            "borderWidth": "1px", "borderStyle": "dashed",
+            "borderRadius": "5px", "textAlign": "center", "margin": "10px"
+        },
+        multiple=False
+    ),
+
+    html.Div([
+        dcc.Dropdown(id="x-axis-dropdown", placeholder="Select X-axis"),
+        dcc.Dropdown(id="y-axis-dropdown", placeholder="Select Y-axis"),
+        dcc.Dropdown(
+            id="chart-type-dropdown",
+            options=[
+                {"label": "Scatter Plot", "value": "scatter"},
+                {"label": "Box Plot", "value": "box"},
+                {"label": "Bar Chart", "value": "bar"},
+                {"label": "Histogram", "value": "histogram"}
+            ],
+            value="scatter",
+            placeholder="Select Chart Type"
+        )
+    ], style={"width": "50%", "marginTop": "20px"}),
+
+    dcc.Graph(id="output-graph")
+
+])
+# Helper function to parse uploaded file
+def parse_contents(contents):
+    content_type, content_string = contents.split(",")
+    decoded = base64.b64decode(content_string)
+    try:
+        # Try reading as CSV
+        df = pd.read_csv(io.StringIO(decoded.decode("utf-8")))
+    except Exception as e:
+        print("Error reading CSV:", e)
+        # If CSV fails, try Excel
+        try:
+            df = pd.read_excel(io.BytesIO(decoded))
+        except Exception as e2:
+            print("Error reading Excel:", e2)
+            df = pd.DataFrame()  # fallback empty dataframe
+
+    return df
+
+@app.callback(
+    [Output("x-axis-dropdown", "options"),
+     Output("y-axis-dropdown", "options"),
+     Output("output-graph", "figure")],
+    [Input("upload-data", "contents"),
+     Input("x-axis-dropdown", "value"),
+     Input("y-axis-dropdown", "value"),
+     Input("chart-type-dropdown", "value")]
+)
+def update_output(contents, x_col, y_col, chart_type):
+    if contents is None:
+        return [], [], {}
+
+    df = parse_contents(contents)
+    options = [{"label": col, "value": col} for col in df.columns]
+
+    fig = {}
+    if x_col and y_col:
+        df[x_col] = pd.to_numeric(df[x_col], errors="coerce")
+        df[y_col] = pd.to_numeric(df[y_col], errors="coerce")
+
+        if chart_type == "scatter":
+            fig = px.scatter(df, x=x_col, y=y_col, title=f"{x_col} vs {y_col}")
+        elif chart_type == "box":
+            fig = px.box(df, x=x_col, y=y_col, title=f"Box Plot: {y_col} vs {x_col}")
+        elif chart_type == "bar":
+            fig = px.bar(df, x=x_col, y=y_col, title=f"Bar Chart: {y_col} vs {x_col}")
+        elif chart_type == "histogram":
+            fig = px.histogram(df, x=x_col, title=f"Histogram of {x_col}")
+
+    return options, options, fig
 if __name__ == "__main__":
     app.run(debug=True)
