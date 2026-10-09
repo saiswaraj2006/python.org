@@ -484,6 +484,7 @@ import plotly.express as px
 import pandas as pd
 import io
 import base64#base64 string
+from dash import dash_table
 
 app = Dash(__name__)
 
@@ -516,7 +517,7 @@ app.layout = html.Div([
             placeholder="Select Chart Type"
         )
     ], style={"width": "50%", "marginTop": "20px"}),
-
+    dash_table.DataTable(id="preview-table"),  
     dcc.Graph(id="output-graph")
 
 ])
@@ -541,6 +542,8 @@ def parse_contents(contents):
 @app.callback(
     [Output("x-axis-dropdown", "options"),
      Output("y-axis-dropdown", "options"),
+     Output("preview-table", "data"),
+     Output("preview-table", "columns"),
      Output("output-graph", "figure")],
     [Input("upload-data", "contents"),
      Input("x-axis-dropdown", "value"),
@@ -549,11 +552,13 @@ def parse_contents(contents):
 )
 def update_output(contents, x_col, y_col, chart_type):
     if contents is None:
-        return [], [], {}
+        return [], [],[],[], {}
 
     df = parse_contents(contents)
     options = [{"label": col, "value": col} for col in df.columns]
-
+    #preview of first 5 rows
+    preview_data = df.head().to_dict("records")
+    preview_columns = [{"name": i, "id": i} for i in df.columns]
     fig = {}
     if x_col and y_col:
         df[x_col] = pd.to_numeric(df[x_col], errors="coerce")
@@ -568,6 +573,6 @@ def update_output(contents, x_col, y_col, chart_type):
         elif chart_type == "histogram":
             fig = px.histogram(df, x=x_col, title=f"Histogram of {x_col}")
 
-    return options, options, fig
+    return options, options, preview_data,preview_columns ,fig
 if __name__ == "__main__":
     app.run(debug=True)
