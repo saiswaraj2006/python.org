@@ -478,7 +478,8 @@ def update_output(contents, x_col, y_col):#generates dropdowns options and plots
 
 if __name__ == "__main__":
     app.run(debug=True)
-    '''
+'''
+
 from dash import Dash, html, dcc, Input, Output, State
 import plotly.express as px
 import pandas as pd
@@ -501,6 +502,15 @@ app.layout = html.Div([
         },
         multiple=False
     ),
+    html.Div([
+    dcc.Input(
+        id="filter-input",
+        type="text",
+        placeholder="Enter filter (e.g., Department=='HR')",
+        style={"width": "50%", "marginTop": "10px"}
+        )
+    ]),
+
 
     html.Div([
         dcc.Dropdown(id="x-axis-dropdown", placeholder="Select X-axis"),
@@ -548,14 +558,21 @@ def parse_contents(contents):
     [Input("upload-data", "contents"),
      Input("x-axis-dropdown", "value"),
      Input("y-axis-dropdown", "value"),
-     Input("chart-type-dropdown", "value")]
+     Input("chart-type-dropdown", "value"),
+     Input("filter-input", "value")]
 )
-def update_output(contents, x_col, y_col, chart_type):
+def update_output(contents, x_col, y_col, chart_type, filter_value):
     if contents is None:
         return [], [],[],[], {}
 
     df = parse_contents(contents)
     options = [{"label": col, "value": col} for col in df.columns]
+        # Apply filter if provided
+    if filter_value:
+        try:
+            df = df.query(filter_value)
+        except Exception as e:
+            print("Invalid filter:", e)
     #preview of first 5 rows
     preview_data = df.head().to_dict("records")
     preview_columns = [{"name": i, "id": i} for i in df.columns]
