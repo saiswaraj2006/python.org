@@ -528,7 +528,9 @@ app.layout = html.Div([
         )
     ], style={"width": "50%", "marginTop": "20px"}),
     dash_table.DataTable(id="preview-table"),  
-    dcc.Graph(id="output-graph")
+    dcc.Graph(id="output-graph"),
+    html.Button("Download Filtered CSV",id="download-btn"),
+    dcc.Download(id="download-data")
 
 ])
 # Helper function to parse uploaded file
@@ -538,29 +540,29 @@ def parse_contents(contents):
     try:
         # Try reading as CSV
         df = pd.read_csv(io.StringIO(decoded.decode("utf-8")))
-    except Exception as e:
-        print("Error reading CSV:", e)
-        # If CSV fails, try Excel
+    except Exception:
         try:
             df = pd.read_excel(io.BytesIO(decoded))
-        except Exception as e2:
-            print("Error reading Excel:", e2)
+        except Exception:
             df = pd.DataFrame()  # fallback empty dataframe
-
     return df
-
+#callback for table+graph
 @app.callback(
     [Output("x-axis-dropdown", "options"),
      Output("y-axis-dropdown", "options"),
      Output("preview-table", "data"),
      Output("preview-table", "columns"),
-     Output("output-graph", "figure")],
+     Output("output-graph","figure")
+    ],
     [Input("upload-data", "contents"),
      Input("x-axis-dropdown", "value"),
      Input("y-axis-dropdown", "value"),
      Input("chart-type-dropdown", "value"),
-     Input("filter-input", "value")]
+     Input("filter-input","value")
+    ]
 )
+
+
 def update_output(contents, x_col, y_col, chart_type, filter_value):
     if contents is None:
         return [], [],[],[], {}
@@ -591,5 +593,21 @@ def update_output(contents, x_col, y_col, chart_type, filter_value):
             fig = px.histogram(df, x=x_col, title=f"Histogram of {x_col}")
 
     return options, options, preview_data,preview_columns ,fig
+#separate callback for download
+@app.callback(
+    Output("download-data","data"),
+    Input("download-btn","n-clicks"),
+    State("upload-data","contents"),
+    State("filter-input","value"),
+    prevent_initial_call=True
+)
+def download_filtered(n_clicks, contents, filter_value):
+    df = parse_contents(contents)
+    if filter_value:
+        try:
+            df = df.query(filter_value)
+        except Exception as e:
+            print("Invalid filter:", e)
+    return dcc.send_data_frame(df.to_csv, "filtered_data.csv")
 if __name__ == "__main__":
     app.run(debug=True)
