@@ -529,6 +529,14 @@ app.layout = html.Div([
     ], style={"width": "50%", "marginTop": "20px"}),
     dash_table.DataTable(id="preview-table"),  
     dcc.Graph(id="output-graph"),
+    dcc.Checklist(
+    id="column-select",
+    options=[],
+    value=[],
+    inline=True,
+    style={"marginTop": "10px"}
+    ),
+
     html.Button("Download Filtered CSV",id="download-btn"),
     dcc.Download(id="download-data")
 
@@ -552,8 +560,9 @@ def parse_contents(contents):
      Output("y-axis-dropdown", "options"),
      Output("preview-table", "data"),
      Output("preview-table", "columns"),
-     Output("output-graph","figure")
-    ],
+     Output("output-graph","figure"),
+     Output("column-select", "options"),
+     Output("column-select", "value")],
     [Input("upload-data", "contents"),
      Input("x-axis-dropdown", "value"),
      Input("y-axis-dropdown", "value"),
@@ -565,7 +574,7 @@ def parse_contents(contents):
 
 def update_output(contents, x_col, y_col, chart_type, filter_value):
     if contents is None:
-        return [], [],[],[], {}
+        return [], [],[],[], {},[],[]
 
     df = parse_contents(contents)
     options = [{"label": col, "value": col} for col in df.columns]
@@ -592,22 +601,25 @@ def update_output(contents, x_col, y_col, chart_type, filter_value):
         elif chart_type == "histogram":
             fig = px.histogram(df, x=x_col, title=f"Histogram of {x_col}")
 
-    return options, options, preview_data,preview_columns ,fig
+    return options, options, preview_data,preview_columns ,fig, options , [col for col in df.columns]
 #separate callback for download
 @app.callback(
     Output("download-data","data"),
     Input("download-btn","n-clicks"),
     State("upload-data","contents"),
     State("filter-input","value"),
+    State("column-select","value"),
     prevent_initial_call=True
 )
-def download_filtered(n_clicks, contents, filter_value):
+def download_filtered(n_clicks, contents, filter_value, selected_cols):
     df = parse_contents(contents)
     if filter_value:
         try:
             df = df.query(filter_value)
         except Exception as e:
             print("Invalid filter:", e)
+    if selected_cols:
+        df=df[selected_cols]
     return dcc.send_data_frame(df.to_csv, "filtered_data.csv")
 if __name__ == "__main__":
     app.run(debug=True)
