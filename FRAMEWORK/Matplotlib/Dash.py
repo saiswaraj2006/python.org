@@ -605,7 +605,7 @@ def update_output(contents, x_col, y_col, chart_type, filter_value):
 #separate callback for download
 @app.callback(
     Output("download-data","data"),
-    Input("download-btn","n-clicks"),
+    Input("download-btn","n_clicks"),
     State("upload-data","contents"),
     State("filter-input","value"),
     State("column-select","value"),
@@ -620,6 +620,19 @@ def download_filtered(n_clicks, contents, filter_value, selected_cols):
             print("Invalid filter:", e)
     if selected_cols:
         df=df[selected_cols]
-    return dcc.send_data_frame(df.to_csv, "filtered_data.csv")
+    # Build dynamic filename
+    #here if i filter with-> Department=="HR", then the file name is 
+    #named as the "filtered_Department_HR.csv"
+    if filter_value:
+        safe_name = filter_value.replace("==", "_").replace("'", "").replace(" ", "")
+        filename = f"filtered_{safe_name}.csv"
+    else:
+        #else if no filter applies i imported the datetime module 
+        #the timestamp will be saved
+        #eg: filtered_20261013_2122.csv
+        from datetime import datetime
+        filename = f"filtered_{datetime.now().strftime('%Y%m%d_%H%M%S')}.csv"
+    return dcc.send_data_frame(df.to_csv, filename)
+
 if __name__ == "__main__":
     app.run(debug=True)
