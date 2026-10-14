@@ -485,9 +485,10 @@ import plotly.express as px
 import pandas as pd
 import io
 import base64#base64 string
+import dash_bootstrap_components as dbc
 from dash import dash_table
 
-app = Dash(__name__)
+app = Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])
 
 app.layout = html.Div([
     html.H1("Upload Your Dataset Explorer"),
@@ -510,8 +511,6 @@ app.layout = html.Div([
         style={"width": "50%", "marginTop": "10px"}
         )
     ]),
-
-
     html.Div([
         dcc.Dropdown(id="x-axis-dropdown", placeholder="Select X-axis"),
         dcc.Dropdown(id="y-axis-dropdown", placeholder="Select Y-axis"),
@@ -538,7 +537,18 @@ app.layout = html.Div([
     ),
 
     html.Button("Download Filtered CSV",id="download-btn"),
-    dcc.Download(id="download-data")
+    dcc.Download(id="download-data"),
+    # Toast component (hidden by default)
+    dbc.Toast(
+        "File downloaded successfully!",
+        id="download-toast",
+        header="Download Complete",
+        is_open=False,
+        dismissable=True,
+        icon="success",
+        duration=4000,  # auto-hide after 4 seconds
+        style={"position": "fixed", "top": 10, "right": 10, "width": 300}
+    )
 
 ])
 # Helper function to parse uploaded file
@@ -604,7 +614,8 @@ def update_output(contents, x_col, y_col, chart_type, filter_value):
     return options, options, preview_data,preview_columns ,fig, options , [col for col in df.columns]
 #separate callback for download
 @app.callback(
-    Output("download-data","data"),
+    [Output("download-data","data"),
+    Output("download-toast","is_open")],
     Input("download-btn","n_clicks"),
     State("upload-data","contents"),
     State("filter-input","value"),
@@ -632,7 +643,7 @@ def download_filtered(n_clicks, contents, filter_value, selected_cols):
         #eg: filtered_20261013_2122.csv
         from datetime import datetime
         filename = f"filtered_{datetime.now().strftime('%Y%m%d_%H%M%S')}.csv"
-    return dcc.send_data_frame(df.to_csv, filename)
+    return dcc.send_data_frame(df.to_csv, filename),True
 
 if __name__ == "__main__":
     app.run(debug=True)
