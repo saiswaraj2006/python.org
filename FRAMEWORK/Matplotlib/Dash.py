@@ -535,6 +535,7 @@ app.layout = html.Div([
     inline=True,
     style={"marginTop": "10px"}
     ),
+    html.Div(id="summary-stats",style={"marginTop":"20px"}),
 
     html.Button("Download Filtered CSV",id="download-btn"),
     dcc.Download(id="download-data"),
@@ -572,7 +573,8 @@ def parse_contents(contents):
      Output("preview-table", "columns"),
      Output("output-graph","figure"),
      Output("column-select", "options"),
-     Output("column-select", "value")],
+     Output("column-select", "value"),
+     Output("summary-stats","children")],
     [Input("upload-data", "contents"),
      Input("x-axis-dropdown", "value"),
      Input("y-axis-dropdown", "value"),
@@ -584,7 +586,7 @@ def parse_contents(contents):
 
 def update_output(contents, x_col, y_col, chart_type, filter_value):
     if contents is None:
-        return [], [],[],[], {},[],[]
+        return [], [],[],[], {},[],[],""
 
     df = parse_contents(contents)
     options = [{"label": col, "value": col} for col in df.columns]
@@ -610,8 +612,13 @@ def update_output(contents, x_col, y_col, chart_type, filter_value):
             fig = px.bar(df, x=x_col, y=y_col, title=f"Bar Chart: {y_col} vs {x_col}")
         elif chart_type == "histogram":
             fig = px.histogram(df, x=x_col, title=f"Histogram of {x_col}")
-
-    return options, options, preview_data,preview_columns ,fig, options , [col for col in df.columns]
+    #Build summary stats
+    stats_text=""
+    if x_col:
+        stats_text+=f"{x_col}: mean={df[x_col].mean():.2f}, median={df[x_col].median():.2f}, count={df[x_col].count()}  \n"
+    if y_col:
+        stats_text += f"📊 {y_col}: mean={df[y_col].mean():.2f}, median={df[y_col].median():.2f}, count={df[y_col].count()}"
+    return options, options, preview_data,preview_columns ,fig, options , [col for col in df.columns], stats_text
 #separate callback for download
 @app.callback(
     [Output("download-data","data"),
