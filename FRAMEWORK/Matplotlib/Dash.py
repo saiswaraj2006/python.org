@@ -549,7 +549,8 @@ app.layout = html.Div([
         icon="success",
         duration=4000,  # auto-hide after 4 seconds
         style={"position": "fixed", "top": 10, "right": 10, "width": 300}
-    )
+    ),
+    html.Div(id="summary-stats", style={"marginTop": "20px"})
 
 ])
 # Helper function to parse uploaded file
@@ -612,13 +613,25 @@ def update_output(contents, x_col, y_col, chart_type, filter_value):
             fig = px.bar(df, x=x_col, y=y_col, title=f"Bar Chart: {y_col} vs {x_col}")
         elif chart_type == "histogram":
             fig = px.histogram(df, x=x_col, title=f"Histogram of {x_col}")
-    #Build summary stats
-    stats_text=""
-    if x_col:
-        stats_text+=f"{x_col}: mean={df[x_col].mean():.2f}, median={df[x_col].median():.2f}, count={df[x_col].count()}  \n"
-    if y_col:
-        stats_text += f"📊 {y_col}: mean={df[y_col].mean():.2f}, median={df[y_col].median():.2f}, count={df[y_col].count()}"
-    return options, options, preview_data,preview_columns ,fig, options , [col for col in df.columns], stats_text
+# Build summary stats cards
+    cards = []
+    for col in [x_col, y_col]:
+        if col:
+            stats = df[col].describe()
+            card = dbc.Card(
+                dbc.CardBody([
+                    html.H5(f"📊 {col}", className="card-title"),
+                    html.P(f"Mean: {stats['mean']:.2f}"),
+                    html.P(f"Median: {df[col].median():.2f}"),
+                    html.P(f"Count: {int(stats['count'])}")
+                ]),
+                style={"marginBottom": "10px"}
+            )
+            cards.append(card)
+
+    return options, options, preview_data, preview_columns, fig, options, [col for col in df.columns], dbc.Row(cards)
+
+
 #separate callback for download
 @app.callback(
     [Output("download-data","data"),
