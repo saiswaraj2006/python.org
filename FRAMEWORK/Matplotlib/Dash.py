@@ -549,8 +549,7 @@ app.layout = html.Div([
         icon="success",
         duration=4000,  # auto-hide after 4 seconds
         style={"position": "fixed", "top": 10, "right": 10, "width": 300}
-    ),
-    html.Div(id="summary-stats", style={"marginTop": "20px"})
+    )
 
 ])
 # Helper function to parse uploaded file
@@ -624,10 +623,9 @@ def update_output(contents, x_col, y_col, chart_type, filter_value):
                     html.P(f"Mean: {stats['mean']:.2f}"),
                     html.P(f"Median: {df[col].median():.2f}"),
                     html.P(f"Count: {int(stats['count'])}")
-                ]),
-                style={"marginBottom": "10px"}
+                ])
             )
-            cards.append(card)
+            cards.append(dbc.Col(card, width=6))#here each card takes half row
 
     return options, options, preview_data, preview_columns, fig, options, [col for col in df.columns], dbc.Row(cards)
 
