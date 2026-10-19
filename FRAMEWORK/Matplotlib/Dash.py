@@ -501,7 +501,8 @@ app.layout = html.Div([
             "borderWidth": "1px", "borderStyle": "dashed",
             "borderRadius": "5px", "textAlign": "center", "margin": "10px"
         },
-        multiple=False
+        multiple=True#here i changed the format to multiple= True because it also accepts the 
+        #multiple uploads of the .csv files
     ),
     html.Div([
     dcc.Input(
@@ -514,6 +515,8 @@ app.layout = html.Div([
     html.Div([
         dcc.Dropdown(id="x-axis-dropdown", placeholder="Select X-axis"),
         dcc.Dropdown(id="y-axis-dropdown", placeholder="Select Y-axis"),
+        dcc.Dropdown(id="file-select",placeholder="Select a file to preview",style={"width": "50%", "marginTop": "10px"}),
+
         dcc.Dropdown(
             id="chart-type-dropdown",
             options=[
@@ -553,21 +556,25 @@ app.layout = html.Div([
 
 ])
 # Helper function to parse uploaded file
-def parse_contents(contents):
-    content_type, content_string = contents.split(",")
-    decoded = base64.b64decode(content_string)
-    try:
-        # Try reading as CSV
-        df = pd.read_csv(io.StringIO(decoded.decode("utf-8")))
-    except Exception:
+def parse_multiple(contents_list):
+    dfs=[]
+    for content in contents_list:
+        content_type, content_string = content.split(",")
+        decoded = base64.b64decode(content_string)
         try:
-            df = pd.read_excel(io.BytesIO(decoded))
+        # Try reading as CSV
+            df = pd.read_csv(io.StringIO(decoded.decode("utf-8")))
         except Exception:
-            df = pd.DataFrame()  # fallback empty dataframe
-    return df
+            try:
+                df = pd.read_excel(io.BytesIO(decoded))
+            except Exception:
+                df = pd.DataFrame()  # fallback empty dataframe
+        dfs.append(df)
+    return dfs
 #callback for table+graph
 @app.callback(
-    [Output("x-axis-dropdown", "options"),
+    [Output("file-select","options"),
+     Output("x-axis-dropdown", "options"),
      Output("y-axis-dropdown", "options"),
      Output("preview-table", "data"),
      Output("preview-table", "columns"),
@@ -576,19 +583,26 @@ def parse_contents(contents):
      Output("column-select", "value"),
      Output("summary-stats","children")],
     [Input("upload-data", "contents"),
+     Input("file-select","value"),
      Input("x-axis-dropdown", "value"),
      Input("y-axis-dropdown", "value"),
      Input("chart-type-dropdown", "value"),
      Input("filter-input","value")
-    ]
+    ],
+    State("upload-data","filename")
 )
 
 
-def update_output(contents, x_col, y_col, chart_type, filter_value):
+def update_output(contents, selected_file, x_col, y_col, chart_type, filter_value):
     if contents is None:
-        return [], [],[],[], {},[],[],""
+        return [], [],[],[],{},[],[],"",[]
 
-    df = parse_contents(contents)
+    dfs= parse_multiple(contents)
+    file_options = [{"label": name, "value": i} for i, name in enumerate(filenames)]
+
+    # Default to first file if none selected
+    idx = selected_file if selected_file is not None else 0
+    df = dfs[idx]
     options = [{"label": col, "value": col} for col in df.columns]
         # Apply filter if provided
     if filter_value:
@@ -626,8 +640,10 @@ def update_output(contents, x_col, y_col, chart_type, filter_value):
                 ])
             )
             cards.append(dbc.Col(card, width=6))#here each card takes half row
-
-    return options, options, preview_data, preview_columns, fig, options, [col for col in df.columns], dbc.Row(cards)
+#here on above line it declares about if i selected only one axis then it shows the axis descriptive summary
+#if both then also it shows both side by side 
+#the cards also resizes automatically on smaller screens (mobile-friendly)
+    return file_options, options, options, preview_data, preview_columns, fig, options, [col for col in df.columns], dbc.Row(cards)
 
 
 #separate callback for download
@@ -641,7 +657,10 @@ def update_output(contents, x_col, y_col, chart_type, filter_value):
     prevent_initial_call=True
 )
 def download_filtered(n_clicks, contents, filter_value, selected_cols):
-    df = parse_contents(contents)
+    if contents is None:
+        return None, False
+    dfs=parse_multiple(contents)
+    df=dfs[0]#to take first uploaded file
     if filter_value:
         try:
             df = df.query(filter_value)
@@ -665,3 +684,4 @@ def download_filtered(n_clicks, contents, filter_value, selected_cols):
 
 if __name__ == "__main__":
     app.run(debug=True)
+
