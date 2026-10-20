@@ -487,6 +487,7 @@ import io
 import base64#base64 string
 import dash_bootstrap_components as dbc
 from dash import dash_table
+from dash.dependencies import ALL
 
 app = Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])
 
@@ -539,6 +540,7 @@ app.layout = html.Div([
     style={"marginTop": "10px"}
     ),
     html.Div(id="summary-stats",style={"marginTop":"20px"}),
+    html.Div(id="file-card", style={"marginTop": "20px"}),
 
     html.Button("Download Filtered CSV",id="download-btn"),
     dcc.Download(id="download-data"),
@@ -551,9 +553,7 @@ app.layout = html.Div([
         dismissable=True,
         icon="success",
         duration=4000,  # auto-hide after 4 seconds
-        style={"position": "fixed", "top": 10, "right": 10, "width": 300}
-    )
-
+        style={"position": "fixed", "top": 10, "right": 10, "width": 300}),
 ])
 # Helper function to parse uploaded file
 def parse_multiple(contents_list):
@@ -581,19 +581,85 @@ def parse_multiple(contents_list):
      Output("output-graph","figure"),
      Output("column-select", "options"),
      Output("column-select", "value"),
-     Output("summary-stats","children")],
+     Output("summary-stats","children")
+     ],
     [Input("upload-data", "contents"),
      Input("file-select","value"),
      Input("x-axis-dropdown", "value"),
      Input("y-axis-dropdown", "value"),
      Input("chart-type-dropdown", "value"),
-     Input("filter-input","value")
+     Input("filter-input","value"),
+     Input("upload-data", "contents")
     ],
     State("upload-data","filename")
 )
+@app.callback(   #show file cards
+    Output("file-card", "children"),
+    Input("upload-data", "contents"),
+    State("upload-data", "filename")
+)
+def show_file_cards(contents, filenames):
+    if contents is None:
+        return []
 
+    cards = []
+    for i, name in enumerate(filenames):
+        card = dbc.Card(
+            dbc.CardBody([
+                html.H6(name, className="card-title"),
+                dbc.Button("Preview", id={"type": "preview-btn", "index": i}, color="primary", size="sm")
+            ]),
+            style={"marginBottom": "10px", "width": "300px"}
+        )
+        cards.append(card)
 
-def update_output(contents, selected_file, x_col, y_col, chart_type, filter_value):
+    return cards
+@app.callback( #Update Preview
+    [Output("preview-table", "data"),
+     Output("preview-table", "columns"),
+     Output("output-graph", "figure"),
+     Output("summary-stats","children")],
+    Input({"type": "preview-btn","index":ALL},"n_clicks"),
+    State("upload-data","contents"),
+    prevent_initial_call=True
+)
+def update_preview(n_clicks_list, contents):
+    if contents is None:
+        return [], [], {}, ""
+
+    dfs = parse_multiple(contents)
+
+    # Find which button was clicked
+    for i, n in enumerate(n_clicks_list):
+        if n:
+            df = dfs[i]
+            # Table preview
+            preview_data = df.head().to_dict("records")
+            preview_columns = [{"name": c, "id": c} for c in df.columns]
+
+            # Simple default graph (first two numeric columns if available)
+            fig = {}
+            numeric_cols = df.select_dtypes(include="number").columns
+            if len(numeric_cols) >= 2:
+                fig = px.scatter(df, x=numeric_cols[0], y=numeric_cols[1],
+                                 title=f"{numeric_cols[0]} vs {numeric_cols[1]}")
+
+            # Summary stats cards
+            cards = []
+            for col in numeric_cols[:2]:
+                stats = df[col].describe()
+                card = dbc.Card(
+                    dbc.CardBody([
+                        html.H5(f"📊 {col}", className="card-title"),
+                        html.P(f"Mean: {stats['mean']:.2f}"),
+                        html.P(f"Median: {df[col].median():.2f}"),
+                        html.P(f"Count: {int(stats['count'])}")
+                    ])
+                )
+                cards.append(dbc.Col(card, width=6))
+            return preview_data, preview_columns, fig, dbc.Row(cards)
+    return [], [], {}, ""
+def update_output(contents, selected_file, x_col, y_col, chart_type, filter_value,filenames):
     if contents is None:
         return [], [],[],[],{},[],[],"",[]
 
@@ -653,7 +719,7 @@ def update_output(contents, selected_file, x_col, y_col, chart_type, filter_valu
     Input("download-btn","n_clicks"),
     State("upload-data","contents"),
     State("filter-input","value"),
-    State("column-select","value"),
+    State("column-select","value"),#for exporting filtered CSV
     prevent_initial_call=True
 )
 def download_filtered(n_clicks, contents, filter_value, selected_cols):
