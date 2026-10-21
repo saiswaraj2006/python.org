@@ -557,20 +557,20 @@ app.layout = html.Div([
 ])
 # Helper function to parse uploaded file
 def parse_multiple(contents_list):
-    dfs=[]
-    for content in contents_list:
+    dfs = []
+    for content in contents_list[:2]:# only first 2 files
         content_type, content_string = content.split(",")
         decoded = base64.b64decode(content_string)
         try:
-        # Try reading as CSV
             df = pd.read_csv(io.StringIO(decoded.decode("utf-8")))
         except Exception:
             try:
                 df = pd.read_excel(io.BytesIO(decoded))
             except Exception:
-                df = pd.DataFrame()  # fallback empty dataframe
+                df = pd.DataFrame()
         dfs.append(df)
     return dfs
+
 #callback for table+graph
 @app.callback(
     [Output("file-select","options"),
@@ -589,96 +589,41 @@ def parse_multiple(contents_list):
      Input("y-axis-dropdown", "value"),
      Input("chart-type-dropdown", "value"),
      Input("filter-input","value"),
-     Input("upload-data", "contents")
+     Input({"type":"preview-btn","index":ALL},"n_clicks")
     ],
-    State("upload-data","filename")
-)
-@app.callback(   #show file cards
-    Output("file-card", "children"),
-    Input("upload-data", "contents"),
-    State("upload-data", "filename")
-)
-def show_file_cards(contents, filenames):
-    if contents is None:
-        return []
-
-    cards = []
-    for i, name in enumerate(filenames):
-        card = dbc.Card(
-            dbc.CardBody([
-                html.H6(name, className="card-title"),
-                dbc.Button("Preview", id={"type": "preview-btn", "index": i}, color="primary", size="sm")
-            ]),
-            style={"marginBottom": "10px", "width": "300px"}
-        )
-        cards.append(card)
-
-    return cards
-@app.callback( #Update Preview
-    [Output("preview-table", "data"),
-     Output("preview-table", "columns"),
-     Output("output-graph", "figure"),
-     Output("summary-stats","children")],
-    Input({"type": "preview-btn","index":ALL},"n_clicks"),
-    State("upload-data","contents"),
+    State("upload-data","filename"),
     prevent_initial_call=True
 )
-def update_preview(n_clicks_list, contents):
+def update_dashboard(contents, selected_file, x_col, y_col, chart_type, filter_value, n_clicks_list, filenames):
     if contents is None:
-        return [], [], {}, ""
+        return [], [], [], [], {}, [], [], "", []
 
     dfs = parse_multiple(contents)
 
-    # Find which button was clicked
+    # Decide which file to use: dropdown or card click
+    idx = selected_file if selected_file is not None else 0
     for i, n in enumerate(n_clicks_list):
         if n:
-            df = dfs[i]
-            # Table preview
-            preview_data = df.head().to_dict("records")
-            preview_columns = [{"name": c, "id": c} for c in df.columns]
+            idx = i
 
-            # Simple default graph (first two numeric columns if available)
-            fig = {}
-            numeric_cols = df.select_dtypes(include="number").columns
-            if len(numeric_cols) >= 2:
-                fig = px.scatter(df, x=numeric_cols[0], y=numeric_cols[1],
-                                 title=f"{numeric_cols[0]} vs {numeric_cols[1]}")
-
-            # Summary stats cards
-            cards = []
-            for col in numeric_cols[:2]:
-                stats = df[col].describe()
-                card = dbc.Card(
-                    dbc.CardBody([
-                        html.H5(f"📊 {col}", className="card-title"),
-                        html.P(f"Mean: {stats['mean']:.2f}"),
-                        html.P(f"Median: {df[col].median():.2f}"),
-                        html.P(f"Count: {int(stats['count'])}")
-                    ])
-                )
-                cards.append(dbc.Col(card, width=6))
-            return preview_data, preview_columns, fig, dbc.Row(cards)
-    return [], [], {}, ""
-def update_output(contents, selected_file, x_col, y_col, chart_type, filter_value,filenames):
-    if contents is None:
-        return [], [],[],[],{},[],[],"",[]
-
-    dfs= parse_multiple(contents)
-    file_options = [{"label": name, "value": i} for i, name in enumerate(filenames)]
-
-    # Default to first file if none selected
-    idx = selected_file if selected_file is not None else 0
     df = dfs[idx]
-    options = [{"label": col, "value": col} for col in df.columns]
-        # Apply filter if provided
+
+    # Apply filter
     if filter_value:
         try:
             df = df.query(filter_value)
         except Exception as e:
             print("Invalid filter:", e)
-    #preview of first 5 rows
+
+    # Dropdown options
+    file_options = [{"label": name, "value": i} for i, name in enumerate(filenames)]
+    options = [{"label": col, "value": col} for col in df.columns]
+
+    # Table preview
     preview_data = df.head().to_dict("records")
-    preview_columns = [{"name": i, "id": i} for i in df.columns]
+    preview_columns = [{"name": c, "id": c} for c in df.columns]
+
+    # Graph
     fig = {}
     if x_col and y_col:
         df[x_col] = pd.to_numeric(df[x_col], errors="coerce")
@@ -692,7 +637,8 @@ def update_output(contents, selected_file, x_col, y_col, chart_type, filter_valu
             fig = px.bar(df, x=x_col, y=y_col, title=f"Bar Chart: {y_col} vs {x_col}")
         elif chart_type == "histogram":
             fig = px.histogram(df, x=x_col, title=f"Histogram of {x_col}")
-# Build summary stats cards
+
+    # Summary stats
     cards = []
     for col in [x_col, y_col]:
         if col:
@@ -705,21 +651,44 @@ def update_output(contents, selected_file, x_col, y_col, chart_type, filter_valu
                     html.P(f"Count: {int(stats['count'])}")
                 ])
             )
-            cards.append(dbc.Col(card, width=6))#here each card takes half row
-#here on above line it declares about if i selected only one axis then it shows the axis descriptive summary
-#if both then also it shows both side by side 
-#the cards also resizes automatically on smaller screens (mobile-friendly)
+            cards.append(dbc.Col(card, width=6))
+
     return file_options, options, options, preview_data, preview_columns, fig, options, [col for col in df.columns], dbc.Row(cards)
+@app.callback(   #show file cards
+    Output("file-card", "children"),
+    Input("upload-data", "contents"),
+    State("upload-data", "filename")
+)
+def show_file_cards(contents, filenames):
+    if contents is None:
+        return []
 
-
-#separate callback for download
+    cols=[]
+    if len(filenames) > 2:#adding the message to guide the user
+        cols.append(
+            dbc.Col(
+            html.Div("⚠️ Please upload only 2 files. Extra files ignored.",
+                     style={"color": "red", "marginBottom": "10px"}),
+                     width=12
+            )
+        )
+    for i, name in enumerate(filenames[:2]):#for first 2 files
+        card = dbc.Card(
+            dbc.CardBody([
+                html.H6(name, className="card-title"),
+                dbc.Button("Preview", id={"type": "preview-btn", "index": i}, color="primary", size="sm")
+            ]),
+            style={"marginBottom": "10px"}
+        )
+        cols.append(dbc.Col(card, width=6)) #each card takes half row
+    return dbc.Row(cols)
 @app.callback(
     [Output("download-data","data"),
-    Output("download-toast","is_open")],
+     Output("download-toast","is_open")],
     Input("download-btn","n_clicks"),
     State("upload-data","contents"),
     State("filter-input","value"),
-    State("column-select","value"),#for exporting filtered CSV
+    State("column-select","value"),
     prevent_initial_call=True
 )
 def download_filtered(n_clicks, contents, filter_value, selected_cols):
