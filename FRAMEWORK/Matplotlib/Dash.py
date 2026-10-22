@@ -488,6 +488,7 @@ import base64#base64 string
 import dash_bootstrap_components as dbc
 from dash import dash_table
 from dash.dependencies import ALL
+from dash import callback_context
 
 app = Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])
 
@@ -530,7 +531,7 @@ app.layout = html.Div([
             placeholder="Select Chart Type"
         )
     ], style={"width": "50%", "marginTop": "20px"}),
-    dash_table.DataTable(id="preview-table"),  
+    html.Div(id="preview-area", style={"marginTop": "20px"}),
     dcc.Graph(id="output-graph"),
     dcc.Checklist(
     id="column-select",
@@ -576,8 +577,6 @@ def parse_multiple(contents_list):
     [Output("file-select","options"),
      Output("x-axis-dropdown", "options"),
      Output("y-axis-dropdown", "options"),
-     Output("preview-table", "data"),
-     Output("preview-table", "columns"),
      Output("output-graph","figure"),
      Output("column-select", "options"),
      Output("column-select", "value"),
@@ -589,25 +588,22 @@ def parse_multiple(contents_list):
      Input("y-axis-dropdown", "value"),
      Input("chart-type-dropdown", "value"),
      Input("filter-input","value"),
-     Input({"type":"preview-btn","index":ALL},"n_clicks")
+     
     ],
     State("upload-data","filename"),
     prevent_initial_call=True
 )
-def update_dashboard(contents, selected_file, x_col, y_col, chart_type, filter_value, n_clicks_list, filenames):
+def update_dashboard(contents, selected_file, x_col, y_col, chart_type, filter_value, filenames):
     if contents is None:
-        return [], [], [], [], {}, [], [], "", []
+        return [], [], [], {}, [], [], ""
 
     dfs = parse_multiple(contents)
 
     # Decide which file to use: dropdown or card click
     idx = selected_file if selected_file is not None else 0
-    for i, n in enumerate(n_clicks_list):
-        if n:
-            idx = i
-
+    if idx>=len(dfs):
+        idx=0
     df = dfs[idx]
-
     # Apply filter
     if filter_value:
         try:
@@ -616,12 +612,13 @@ def update_dashboard(contents, selected_file, x_col, y_col, chart_type, filter_v
             print("Invalid filter:", e)
 
     # Dropdown options
-    file_options = [{"label": name, "value": i} for i, name in enumerate(filenames)]
+    if filenames is None:
+        filenames=[]
+    file_options = [{"label": name, "value": i} for i, name in enumerate(filenames[:2])]
     options = [{"label": col, "value": col} for col in df.columns]
 
     # Table preview
-    preview_data = df.head().to_dict("records")
-    preview_columns = [{"name": c, "id": c} for c in df.columns]
+
 
     # Graph
     fig = {}
@@ -653,7 +650,7 @@ def update_dashboard(contents, selected_file, x_col, y_col, chart_type, filter_v
             )
             cards.append(dbc.Col(card, width=6))
 
-    return file_options, options, options, preview_data, preview_columns, fig, options, [col for col in df.columns], dbc.Row(cards)
+    return file_options, options, options, fig, options, [col for col in df.columns], dbc.Row(cards)
 @app.callback(   #show file cards
     Output("file-card", "children"),
     Input("upload-data", "contents"),
@@ -676,26 +673,70 @@ def show_file_cards(contents, filenames):
         card = dbc.Card(
             dbc.CardBody([
                 html.H6(name, className="card-title"),
-                dbc.Button("Preview", id={"type": "preview-btn", "index": i}, color="primary", size="sm")
+                dbc.Button(
+                "Preview",
+                id={"type":"preview-btn","index":i},
+                color="primary",
+                size="sm"
+            )
             ]),
             style={"marginBottom": "10px"}
         )
         cols.append(dbc.Col(card, width=6)) #each card takes half row
     return dbc.Row(cols)
+from dash import callback_context
+
+@app.callback(
+    Output("preview-area", "children"),
+    Input({"type":"preview-btn","index":ALL}, "n_clicks"),
+    State("upload-data", "contents"),
+    State("upload-data", "filename"),
+    prevent_initial_call=True
+)
+def show_selected_preview(n_clicks, contents, filenames):
+    if contents is None:
+        return []
+    ctx = callback_context
+    if not ctx.triggered:
+        return []
+    button_id = eval(ctx.triggered[0]["prop_id"].split(".")[0])
+    idx = button_id["index"]
+    dfs = parse_multiple(contents)
+    df = dfs[idx]
+    table = dash_table.DataTable(
+        data=df.head().to_dict("records"),
+        columns=[
+            {"name":c,"id":c}
+            for c in df.columns
+        ],
+        page_size=5
+    )
+    return dbc.Card(
+        dbc.CardBody([
+            html.H5(f"Preview of {filenames[idx]}"),
+            table
+        ])
+    )
+
 @app.callback(
     [Output("download-data","data"),
      Output("download-toast","is_open")],
     Input("download-btn","n_clicks"),
     State("upload-data","contents"),
+    State("file-select","value"),
     State("filter-input","value"),
     State("column-select","value"),
     prevent_initial_call=True
 )
-def download_filtered(n_clicks, contents, filter_value, selected_cols):
+def download_filtered(n_clicks, contents, selected_file, filter_value, selected_cols):
     if contents is None:
         return None, False
     dfs=parse_multiple(contents)
-    df=dfs[0]#to take first uploaded file
+    idx = selected_file if selected_file is not None else 0
+
+    if idx >= len(dfs):
+        idx = 0
+    df = dfs[idx]
     if filter_value:
         try:
             df = df.query(filter_value)
