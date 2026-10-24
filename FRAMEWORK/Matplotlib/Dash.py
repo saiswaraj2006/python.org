@@ -542,6 +542,32 @@ app.layout = html.Div([
     ),
     html.Div(id="summary-stats",style={"marginTop":"20px"}),
     html.Div(id="file-card", style={"marginTop": "20px"}),
+    html.Button(
+        "Common Columns",
+        id="common-btn",
+        className="btn btn-info",
+        style={
+            "marginTop": "15px",
+            "marginLeft": "10px"
+        }
+    ),
+
+    html.Div(id="common-columns-output"),
+
+    html.Button(
+        "Common Columns",
+        id="common-btn",
+        className="btn btn-info",
+        style={
+            "marginTop": "15px",
+            "marginLeft": "10px"
+        }
+    ),
+
+    html.Div(id="comparison-output"),
+    html.Div(id="common-columns-output"),
+    html.Div(id="quality-report"),
+
 
     html.Button("Download Filtered CSV",id="download-btn"),
     dcc.Download(id="download-data"),
@@ -669,16 +695,26 @@ def show_file_cards(contents, filenames):
                      width=12
             )
         )
+    dfs = parse_multiple(contents)
     for i, name in enumerate(filenames[:2]):#for first 2 files
         card = dbc.Card(
             dbc.CardBody([
                 html.H6(name, className="card-title"),
+
+                html.P(
+                    f"Rows: {len(dfs[i])}"
+                ),
+
+                html.P(
+                    f"Columns: {len(dfs[i].columns)}"
+                ),
+
                 dbc.Button(
-                "Preview",
-                id={"type":"preview-btn","index":i},
-                color="primary",
-                size="sm"
-            )
+                    "Preview",
+                    id={"type":"preview-btn","index":i},
+                    color="primary",
+                    size="sm"
+                )
             ]),
             style={"marginBottom": "10px"}
         )
@@ -717,6 +753,135 @@ def show_selected_preview(n_clicks, contents, filenames):
             table
         ])
     )
+@app.callback(
+    Output("comparison-output", "children"),
+    Input("compare-btn", "n_clicks"),
+    State("upload-data", "contents"),
+    State("upload-data", "filename"),
+    prevent_initial_call=True
+)
+def compare_files(n_clicks, contents, filenames):
+
+    if contents is None:
+        return "Upload 2 files first"
+
+    dfs = parse_multiple(contents)
+
+    if len(dfs) < 2:
+        return "Please upload two files"
+
+    df1 = dfs[0]
+    df2 = dfs[1]
+
+    comparison = pd.DataFrame({
+        "Metric":[
+            "Rows",
+            "Columns",
+            "Missing Values",
+            "Duplicate Rows",
+            "Missing %",
+            "Duplicate %"
+        ],
+        filenames[0]:[
+            len(df1),
+            len(df1.columns),
+            df1.isna().sum().sum(),
+            df1.duplicated().sum(),
+            round(
+                df1.isna().sum().sum() /
+                (df1.shape[0]*df1.shape[1]) * 100,
+                2
+            ),
+            round(
+                df1.duplicated().sum() /
+                len(df1) * 100,
+                2
+            )
+        ],
+        filenames[1]:[
+            len(df2),
+            len(df2.columns),
+            df2.isna().sum().sum(),
+            df2.duplicated().sum(),
+            round(
+                df2.isna().sum().sum() /
+                (df2.shape[0]*df2.shape[1]) * 100,
+                2
+            ),
+            round(
+                df2.duplicated().sum() /
+                len(df2) * 100,
+                2
+            )
+        ]
+    })
+
+    return dash_table.DataTable(
+        data=comparison.to_dict("records"),
+        columns=[
+            {"name":i,"id":i}
+            for i in comparison.columns
+        ]
+    )
+@app.callback(
+    Output("common-columns-output", "children"),
+    Input("common-btn", "n_clicks"),
+    State("upload-data", "contents"),
+    prevent_initial_call=True
+)
+def common_columns(n_clicks, contents):
+
+    if contents is None:
+        return "Upload two files first"
+
+    dfs = parse_multiple(contents)
+
+    if len(dfs) < 2:
+        return "Please upload two files"
+
+    common = list(
+        set(dfs[0].columns) &
+        set(dfs[1].columns)
+    )
+
+    return dbc.Card(
+        dbc.CardBody([
+            html.H5("Common Columns"),
+
+            html.Ul([
+                html.Li(col)
+                for col in common
+            ])
+        ])
+    )
+@app.callback(
+    Output("quality-report","children"),
+    Input("file-select","value"),
+    State("upload-data","contents"),
+    prevent_initial_call=True
+)
+def quality_report(selected_file, contents):
+
+    dfs = parse_multiple(contents)
+
+    idx = selected_file if selected_file is not None else 0
+
+    if idx >= len(dfs):
+        idx = 0
+
+    df = dfs[idx]
+
+    return dbc.Card(
+        dbc.CardBody([
+            html.H5("Data Quality Report"),
+            html.P(f"Missing Values: {df.isna().sum().sum()}"),
+            html.P(f"Duplicate Rows: {df.duplicated().sum()}"),
+            html.P(f"Columns: {len(df.columns)}"),
+            html.P(f"Rows: {len(df)}")
+        ])
+    )
+
+
 
 @app.callback(
     [Output("download-data","data"),
