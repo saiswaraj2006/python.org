@@ -543,17 +543,11 @@ app.layout = html.Div([
     html.Div(id="summary-stats",style={"marginTop":"20px"}),
     html.Div(id="file-card", style={"marginTop": "20px"}),
     html.Button(
-        "Common Columns",
-        id="common-btn",
-        className="btn btn-info",
-        style={
-            "marginTop": "15px",
-            "marginLeft": "10px"
-        }
+            "Compare Files",
+            id="compare-btn",
+            className="btn btn-success",
+            style={"marginTop": "15px"}
     ),
-
-    html.Div(id="common-columns-output"),
-
     html.Button(
         "Common Columns",
         id="common-btn",
@@ -563,7 +557,6 @@ app.layout = html.Div([
             "marginLeft": "10px"
         }
     ),
-
     html.Div(id="comparison-output"),
     html.Div(id="common-columns-output"),
     html.Div(id="quality-report"),
@@ -683,7 +676,10 @@ def update_dashboard(contents, selected_file, x_col, y_col, chart_type, filter_v
     State("upload-data", "filename")
 )
 def show_file_cards(contents, filenames):
+    print(filenames)
     if contents is None:
+        return []
+    if filenames is None:
         return []
 
     cols=[]
@@ -720,7 +716,6 @@ def show_file_cards(contents, filenames):
         )
         cols.append(dbc.Col(card, width=6)) #each card takes half row
     return dbc.Row(cols)
-from dash import callback_context
 
 @app.callback(
     Output("preview-area", "children"),
@@ -839,9 +834,8 @@ def common_columns(n_clicks, contents):
     if len(dfs) < 2:
         return "Please upload two files"
 
-    common = list(
-        set(dfs[0].columns) &
-        set(dfs[1].columns)
+    common = sorted(
+    list(set(dfs[0].columns) & set(dfs[1].columns))
     )
 
     return dbc.Card(
