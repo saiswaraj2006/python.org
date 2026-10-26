@@ -489,12 +489,9 @@ import dash_bootstrap_components as dbc
 from dash import dash_table
 from dash.dependencies import ALL
 from dash import callback_context
-
 app = Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])
-
 app.layout = html.Div([
     html.H1("Upload Your Dataset Explorer"),
-
     dcc.Upload(
         id="upload-data",
         children=html.Div(["Drag and Drop or ", html.A("Select a CSV File")]),
@@ -518,7 +515,6 @@ app.layout = html.Div([
         dcc.Dropdown(id="x-axis-dropdown", placeholder="Select X-axis"),
         dcc.Dropdown(id="y-axis-dropdown", placeholder="Select Y-axis"),
         dcc.Dropdown(id="file-select",placeholder="Select a file to preview",style={"width": "50%", "marginTop": "10px"}),
-
         dcc.Dropdown(
             id="chart-type-dropdown",
             options=[
@@ -557,11 +553,23 @@ app.layout = html.Div([
             "marginLeft": "10px"
         }
     ),
+    html.Button(
+        "Merge Files",
+        id="merge-btn",
+        className="btn btn-warning",
+        style={
+            "marginTop": "15px",
+            "marginLeft": "10px"
+        }
+    ),
+    html.Div(id="merge-output"),
     html.Div(id="comparison-output"),
     html.Div(id="common-columns-output"),
+    dcc.Dropdown(
+        id="merge-column",
+        placeholder="Select common column for merge"
+    ),
     html.Div(id="quality-report"),
-
-
     html.Button("Download Filtered CSV",id="download-btn"),
     dcc.Download(id="download-data"),
     # Toast component (hidden by default)
@@ -576,6 +584,62 @@ app.layout = html.Div([
         style={"position": "fixed", "top": 10, "right": 10, "width": 300}),
 ])
 # Helper function to parse uploaded file
+@app.callback(
+    Output("merge-column", "options"),
+    Input("upload-data", "contents"),
+    prevent_initial_call=True
+)
+def update_merge_columns(contents):
+
+    dfs = parse_multiple(contents)
+
+    if len(dfs) < 2:
+        return []
+
+    common = list(
+        set(dfs[0].columns) &
+        set(dfs[1].columns)
+    )
+
+    return [
+        {"label": col, "value": col}
+        for col in common
+    ]
+@app.callback(
+    Output("merge-output", "children"),
+    Input("merge-btn", "n_clicks"),
+    State("upload-data", "contents"),
+    State("merge-column", "value"),
+    prevent_initial_call=True
+)
+def merge_files(n_clicks, contents, merge_col):
+
+    if contents is None:
+        return "Upload two files first"
+
+    if merge_col is None:
+        return "Select a merge column"
+
+    dfs = parse_multiple(contents)
+
+    if len(dfs) < 2:
+        return "Upload two files"
+
+    merged = pd.merge(
+        dfs[0],
+        dfs[1],
+        on=merge_col,
+        how="inner"
+    )
+
+    return dash_table.DataTable(
+        data=merged.head().to_dict("records"),
+        columns=[
+            {"name": c, "id": c}
+            for c in merged.columns
+        ],
+        page_size=10
+    )
 def parse_multiple(contents_list):
     dfs = []
     for content in contents_list[:2]:# only first 2 files
@@ -590,7 +654,6 @@ def parse_multiple(contents_list):
                 df = pd.DataFrame()
         dfs.append(df)
     return dfs
-
 #callback for table+graph
 @app.callback(
     [Output("file-select","options"),
@@ -607,7 +670,6 @@ def parse_multiple(contents_list):
      Input("y-axis-dropdown", "value"),
      Input("chart-type-dropdown", "value"),
      Input("filter-input","value"),
-     
     ],
     State("upload-data","filename"),
     prevent_initial_call=True
@@ -615,9 +677,7 @@ def parse_multiple(contents_list):
 def update_dashboard(contents, selected_file, x_col, y_col, chart_type, filter_value, filenames):
     if contents is None:
         return [], [], [], {}, [], [], ""
-
     dfs = parse_multiple(contents)
-
     # Decide which file to use: dropdown or card click
     idx = selected_file if selected_file is not None else 0
     if idx>=len(dfs):
@@ -629,16 +689,12 @@ def update_dashboard(contents, selected_file, x_col, y_col, chart_type, filter_v
             df = df.query(filter_value)
         except Exception as e:
             print("Invalid filter:", e)
-
     # Dropdown options
     if filenames is None:
         filenames=[]
     file_options = [{"label": name, "value": i} for i, name in enumerate(filenames[:2])]
     options = [{"label": col, "value": col} for col in df.columns]
-
     # Table preview
-
-
     # Graph
     fig = {}
     if x_col and y_col:
@@ -682,7 +738,7 @@ def show_file_cards(contents, filenames):
     if filenames is None:
         return []
 
-    cols=[]
+    cols=[]  
     if len(filenames) > 2:#adding the message to guide the user
         cols.append(
             dbc.Col(
@@ -716,7 +772,6 @@ def show_file_cards(contents, filenames):
         )
         cols.append(dbc.Col(card, width=6)) #each card takes half row
     return dbc.Row(cols)
-
 @app.callback(
     Output("preview-area", "children"),
     Input({"type":"preview-btn","index":ALL}, "n_clicks"),
@@ -874,9 +929,6 @@ def quality_report(selected_file, contents):
             html.P(f"Rows: {len(df)}")
         ])
     )
-
-
-
 @app.callback(
     [Output("download-data","data"),
      Output("download-toast","is_open")],
