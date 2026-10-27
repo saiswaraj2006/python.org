@@ -567,7 +567,8 @@ app.layout = html.Div([
     html.Div(id="common-columns-output"),
     dcc.Dropdown(
         id="merge-column",
-        placeholder="Select common column for merge"
+        placeholder="Select common column for merge",
+        value=None 
     ),
     html.Div(id="quality-report"),
     html.Button("Download Filtered CSV",id="download-btn"),
@@ -583,6 +584,20 @@ app.layout = html.Div([
         duration=4000,  # auto-hide after 4 seconds
         style={"position": "fixed", "top": 10, "right": 10, "width": 300}),
 ])
+def parse_multiple(contents_list):
+    dfs = []
+    for content in contents_list[:2]:
+        content_type, content_string = content.split(",")
+        decoded = base64.b64decode(content_string)
+        try:
+            df = pd.read_csv(io.StringIO(decoded.decode("utf-8")))
+        except Exception:
+            try:
+                df = pd.read_excel(io.BytesIO(decoded))
+            except Exception:
+                df = pd.DataFrame()
+        dfs.append(df)
+    return dfs
 # Helper function to parse uploaded file
 @app.callback(
     Output("merge-column", "options"),
@@ -632,28 +647,21 @@ def merge_files(n_clicks, contents, merge_col):
         how="inner"
     )
 
-    return dash_table.DataTable(
-        data=merged.head().to_dict("records"),
-        columns=[
-            {"name": c, "id": c}
-            for c in merged.columns
-        ],
-        page_size=10
-    )
-def parse_multiple(contents_list):
-    dfs = []
-    for content in contents_list[:2]:# only first 2 files
-        content_type, content_string = content.split(",")
-        decoded = base64.b64decode(content_string)
-        try:
-            df = pd.read_csv(io.StringIO(decoded.decode("utf-8")))
-        except Exception:
-            try:
-                df = pd.read_excel(io.BytesIO(decoded))
-            except Exception:
-                df = pd.DataFrame()
-        dfs.append(df)
-    return dfs
+    return dbc.Card(
+        dbc.CardBody([#for showing the rows and cols how many?
+            html.H5("Merged Dataset"),
+            html.P(f"Rows: {len(merged)}"),
+            html.P(f"Columns: {len(merged.columns)}"),
+            dash_table.DataTable(
+                data=merged.head().to_dict("records"),
+                columns=[
+                    {"name": c, "id": c}
+                    for c in merged.columns
+                ],
+                page_size=10
+            )
+        ])
+)
 #callback for table+graph
 @app.callback(
     [Output("file-select","options"),
