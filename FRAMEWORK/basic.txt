@@ -13,7 +13,7 @@ There are many types of Frameworks for different uses for:
 ↳Flask, Django
 
 2. DataDashboards
-↳Dash(built on plotly)
+↳Dash(built on plotly)#dcc=Dash Core Components
     ↳Perfect for interactive charts and dashboards
     
 3. Machine Learning

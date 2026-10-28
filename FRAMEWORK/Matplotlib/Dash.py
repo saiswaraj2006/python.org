@@ -494,7 +494,9 @@ app.layout = html.Div([
     html.H1("Upload Your Dataset Explorer"),
     dcc.Upload(
         id="upload-data",
-        children=html.Div(["Drag and Drop or ", html.A("Select a CSV File")]),
+        children=html.Div(["Drag and Drop or ", html.A("Select Up To 2 CSV File")
+                           ]),
+          
         style={
             "width": "50%", "height": "60px", "lineHeight": "60px",
             "borderWidth": "1px", "borderStyle": "dashed",
@@ -502,6 +504,14 @@ app.layout = html.Div([
         },
         multiple=True#here i changed the format to multiple= True because it also accepts the 
         #multiple uploads of the .csv files
+    ),
+    html.Small(
+        "Tip: Hold Ctrl and select two files together.",
+    style={
+        "color": "gray",
+        "marginLeft": "10px",
+        "display": "block"
+    }
     ),
     html.Div([
     dcc.Input(
