@@ -539,6 +539,14 @@ app.layout = html.Div([
     ], style={"width": "50%", "marginTop": "20px"}),
     html.Div(id="preview-area", style={"marginTop": "20px"}),
     dcc.Graph(id="output-graph"),
+    html.Button(
+    "Generate Correlation Heatmap",
+    id="heatmap-btn",
+    className="btn btn-danger",
+    style={"marginTop": "10px"}
+    ),
+
+    dcc.Graph(id="heatmap-graph"),
     dcc.Checklist(
     id="column-select",
     options=[],
@@ -947,6 +955,33 @@ def quality_report(selected_file, contents):
             html.P(f"Rows: {len(df)}")
         ])
     )
+@app.callback(
+    Output("heatmap-graph", "figure"),
+    Input("heatmap-btn", "n_clicks"),
+    State("upload-data", "contents"),
+    State("file-select", "value"),
+    prevent_initial_call=True
+)
+def generate_heatmap(n_clicks, contents, selected_file):
+
+    dfs = parse_multiple(contents)
+
+    idx = selected_file if selected_file is not None else 0
+
+    if idx >= len(dfs):
+        idx = 0
+
+    df = dfs[idx]
+
+    corr = df.corr(numeric_only=True)
+
+    fig = px.imshow(
+        corr,
+        text_auto=True,
+        title="Correlation Heatmap"
+    )
+
+    return fig
 @app.callback(
     [Output("download-data","data"),
      Output("download-toast","is_open")],
