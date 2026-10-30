@@ -572,6 +572,13 @@ app.layout = html.Div([
         }
     ),
     html.Button(
+            "Download Merged CSV",
+            id="download-merged-btn",
+            className="btn btn-dark"
+    ),
+    dcc.Download(id="download-merged"),
+
+    html.Button(
         "Merge Files",
         id="merge-btn",
         className="btn btn-warning",
@@ -633,7 +640,7 @@ def update_merge_columns(contents):
         set(dfs[0].columns) &
         set(dfs[1].columns)
     )
-
+    print("COMMON COLUMNS:", common)
     return [
         {"label": col, "value": col}
         for col in common
@@ -954,6 +961,39 @@ def quality_report(selected_file, contents):
             html.P(f"Columns: {len(df.columns)}"),
             html.P(f"Rows: {len(df)}")
         ])
+    )
+@app.callback(
+    Output("download-merged", "data"),
+    Input("download-merged-btn", "n_clicks"),
+    State("upload-data", "contents"),
+    State("merge-column", "value"),
+    prevent_initial_call=True
+)
+def download_merged_file(n_clicks, contents, merge_col):
+    print("Download button clicked")
+    print("Merge column:", merge_col)
+
+    if contents is None:
+        return None
+    if merge_col is None:
+        print("No merge column selected")
+        return None
+    dfs = parse_multiple(contents)
+
+    if len(dfs) < 2:
+        return None
+
+    merged = pd.merge(
+        dfs[0],
+        dfs[1],
+        on=merge_col,
+        how="inner"
+    )
+
+    return dcc.send_data_frame(
+        merged.to_csv,
+        "merged_dataset.csv",
+        index=False
     )
 @app.callback(
     Output("heatmap-graph", "figure"),
