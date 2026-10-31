@@ -625,7 +625,8 @@ def parse_multiple(contents_list):
     return dfs
 # Helper function to parse uploaded file
 @app.callback(
-    Output("merge-column", "options"),
+    [Output("merge-column", "options"),
+     Output("merge-column", "value")],
     Input("upload-data", "contents"),
     prevent_initial_call=True
 )
@@ -641,10 +642,14 @@ def update_merge_columns(contents):
         set(dfs[1].columns)
     )
     print("COMMON COLUMNS:", common)
-    return [
+    options = [
         {"label": col, "value": col}
         for col in common
     ]
+
+    default_value = common[0] if common else None
+
+    return options, default_value
 @app.callback(
     Output("merge-output", "children"),
     Input("merge-btn", "n_clicks"),
