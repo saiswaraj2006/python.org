@@ -1,0 +1,182 @@
+PROJECT TITLE
+-------------
+Multi-File Data Analysis Dashboard Using Dash and Plotly
+
+PROJECT OVERVIEW
+----------------
+This project is an interactive web-based data analysis dashboard developed using
+Python, Dash, Plotly, Pandas, and Bootstrap Components.
+
+The dashboard allows users to upload and analyze multiple CSV files,
+compare datasets, identify common columns, merge datasets, generate charts,
+and download processed data.
+
+FEATURES
+--------
+
+1. Multi-File Upload
+   - Upload up to 2 CSV files simultaneously.
+   - Supports drag-and-drop and file selection.
+   - User guidance provided through upload tips.
+
+2. Dataset Preview
+   - Each uploaded file is displayed as a card.
+   - Displays:
+       * File Name
+       * Number of Rows
+       * Number of Columns
+   - Individual Preview button for each file.
+
+3. Interactive Visualization
+   - Scatter Plot
+   - Bar Chart
+   - Box Plot
+   - Histogram
+   - Dynamic X and Y axis selection
+
+4. Dataset Comparison
+   - Compare two uploaded datasets.
+   - Displays:
+       * Number of Rows
+       * Number of Columns
+       * Missing Values
+       * Duplicate Rows
+       * Missing Percentage
+       * Duplicate Percentage
+
+5. Common Column Detection
+   - Identifies columns shared between both datasets.
+   - Useful for merging datasets.
+
+6. Dataset Merging
+   - Select a common column.
+   - Merge two datasets using Pandas Merge.
+   - Preview merged results.
+   - Displays merged dataset dimensions.
+
+7. Correlation Heatmap
+   - Generates correlation matrix for numeric columns.
+   - Visualized using Plotly Heatmap.
+
+8. Data Quality Report
+   - Displays:
+       * Total Rows
+       * Total Columns
+       * Missing Values
+       * Duplicate Rows
+
+9. Filtering
+   - Supports Pandas Query filtering.
+   - Example:
+         Department == 'HR'
+
+10. CSV Download
+    - Download filtered dataset.
+    - Dynamic file naming.
+
+11. Download Merged Dataset
+    - Export merged dataset as CSV.
+
+TECHNOLOGIES USED
+-----------------
+
+Frontend:
+    - Dash
+    - Dash Core Components (dcc)
+    - Dash HTML Components (html)
+    - Dash Bootstrap Components (dbc)
+
+Backend:
+    - Python
+    - Pandas
+
+Visualization:
+    - Plotly Express
+
+Data Processing:
+    - Pandas
+    - NumPy
+
+WORKFLOW
+--------
+
+Step 1:
+Upload one or two CSV files.
+
+Step 2:
+Dashboard reads files and converts them into Pandas DataFrames.
+
+Step 3:
+File cards are generated showing:
+    - File Name
+    - Row Count
+    - Column Count
+
+Step 4:
+User can preview any uploaded file.
+
+Step 5:
+User can:
+    - Compare datasets
+    - Find common columns
+    - Generate graphs
+    - Filter data
+
+Step 6:
+User can choose a common column and merge datasets.
+
+Step 7:
+Merged dataset can be previewed and downloaded.
+
+Step 8:
+Generate correlation heatmaps and quality reports for deeper analysis.
+
+PROJECT STRUCTURE
+-----------------
+
+app.py
+
+├── Layout Components
+│   ├── File Upload
+│   ├── Dropdowns
+│   ├── Buttons
+│   ├── Graphs
+│   ├── Data Tables
+│   └── Download Components
+│
+├── Helper Functions
+│   └── parse_multiple()
+│
+├── Upload Callbacks
+│
+├── Preview Callbacks
+│
+├── Comparison Callbacks
+│
+├── Common Column Callbacks
+│
+├── Merge Callbacks
+│
+├── Heatmap Callbacks
+│
+├── Filter Callbacks
+│
+└── Download Callbacks
+
+LEARNING OUTCOMES
+-----------------
+
+Through this project the following concepts were implemented:
+
+- Multi-file Upload Handling
+- Dash Callbacks
+- Pattern Matching Callbacks
+- Dynamic UI Updates
+- Data Visualization
+- Data Cleaning
+- Data Merging
+- Dataset Comparison
+- Statistical Analysis
+- CSV Export Functionality
+- Plotly Interactive Charts
+- Bootstrap-Based Dashboard Design
