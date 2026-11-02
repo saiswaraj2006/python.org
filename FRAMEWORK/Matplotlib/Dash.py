@@ -557,18 +557,31 @@ app.layout = html.Div([
     html.Div(id="summary-stats",style={"marginTop":"20px"}),
     html.Div(id="file-card", style={"marginTop": "20px"}),
     html.Button(
-            "Compare Files",
-            id="compare-btn",
-            className="btn btn-success",
-            style={"marginTop": "15px"}
-    ),
+    "Compare Files",
+    id="compare-btn",
+    className="btn btn-success",
+    style={"marginTop": "15px"}
+),
+
     html.Button(
-        "Common Columns",
-        id="common-btn",
-        className="btn btn-info",
-        style={
-            "marginTop": "15px",
-            "marginLeft": "10px"
+    "Download Comparison Report",
+    id="download-comparison-btn",
+    className="btn btn-secondary",
+    style={
+        "marginTop": "15px",
+        "marginLeft": "10px"
+        }
+    ),
+
+    dcc.Download(id="download-comparison"),
+
+    html.Button(
+    "Common Columns",
+    id="common-btn",
+    className="btn btn-info",
+    style={
+        "marginTop": "15px",
+        "marginLeft": "10px"
         }
     ),
     html.Button(
@@ -595,6 +608,34 @@ app.layout = html.Div([
         placeholder="Select common column for merge",
         value=None 
     ),
+    dcc.Tabs([
+        dcc.Tab(label="Visualization", children=[
+        dcc.Graph(id="output-graph")
+        ]),
+
+        dcc.Tab(label="Comparison", children=[
+        html.Div(id="comparison-output"),
+        html.Div(id="common-columns-output")
+        ]),
+
+        dcc.Tab(label="Merge", children=[
+        dcc.Dropdown(id="merge-column"),
+        html.Div(id="merge-output")
+        ]),
+
+        dcc.Tab(label="Reports", children=[
+        html.Div(id="quality-report"),
+        html.Div(id="overview-report")
+        ])
+    ])
+    dcc.RadioItems(#for Dark/Light Mode theme switcher
+    id="theme-selector",
+    options=[
+        {"label": "Light", "value": "light"},
+        {"label": "Dark", "value": "dark"}
+    ],
+    value="light"
+    )
     html.Div(id="quality-report"),
     html.Button("Download Filtered CSV",id="download-btn"),
     dcc.Download(id="download-data"),
@@ -950,14 +991,10 @@ def common_columns(n_clicks, contents):
 def quality_report(selected_file, contents):
 
     dfs = parse_multiple(contents)
-
     idx = selected_file if selected_file is not None else 0
-
     if idx >= len(dfs):
         idx = 0
-
     df = dfs[idx]
-
     return dbc.Card(
         dbc.CardBody([
             html.H5("Data Quality Report"),
@@ -977,17 +1014,14 @@ def quality_report(selected_file, contents):
 def download_merged_file(n_clicks, contents, merge_col):
     print("Download button clicked")
     print("Merge column:", merge_col)
-
     if contents is None:
         return None
     if merge_col is None:
         print("No merge column selected")
         return None
     dfs = parse_multiple(contents)
-
     if len(dfs) < 2:
         return None
-
     merged = pd.merge(
         dfs[0],
         dfs[1],
@@ -1017,9 +1051,7 @@ def generate_heatmap(n_clicks, contents, selected_file):
         idx = 0
 
     df = dfs[idx]
-
     corr = df.corr(numeric_only=True)
-
     fig = px.imshow(
         corr,
         text_auto=True,
