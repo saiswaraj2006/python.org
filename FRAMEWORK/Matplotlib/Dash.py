@@ -513,6 +513,7 @@ app.layout = html.Div([
         "display": "block"
     }
     ),
+    html.Div(id="overview-report"),
     html.Div([
     dcc.Input(
         id="filter-input",
@@ -600,17 +601,10 @@ app.layout = html.Div([
             "marginLeft": "10px"
         }
     ),
-    html.Div(id="merge-output"),
-    html.Div(id="comparison-output"),
-    html.Div(id="common-columns-output"),
-    dcc.Dropdown(
-        id="merge-column",
-        placeholder="Select common column for merge",
-        value=None 
-    ),
+
     dcc.Tabs([
         dcc.Tab(label="Visualization", children=[
-        dcc.Graph(id="output-graph")
+        dcc.Graph(id="output-graph"), dcc.Graph(id="heatmap-graph")
         ]),
 
         dcc.Tab(label="Comparison", children=[
@@ -627,7 +621,7 @@ app.layout = html.Div([
         html.Div(id="quality-report"),
         html.Div(id="overview-report")
         ])
-    ])
+    ]),
     dcc.RadioItems(#for Dark/Light Mode theme switcher
     id="theme-selector",
     options=[
@@ -676,7 +670,7 @@ def update_merge_columns(contents):
     dfs = parse_multiple(contents)
 
     if len(dfs) < 2:
-        return []
+        return [], None 
 
     common = list(
         set(dfs[0].columns) &
