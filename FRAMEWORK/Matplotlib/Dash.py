@@ -513,7 +513,7 @@ app.layout = html.Div([
         "display": "block"
     }
     ),
-    html.Div(id="overview-report"),
+    
     html.Div([
     dcc.Input(
         id="filter-input",
@@ -539,7 +539,7 @@ app.layout = html.Div([
         )
     ], style={"width": "50%", "marginTop": "20px"}),
     html.Div(id="preview-area", style={"marginTop": "20px"}),
-    dcc.Graph(id="output-graph"),
+    
     html.Button(
     "Generate Correlation Heatmap",
     id="heatmap-btn",
@@ -547,7 +547,7 @@ app.layout = html.Div([
     style={"marginTop": "10px"}
     ),
 
-    dcc.Graph(id="heatmap-graph"),
+    
     dcc.Checklist(
     id="column-select",
     options=[],
@@ -604,7 +604,8 @@ app.layout = html.Div([
 
     dcc.Tabs([
         dcc.Tab(label="Visualization", children=[
-        dcc.Graph(id="output-graph"), dcc.Graph(id="heatmap-graph")
+        dcc.Graph(id="output-graph"),
+        dcc.Graph(id="heatmap-graph")
         ]),
 
         dcc.Tab(label="Comparison", children=[
@@ -629,8 +630,8 @@ app.layout = html.Div([
         {"label": "Dark", "value": "dark"}
     ],
     value="light"
-    )
-    html.Div(id="quality-report"),
+    ),
+    
     html.Button("Download Filtered CSV",id="download-btn"),
     dcc.Download(id="download-data"),
     # Toast component (hidden by default)
@@ -727,6 +728,38 @@ def merge_files(n_clicks, contents, merge_col):
             )
         ])
 )
+@app.callback(
+    Output("overview-report", "children"),
+    Input("file-select", "value"),
+    State("upload-data", "contents"),
+    prevent_initial_call=True
+)
+def dataset_overview(selected_file, contents):
+
+    dfs = parse_multiple(contents)
+
+    idx = selected_file if selected_file is not None else 0
+
+    if idx >= len(dfs):
+        idx = 0
+
+    df = dfs[idx]
+
+    memory_mb = (
+        df.memory_usage(deep=True).sum()
+        / 1024 / 1024
+    )
+
+    return dbc.Card(
+        dbc.CardBody([
+            html.H4("Dataset Overview"),
+            html.P(f"Rows: {len(df)}"),
+            html.P(f"Columns: {len(df.columns)}"),
+            html.P(f"Missing Values: {df.isna().sum().sum()}"),
+            html.P(f"Duplicate Rows: {df.duplicated().sum()}"),
+            html.P(f"Memory Usage: {memory_mb:.2f} MB")
+        ])
+    )
 #callback for table+graph
 @app.callback(
     [Output("file-select","options"),
