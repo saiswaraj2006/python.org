@@ -687,6 +687,53 @@ def update_merge_columns(contents):
 
     return options, default_value
 @app.callback(
+    Output("download-comparison", "data"),
+    Input("download-comparison-btn", "n_clicks"),
+    State("upload-data", "contents"),
+    State("upload-data", "filename"),
+    prevent_initial_call=True
+)
+def download_comparison(n_clicks, contents, filenames):
+
+    if contents is None:
+        return None
+
+    dfs = parse_multiple(contents)
+
+    if len(dfs) < 2:
+        return None
+
+    df1 = dfs[0]
+    df2 = dfs[1]
+
+    comparison = pd.DataFrame({
+        "Metric": [
+            "Rows",
+            "Columns",
+            "Missing Values",
+            "Duplicate Rows"
+        ],
+        filenames[0]: [
+            len(df1),
+            len(df1.columns),
+            df1.isna().sum().sum(),
+            df1.duplicated().sum()
+        ],
+        filenames[1]: [
+            len(df2),
+            len(df2.columns),
+            df2.isna().sum().sum(),
+            df2.duplicated().sum()
+        ]
+    })
+
+    return dcc.send_data_frame(
+        comparison.to_csv,
+        "comparison_report.csv",
+        index=False
+    )
+
+@app.callback(
     Output("merge-output", "children"),
     Input("merge-btn", "n_clicks"),
     State("upload-data", "contents"),
