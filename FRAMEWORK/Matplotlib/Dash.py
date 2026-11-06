@@ -490,8 +490,17 @@ from dash import dash_table
 from dash.dependencies import ALL
 from dash import callback_context
 app = Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])
-app.layout = html.Div([
-    html.H1("Upload Your Dataset Explorer"),
+app.layout = html.Div(
+    id="main-container",
+    children=[
+        html.H1("Upload Your Dataset Explorer"),
+
+
+    dbc.Switch(
+        id="theme-switch",
+        label="🌙 Dark Mode",
+        value=False,
+    ),
     dcc.Upload(
         id="upload-data",
         children=html.Div(["Drag and Drop or ", html.A("Select Up To 2 CSV File")
@@ -513,7 +522,6 @@ app.layout = html.Div([
         "display": "block"
     }
     ),
-    
     html.Div([
     dcc.Input(
         id="filter-input",
@@ -623,15 +631,7 @@ app.layout = html.Div([
         html.Div(id="overview-report")
         ])
     ]),
-    dcc.RadioItems(#for Dark/Light Mode theme switcher
-    id="theme-selector",
-    options=[
-        {"label": "Light", "value": "light"},
-        {"label": "Dark", "value": "dark"}
-    ],
-    value="light"
-    ),
-    
+
     html.Button("Download Filtered CSV",id="download-btn"),
     dcc.Download(id="download-data"),
     # Toast component (hidden by default)
@@ -644,7 +644,9 @@ app.layout = html.Div([
         icon="success",
         duration=4000,  # auto-hide after 4 seconds
         style={"position": "fixed", "top": 10, "right": 10, "width": 300}),
-])
+
+    ]
+)
 def parse_multiple(contents_list):
     dfs = []
     for content in contents_list[:2]:
@@ -1133,6 +1135,27 @@ def generate_heatmap(n_clicks, contents, selected_file):
     )
 
     return fig
+
+@app.callback(
+    Output("main-container", "style"),
+    Input("theme-switch", "value")
+)
+def switch_theme(is_dark):
+
+    if is_dark:
+        return {
+            "backgroundColor": "#222",
+            "color": "white",
+            "minHeight": "100vh",
+            "padding": "20px"
+        }
+
+    return {
+        "backgroundColor": "white",
+        "color": "black",
+        "minHeight": "100vh",
+        "padding": "20px"
+    }
 @app.callback(
     [Output("download-data","data"),
      Output("download-toast","is_open")],
