@@ -530,22 +530,43 @@ app.layout = html.Div(
         style={"width": "50%", "marginTop": "10px"}
         )
     ]),
-    html.Div([
-        dcc.Dropdown(id="x-axis-dropdown", placeholder="Select X-axis"),
-        dcc.Dropdown(id="y-axis-dropdown", placeholder="Select Y-axis"),
-        dcc.Dropdown(id="file-select",placeholder="Select a file to preview",style={"width": "50%", "marginTop": "10px"}),
-        dcc.Dropdown(
-            id="chart-type-dropdown",
-            options=[
-                {"label": "Scatter Plot", "value": "scatter"},
-                {"label": "Box Plot", "value": "box"},
-                {"label": "Bar Chart", "value": "bar"},
-                {"label": "Histogram", "value": "histogram"}
-            ],
-            value="scatter",
-            placeholder="Select Chart Type"
-        )
-    ], style={"width": "50%", "marginTop": "20px"}),
+html.Div([
+    dcc.Dropdown(
+        id="x-axis-dropdown",
+        placeholder="Select X-axis"
+    ),
+
+    dcc.Dropdown(
+        id="y-axis-dropdown",
+        placeholder="Select Y-axis"
+    ),
+
+    dcc.Dropdown(
+        id="file-select",
+        placeholder="Select a file to preview",
+        style={"width": "50%", "marginTop": "10px"}
+    ),
+
+    html.Label(
+        "📊 Select Chart Type",
+        style={
+            "fontWeight": "bold",
+            "marginTop": "10px",
+            "display": "block"
+        }
+    ),
+
+    dcc.Dropdown(
+        id="chart-type-dropdown",
+        options=[
+            {"label": "Scatter Plot", "value": "scatter"},
+            {"label": "Box Plot", "value": "box"},
+            {"label": "Bar Chart", "value": "bar"},
+            {"label": "Histogram", "value": "histogram"}
+        ],
+        placeholder="Choose a Chart Type"
+    )
+], style={"width": "50%", "marginTop": "20px"}),
     html.Div(id="preview-area", style={"marginTop": "20px"}),
     
     html.Button(
@@ -609,31 +630,39 @@ app.layout = html.Div(
             "marginLeft": "10px"
         }
     ),
+dcc.Tabs([
+    dcc.Tab(label="Visualization", children=[
 
-    dcc.Tabs([
-        dcc.Tab(label="Visualization", children=[
-        dcc.Graph(id="output-graph"),
-        dcc.Graph(id="heatmap-graph")
-        ]),
+        dcc.Loading(
+            type="circle",#it shows the circle spinning when it is loading
+            children=[
+                dcc.Graph(id="output-graph")
+            ]
+        ),
 
-        dcc.Tab(label="Comparison", children=[
-        html.Div(id="comparison-output"),
-        html.Div(id="common-columns-output")
-        ]),
-
-        dcc.Tab(label="Merge", children=[
-        dcc.Dropdown(id="merge-column"),
-        html.Div(id="merge-output")
-        ]),
-
-        dcc.Tab(label="Reports", children=[
-        html.Div(id="quality-report"),
-        html.Div(id="overview-report")
-        ])
+        dcc.Loading(
+            type="cube",#it also shows the spinning cube
+            children=[
+                dcc.Graph(id="heatmap-graph")
+            ]
+        )
     ]),
 
-    html.Button("Download Filtered CSV",id="download-btn"),
-    dcc.Download(id="download-data"),
+    dcc.Tab(label="Comparison", children=[
+        html.Div(id="comparison-output"),
+        html.Div(id="common-columns-output")
+    ]),
+
+    dcc.Tab(label="Merge", children=[
+        dcc.Dropdown(id="merge-column"),
+        html.Div(id="merge-output")
+    ]),
+
+    dcc.Tab(label="Reports", children=[
+        html.Div(id="quality-report"),
+        html.Div(id="overview-report")
+    ])
+]),
     # Toast component (hidden by default)
     dbc.Toast(
         "File downloaded successfully!",
@@ -644,7 +673,12 @@ app.layout = html.Div(
         icon="success",
         duration=4000,  # auto-hide after 4 seconds
         style={"position": "fixed", "top": 10, "right": 10, "width": 300}),
+    html.Button(
+    "Download Filtered CSV",
+    id="download-btn"
+    ),
 
+    dcc.Download(id="download-data")
     ]
 )
 def parse_multiple(contents_list):
@@ -940,7 +974,11 @@ def show_selected_preview(n_clicks, contents, filenames):
     ctx = callback_context
     if not ctx.triggered:
         return []
-    button_id = eval(ctx.triggered[0]["prop_id"].split(".")[0])
+    import json
+    #for safer version
+    button_id = json.loads(
+    ctx.triggered[0]["prop_id"].split(".")[0]
+    )
     idx = button_id["index"]
     dfs = parse_multiple(contents)
     df = dfs[idx]
