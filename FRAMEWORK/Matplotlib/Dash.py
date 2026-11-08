@@ -494,8 +494,6 @@ app.layout = html.Div(
     id="main-container",
     children=[
         html.H1("Upload Your Dataset Explorer"),
-
-
     dbc.Switch(
         id="theme-switch",
         label="🌙 Dark Mode",
@@ -673,12 +671,71 @@ dcc.Tabs([
         icon="success",
         duration=4000,  # auto-hide after 4 seconds
         style={"position": "fixed", "top": 10, "right": 10, "width": 300}),
+    html.H4(
+    "📥 Download Center",
+    style={
+        "color": "#0d6efd",
+        "fontWeight": "bold",
+        "marginTop": "20px"
+        }
+    ),
+
+    dbc.RadioItems(
+    id="report-type",
+    options=[
+        {
+            "label": " 📄 Report Only",
+            "value": "report"
+        },
+        {
+            "label": " 📊 Report + Dataset",
+            "value": "full"
+        }
+    ],
+    value="report",
+    inline=True,
+    input_checked_style={
+        "backgroundColor": "#0d6efd",
+        "borderColor": "#0d6efd"
+        }
+    ),
+
+    html.Br(),
+
+    dbc.Checklist(
+    id="report-options",
+    options=[
+        {
+            "label": " Dataset Overview",
+            "value": "overview"
+        },
+        {
+            "label": " Data Quality Report",
+            "value": "quality"
+        },
+        {
+            "label": " Original Dataset",
+            "value": "dataset"
+        }
+    ],
+    value=["overview", "quality"],
+    switch=True
+    ),
+    html.Br(),
+    dbc.Button(
+    "📥 Download Analysis Report",
+    id="download-report-btn",
+    color="success",
+    size="lg",
+    className="mt-2"
+    ),
+
+    dcc.Download(id="download-report"),
     html.Button(
     "Download Filtered CSV",
     id="download-btn"
     ),
-
-    dcc.Download(id="download-data")
+    dcc.Download(id="download-data"),
     ]
 )
 def parse_multiple(contents_list):
@@ -1233,6 +1290,59 @@ def download_filtered(n_clicks, contents, selected_file, filter_value, selected_
         from datetime import datetime
         filename = f"filtered_{datetime.now().strftime('%Y%m%d_%H%M%S')}.csv"
     return dcc.send_data_frame(df.to_csv, filename),True
+#callback for downloading the "Analysis Report" 
+@app.callback(
+    Output("download-report", "data"),
+    Input("download-report-btn", "n_clicks"),
+    State("report-type", "value"),
+    State("report-options", "value"),
+    State("upload-data", "contents"),
+    State("file-select", "value"),
+    prevent_initial_call=True
+)
+def download_analysis_report(
+    n_clicks,
+    report_type,
+    report_options,
+    contents,
+    selected_file
+):
+    if contents is None:
+        return None
+    dfs = parse_multiple(contents)
+    idx = selected_file if selected_file is not None else 0
+    if idx >= len(dfs):
+        idx = 0
+    df = dfs[idx]
+
+    report = []
+
+    if "overview" in report_options:
+        report.append("DATASET OVERVIEW")
+        report.append(f"Rows: {len(df)}")
+        report.append(f"Columns: {len(df.columns)}")
+        report.append("")
+    if "quality" in report_options:
+        report.append("DATA QUALITY REPORT")
+        report.append(
+            f"Missing Values: {df.isna().sum().sum()}"
+        )
+        report.append(
+            f"Duplicate Rows: {df.duplicated().sum()}"
+        )
+        report.append("")
+
+    if report_type == "full":
+        report.append("")
+        report.append("ORIGINAL DATASET")
+        report.append("")
+        report.append(df.to_csv(index=False))
+
+    content = "\n".join(report)
+    return dict(
+        content=content,
+        filename="analysis_report.txt"
+    )
 
 if __name__ == "__main__":
     app.run(debug=True)
