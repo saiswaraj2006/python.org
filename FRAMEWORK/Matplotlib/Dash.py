@@ -939,7 +939,17 @@ def update_dashboard(contents, selected_file, x_col, y_col, chart_type, filter_v
     if filenames is None:
         filenames=[]
     file_options = [{"label": name, "value": i} for i, name in enumerate(filenames[:2])]
-    options = [{"label": col, "value": col} for col in df.columns]
+    numeric_cols = df.select_dtypes(include="number").columns
+    axis_options = [
+    {"label": col, "value": col}
+    for col in numeric_cols
+    ]
+
+    all_options = [
+    {"label": col, "value": col}
+    for col in df.columns
+    ]
+
     # Table preview
     # Graph
     fig = {}
@@ -958,20 +968,35 @@ def update_dashboard(contents, selected_file, x_col, y_col, chart_type, filter_v
 
     # Summary stats
     cards = []
+
     for col in [x_col, y_col]:
-        if col:
+
+        if col and pd.api.types.is_numeric_dtype(df[col]):
+
             stats = df[col].describe()
+
             card = dbc.Card(
                 dbc.CardBody([
-                    html.H5(f"📊 {col}", className="card-title"),
+                    html.H5(f"📊 {col}"),
                     html.P(f"Mean: {stats['mean']:.2f}"),
                     html.P(f"Median: {df[col].median():.2f}"),
                     html.P(f"Count: {int(stats['count'])}")
                 ])
             )
-            cards.append(dbc.Col(card, width=6))
 
-    return file_options, options, options, fig, options, [col for col in df.columns], dbc.Row(cards)
+            cards.append(
+                dbc.Col(card, width=6)
+                )
+
+    return (
+    file_options,#file-select
+    axis_options,#x-axis
+    axis_options,#y-axis
+    fig,
+    all_options,#column checklist
+    [col for col in df.columns],
+    dbc.Row(cards)
+    )
 @app.callback(   #show file cards
     Output("file-card", "children"),
     Input("upload-data", "contents"),
@@ -1316,7 +1341,10 @@ def download_analysis_report(
     df = dfs[idx]
 
     report = []
-
+    report.append("ANALYSIS REPORT")
+    report.append(f"Generated On: {pd.Timestamp.now()}")# when downloading
+    #the timestamp is present
+    report.append("")
     if "overview" in report_options:
         report.append("DATASET OVERVIEW")
         report.append(f"Rows: {len(df)}")
