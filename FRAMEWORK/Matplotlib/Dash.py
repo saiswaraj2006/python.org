@@ -938,64 +938,76 @@ def update_dashboard(contents, selected_file, x_col, y_col, chart_type, filter_v
     # Dropdown options
     if filenames is None:
         filenames=[]
-    file_options = [{"label": name, "value": i} for i, name in enumerate(filenames[:2])]
-    numeric_cols = df.select_dtypes(include="number").columns
+    file_options = [
+        {"label": name, "value": i}
+        for i, name in enumerate(filenames[:2])
+    ]
+
     axis_options = [
-    {"label": col, "value": col}
-    for col in numeric_cols
+        {"label": col, "value": col}
+        for col in df.columns
     ]
 
     all_options = [
-    {"label": col, "value": col}
-    for col in df.columns
+        {"label": col, "value": col}
+        for col in df.columns
     ]
 
-    # Table preview
     # Graph
     fig = {}
-    if x_col and y_col:
-        df[x_col] = pd.to_numeric(df[x_col], errors="coerce")
-        df[y_col] = pd.to_numeric(df[y_col], errors="coerce")
 
+    if x_col and y_col:
         if chart_type == "scatter":
-            fig = px.scatter(df, x=x_col, y=y_col, title=f"{x_col} vs {y_col}")
+            fig = px.scatter(df, x=x_col, y=y_col)
         elif chart_type == "box":
-            fig = px.box(df, x=x_col, y=y_col, title=f"Box Plot: {y_col} vs {x_col}")
+            fig = px.box(df, x=x_col, y=y_col)
         elif chart_type == "bar":
-            fig = px.bar(df, x=x_col, y=y_col, title=f"Bar Chart: {y_col} vs {x_col}")
+            fig = px.bar(df, x=x_col, y=y_col)
         elif chart_type == "histogram":
-            fig = px.histogram(df, x=x_col, title=f"Histogram of {x_col}")
+            fig = px.histogram(df, x=x_col)
 
     # Summary stats
     cards = []
 
     for col in [x_col, y_col]:
 
-        if col and pd.api.types.is_numeric_dtype(df[col]):
+        if col:
+            if pd.api.types.is_numeric_dtype(df[col]):
 
-            stats = df[col].describe()
+                stats = df[col].describe()
+                card = dbc.Card(
+                    dbc.CardBody([
+                        html.H5(f"📊 {col}"),
+                        html.P(f"Mean: {stats['mean']:.2f}"),
+                        html.P(f"Median: {df[col].median():.2f}"),
+                        html.P(f"Count: {int(stats['count'])}")
+                    ])
+                )
 
-            card = dbc.Card(
-                dbc.CardBody([
-                    html.H5(f"📊 {col}"),
-                    html.P(f"Mean: {stats['mean']:.2f}"),
-                    html.P(f"Median: {df[col].median():.2f}"),
-                    html.P(f"Count: {int(stats['count'])}")
-                ])
-            )
+            else:
+                card = dbc.Card(
+                    dbc.CardBody([
+                        html.H5(f"📄 {col}"),
+                        html.P(
+                            f"Unique Values: {df[col].nunique()}"
+                        ),
+                        html.P(
+                            f"Count: {df[col].count()}"
+                        )
+                    ])
+                )
 
             cards.append(
                 dbc.Col(card, width=6)
-                )
-
+            )
     return (
-    file_options,#file-select
-    axis_options,#x-axis
-    axis_options,#y-axis
-    fig,
-    all_options,#column checklist
-    [col for col in df.columns],
-    dbc.Row(cards)
+        file_options,
+        axis_options,
+        axis_options,
+        fig,
+        all_options,
+        [col for col in df.columns],
+        dbc.Row(cards)
     )
 @app.callback(   #show file cards
     Output("file-card", "children"),
