@@ -958,22 +958,20 @@ def update_dashboard(contents, selected_file, x_col, y_col, chart_type, filter_v
 
     if x_col and y_col:
         if chart_type == "scatter":
-            fig = px.scatter(df, x=x_col, y=y_col)
-        elif chart_type == "box":
-            fig = px.box(df, x=x_col, y=y_col)
-        elif chart_type == "bar":
-            fig = px.bar(df, x=x_col, y=y_col)
-        elif chart_type == "histogram":
-            fig = px.histogram(df, x=x_col)
-
+            if(pd.api.types.is_numeric_dtype(df[x_col])
+               and pd.api.types.is_numeric_dtype(df[y_col])):
+                fig = px.scatter(df, x=x_col, y=y_col)
+            elif chart_type == "box":
+                fig = px.box(df, x=x_col, y=y_col)
+            elif chart_type == "bar":
+                fig = px.bar(df, x=x_col, y=y_col)
+            elif chart_type == "histogram":
+                fig = px.histogram(df, x=x_col)
     # Summary stats
     cards = []
-
     for col in [x_col, y_col]:
-
         if col:
             if pd.api.types.is_numeric_dtype(df[col]):
-
                 stats = df[col].describe()
                 card = dbc.Card(
                     dbc.CardBody([
@@ -983,7 +981,6 @@ def update_dashboard(contents, selected_file, x_col, y_col, chart_type, filter_v
                         html.P(f"Count: {int(stats['count'])}")
                     ])
                 )
-
             else:
                 card = dbc.Card(
                     dbc.CardBody([
@@ -996,7 +993,6 @@ def update_dashboard(contents, selected_file, x_col, y_col, chart_type, filter_v
                         )
                     ])
                 )
-
             cards.append(
                 dbc.Col(card, width=6)
             )
@@ -1020,7 +1016,6 @@ def show_file_cards(contents, filenames):
         return []
     if filenames is None:
         return []
-
     cols=[]  
     if len(filenames) > 2:#adding the message to guide the user
         cols.append(
