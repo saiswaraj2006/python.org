@@ -642,6 +642,7 @@ dcc.Tabs([
             type="cube",#it also shows the spinning cube
             children=[
                 dcc.Graph(id="heatmap-graph")
+
             ]
         )
     ]),
@@ -961,12 +962,12 @@ def update_dashboard(contents, selected_file, x_col, y_col, chart_type, filter_v
             if(pd.api.types.is_numeric_dtype(df[x_col])
                and pd.api.types.is_numeric_dtype(df[y_col])):
                 fig = px.scatter(df, x=x_col, y=y_col)
-            elif chart_type == "box":
-                fig = px.box(df, x=x_col, y=y_col)
-            elif chart_type == "bar":
-                fig = px.bar(df, x=x_col, y=y_col)
-            elif chart_type == "histogram":
-                fig = px.histogram(df, x=x_col)
+        elif chart_type == "box":#outer chart selection
+            fig = px.box(df, x=x_col, y=y_col)
+        elif chart_type == "bar":
+            fig = px.bar(df, x=x_col, y=y_col)
+        elif chart_type == "histogram":
+            fig = px.histogram(df, x=x_col)
     # Summary stats
     cards = []
     for col in [x_col, y_col]:
@@ -1245,22 +1246,22 @@ def download_merged_file(n_clicks, contents, merge_col):
     prevent_initial_call=True
 )
 def generate_heatmap(n_clicks, contents, selected_file):
-
     dfs = parse_multiple(contents)
-
     idx = selected_file if selected_file is not None else 0
-
     if idx >= len(dfs):
         idx = 0
-
     df = dfs[idx]
     corr = df.corr(numeric_only=True)
+    if corr.empty:
+        return px.imshow(
+            [[0]],
+            title="No Numeric Columns Found"
+        )
     fig = px.imshow(
         corr,
         text_auto=True,
         title="Correlation Heatmap"
     )
-
     return fig
 
 @app.callback(
