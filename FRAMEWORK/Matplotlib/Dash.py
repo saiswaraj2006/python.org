@@ -644,8 +644,9 @@ dcc.Tabs([
                 dcc.Graph(id="heatmap-graph")
 
             ]
-        )
-    ]),
+        ),
+    ]
+    ),
 
     dcc.Tab(label="Comparison", children=[
         html.Div(id="comparison-output"),
@@ -1246,23 +1247,35 @@ def download_merged_file(n_clicks, contents, merge_col):
     prevent_initial_call=True
 )
 def generate_heatmap(n_clicks, contents, selected_file):
+
+    if contents is None:
+        return {}
+
     dfs = parse_multiple(contents)
+
+    if len(dfs) == 0:
+        return {}
+
     idx = selected_file if selected_file is not None else 0
+
     if idx >= len(dfs):
         idx = 0
+
     df = dfs[idx]
+
     corr = df.corr(numeric_only=True)
+
     if corr.empty:
         return px.imshow(
             [[0]],
             title="No Numeric Columns Found"
         )
-    fig = px.imshow(
+
+    return px.imshow(
         corr,
         text_auto=True,
         title="Correlation Heatmap"
     )
-    return fig
 
 @app.callback(
     Output("main-container", "style"),
