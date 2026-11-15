@@ -659,9 +659,13 @@ dcc.Tabs([
     ]),
 
     dcc.Tab(label="Reports", children=[
-        html.Div(id="quality-report"),
-        html.Div(id="overview-report")
-    ])
+    html.Div(id="quality-report"),
+    html.Br(),
+    html.Div(id="quality-score"),
+    html.Br(),
+    html.Div(id="overview-report")
+])
+
 ]),
     # Toast component (hidden by default)
     dbc.Toast(
@@ -1172,7 +1176,6 @@ def common_columns(n_clicks, contents):
 
     if len(dfs) < 2:
         return "Please upload two files"
-
     common = sorted(
     list(set(dfs[0].columns) & set(dfs[1].columns))
     )
@@ -1188,13 +1191,70 @@ def common_columns(n_clicks, contents):
         ])
     )
 @app.callback(
+    Output("quality-score", "children"),
+    Input("file-select", "value"),
+    State("upload-data", "contents"),
+    prevent_initial_call=True
+)
+#quality status (Excellent/warning/Danger)
+def dataset_score(selected_file, contents):
+    dfs = parse_multiple(contents)
+    idx = selected_file if selected_file is not None else 0
+    if idx >= len(dfs):
+        idx = 0
+    df = dfs[idx]
+    if df.empty:
+        return dbc.Alert(
+        "Dataset is empty",
+        color="warning"
+    )
+    missing_pct = (
+        df.isna().sum().sum()
+        /
+        (df.shape[0] * df.shape[1])
+    ) * 100
+    duplicate_pct = (
+        df.duplicated().sum()
+        /
+        len(df)
+    ) * 100
+    score = max(
+        0,
+        round(100 - missing_pct - duplicate_pct)
+    )
+    color = (
+        "success" if score >= 80
+        else "warning" if score >= 50
+        else "danger"
+    )
+    return dbc.Card(
+    dbc.CardBody([
+        html.H4(f"📊 Dataset Quality Score: {score}/100"),
+        html.P(
+            "✅ Excellent"
+            if score >= 80
+            else "⚠️ Needs Attention"
+            if score >= 50
+            else "❌ Poor Data Quality"
+        ),
+        dbc.Progress(
+            value=score,
+            color=color,
+            striped=True,
+            animated=True
+        ),
+        html.Br(),
+        html.P(f"Missing %: {missing_pct:.2f}%"),
+        html.P(f"Duplicate %: {duplicate_pct:.2f}%")
+    ])
+)
+@app.callback(
     Output("quality-report","children"),
     Input("file-select","value"),
     State("upload-data","contents"),
     prevent_initial_call=True
 )
 def quality_report(selected_file, contents):
-
     dfs = parse_multiple(contents)
     idx = selected_file if selected_file is not None else 0
     if idx >= len(dfs):
