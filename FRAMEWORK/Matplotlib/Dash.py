@@ -663,6 +663,12 @@ dcc.Tabs([
     html.Br(),
     html.Div(id="quality-score"),
     html.Br(),
+    dcc.Graph(id="missing-chart"),
+    html.Br(),
+    html.Div(id="outlier-report"),
+    html.Br(),
+    html.Div(id="top-correlations"),
+    html.Br(),
     html.Div(id="overview-report")
 ])
 
@@ -831,8 +837,163 @@ def download_comparison(n_clicks, contents, filenames):
         "comparison_report.csv",
         index=False
     )
-
 @app.callback(
+    Output("missing-chart", "figure"),
+    Input("file-select", "value"),
+    State("upload-data", "contents"),
+    prevent_initial_call=True
+)
+def missing_values_chart(selected_file, contents):
+
+    dfs = parse_multiple(contents)
+
+    idx = selected_file if selected_file is not None else 0
+
+    if idx >= len(dfs):
+        idx = 0
+
+    df = dfs[idx]
+
+    missing = df.isnull().sum()
+
+    fig = px.bar(
+        x=missing.index,
+        y=missing.values,
+        labels={
+            "x": "Columns",
+            "y": "Missing Values"
+        },
+        title="Missing Values by Column"
+    )
+
+    return fig
+@app.callback(
+    Output("outlier-report", "children"),
+    Input("file-select", "value"),
+    State("upload-data", "contents"),
+    prevent_initial_call=True
+)
+def outlier_report(selected_file, contents):
+
+    dfs = parse_multiple(contents)
+
+    idx = selected_file if selected_file is not None else 0
+
+    if idx >= len(dfs):
+        idx = 0
+
+    df = dfs[idx]
+
+    numeric_cols = df.select_dtypes(
+        include="number"
+    ).columns
+
+    report = []
+
+    for col in numeric_cols:
+
+        Q1 = df[col].quantile(0.25)
+        Q3 = df[col].quantile(0.75)
+
+        IQR = Q3 - Q1
+
+        lower = Q1 - 1.5 * IQR
+        upper = Q3 + 1.5 * IQR
+
+        count = len(
+            df[
+                (df[col] < lower) |
+                (df[col] > upper)
+            ]
+        )
+
+        report.append(
+            html.Li(
+                f"{col}: {count} outliers"
+            )
+        )
+
+    return dbc.Card(
+        dbc.CardBody([
+            html.H5("🚨 Outlier Report"),
+            html.Ul(report)
+        ])
+    )
+
+@app.callback(@app.callback(
+    Output("top-correlations", "children"),
+    Input("file-select", "value"),
+    State("upload-data", "contents"),
+    prevent_initial_call=True
+)
+'''adding the correlations chart box 
+shows the "Top correlations" sections '''
+def top_correlations(selected_file, contents):
+
+    dfs = parse_multiple(contents)
+
+    idx = selected_file if selected_file is not None else 0
+
+    if idx >= len(dfs):
+        idx = 0
+
+    df = dfs[idx]
+
+    corr = df.corr(numeric_only=True)
+
+    if corr.empty:
+        return dbc.Alert(
+            "No numeric columns found",
+            color="warning"
+        )
+
+    pairs = []
+
+    for col1 in corr.columns:
+        for col2 in corr.columns:
+
+            if col1 != col2:
+
+                pairs.append(
+                    (
+                        col1,
+                        col2,
+                        abs(corr.loc[col1, col2])
+                    )
+                )
+
+    pairs = sorted(
+        pairs,
+        key=lambda x: x[2],
+        reverse=True
+    )
+
+    seen = set()
+    top = []
+
+    for c1, c2, val in pairs:
+
+        key = tuple(sorted([c1, c2]))
+
+        if key not in seen:
+
+            seen.add(key)
+
+            top.append(
+                html.Li(
+                    f"{c1} ↔ {c2} : {val:.2f}"
+                )
+            )
+
+        if len(top) == 3:
+            break
+
+    return dbc.Card(
+        dbc.CardBody([
+            html.H5("📈 Top Correlations"),
+            html.Ul(top)
+        ])
+    )
     Output("merge-output", "children"),
     Input("merge-btn", "n_clicks"),
     State("upload-data", "contents"),
