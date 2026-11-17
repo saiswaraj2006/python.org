@@ -560,7 +560,8 @@ html.Div([
             {"label": "Scatter Plot", "value": "scatter"},
             {"label": "Box Plot", "value": "box"},
             {"label": "Bar Chart", "value": "bar"},
-            {"label": "Histogram", "value": "histogram"}
+            {"label": "Histogram", "value": "histogram"},
+            {"label": "Line Chart", "value": "line"}
         ],
         placeholder="Choose a Chart Type"
     )
@@ -920,20 +921,20 @@ def outlier_report(selected_file, contents):
         ])
     )
 
-@app.callback(@app.callback(
+@app.callback(
     Output("top-correlations", "children"),
     Input("file-select", "value"),
     State("upload-data", "contents"),
     prevent_initial_call=True
 )
-'''adding the correlations chart box 
-shows the "Top correlations" sections '''
+
+#shows the "Top correlations" between numeric columns 
+
 def top_correlations(selected_file, contents):
 
     dfs = parse_multiple(contents)
 
     idx = selected_file if selected_file is not None else 0
-
     if idx >= len(dfs):
         idx = 0
 
@@ -1134,6 +1135,8 @@ def update_dashboard(contents, selected_file, x_col, y_col, chart_type, filter_v
             fig = px.bar(df, x=x_col, y=y_col)
         elif chart_type == "histogram":
             fig = px.histogram(df, x=x_col)
+        elif chart_type == "line":
+            fig = px.line(df, x=x_col, y=y_col)
     # Summary stats
     cards = []
     for col in [x_col, y_col]:
