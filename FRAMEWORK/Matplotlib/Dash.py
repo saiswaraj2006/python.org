@@ -576,12 +576,22 @@ html.Div([
     ),
 
     
-    dcc.Checklist(
-    id="column-select",
-    options=[],
-    value=[],
-    inline=True,
-    style={"marginTop": "10px"}
+    html.Div(
+        id="checklist-container",
+        children=[
+            dcc.Checklist(
+                id="column-select",
+                options=[],
+                value=[],
+                inline=True,
+                labelStyle={
+                "color": "white",
+                "fontSize": "18px",
+                "marginRight": "15px"
+                }
+            )
+        ],
+        style={"marginTop": "10px"}
     ),
     html.Div(id="summary-stats",style={"marginTop":"20px"}),
     html.Div(id="file-card", style={"marginTop": "20px"}),
@@ -988,13 +998,13 @@ def top_correlations(selected_file, contents):
 
         if len(top) == 3:
             break
-
     return dbc.Card(
         dbc.CardBody([
             html.H5("📈 Top Correlations"),
             html.Ul(top)
         ])
     )
+@app.callback(
     Output("merge-output", "children"),
     Input("merge-btn", "n_clicks"),
     State("upload-data", "contents"),
