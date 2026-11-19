@@ -520,31 +520,28 @@ app.layout = html.Div(
         "display": "block"
     }
     ),
-    html.Div([
     dcc.Input(
         id="filter-input",
         type="text",
         placeholder="Enter filter (e.g., Department=='HR')",
-        style={"width": "50%", "marginTop": "10px"}
-        )
-    ]),
+        style={"width":"50%",
+               "marginTop":"10px"
+        }
+    ),
 html.Div([
     dcc.Dropdown(
         id="x-axis-dropdown",
         placeholder="Select X-axis"
     ),
-
     dcc.Dropdown(
         id="y-axis-dropdown",
         placeholder="Select Y-axis"
     ),
-
     dcc.Dropdown(
         id="file-select",
         placeholder="Select a file to preview",
         style={"width": "50%", "marginTop": "10px"}
     ),
-
     html.Label(
         "📊 Select Chart Type",
         style={
@@ -553,7 +550,6 @@ html.Div([
             "display": "block"
         }
     ),
-
     dcc.Dropdown(
         id="chart-type-dropdown",
         options=[
@@ -1517,6 +1513,28 @@ def switch_theme(is_dark):
         "color": "black",
         "minHeight": "100vh",
         "padding": "20px"
+    }
+@app.callback(
+    Output("filter-input", "style"),
+    Input("theme-switch", "value")
+)
+def update_filter_theme(is_dark):
+
+    if is_dark:
+        return {
+            "width": "50%",
+            "marginTop": "10px",
+            "backgroundColor": "#333",
+            "color": "white",
+            "border": "1px solid #666"
+        }
+
+    return {
+        "width": "50%",
+        "marginTop": "10px",
+        "backgroundColor": "white",
+        "color": "black",
+        "border": "1px solid #ccc"
     }
 @app.callback(
     [Output("download-data","data"),
