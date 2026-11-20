@@ -1090,11 +1090,12 @@ def dataset_overview(selected_file, contents):
      Input("y-axis-dropdown", "value"),
      Input("chart-type-dropdown", "value"),
      Input("filter-input","value"),
+     Input("theme-switch","value")
     ],
     State("upload-data","filename"),
     prevent_initial_call=True
 )
-def update_dashboard(contents, selected_file, x_col, y_col, chart_type, filter_value, filenames):
+def update_dashboard(contents, selected_file, x_col, y_col, chart_type, filter_value, is_dark, filenames):
     if contents is None:
         return [], [], [], {}, [], [], ""
     dfs = parse_multiple(contents)
@@ -1116,71 +1117,87 @@ def update_dashboard(contents, selected_file, x_col, y_col, chart_type, filter_v
         {"label": name, "value": i}
         for i, name in enumerate(filenames[:2])
     ]
-
     axis_options = [
         {"label": col, "value": col}
         for col in df.columns
     ]
-
     all_options = [
         {"label": col, "value": col}
         for col in df.columns
     ]
-
     # Graph
     fig = {}
 
     if x_col and y_col:
         if chart_type == "scatter":
-            if(pd.api.types.is_numeric_dtype(df[x_col])
-               and pd.api.types.is_numeric_dtype(df[y_col])):
+            if (
+                pd.api.types.is_numeric_dtype(df[x_col])
+                and
+                pd.api.types.is_numeric_dtype(df[y_col])
+            ):
                 fig = px.scatter(df, x=x_col, y=y_col)
-        elif chart_type == "box":#outer chart selection
+
+        elif chart_type == "box":
             fig = px.box(df, x=x_col, y=y_col)
+
         elif chart_type == "bar":
             fig = px.bar(df, x=x_col, y=y_col)
         elif chart_type == "histogram":
             fig = px.histogram(df, x=x_col)
         elif chart_type == "line":
             fig = px.line(df, x=x_col, y=y_col)
+
+        # Apply dark/light theme to graph
+        if fig:
+            fig.update_layout(
+                template="plotly_dark" if is_dark else "plotly_white"
+            )
+
     # Summary stats
     cards = []
+
     for col in [x_col, y_col]:
         if col:
             if pd.api.types.is_numeric_dtype(df[col]):
+
                 stats = df[col].describe()
+
                 card = dbc.Card(
-                    dbc.CardBody([
-                        html.H5(f"📊 {col}"),
-                        html.P(f"Mean: {stats['mean']:.2f}"),
-                        html.P(f"Median: {df[col].median():.2f}"),
-                        html.P(f"Count: {int(stats['count'])}")
-                    ])
-                )
-            else:
-                card = dbc.Card(
-                    dbc.CardBody([
-                        html.H5(f"📄 {col}"),
-                        html.P(
-                            f"Unique Values: {df[col].nunique()}"
-                        ),
-                        html.P(
-                            f"Count: {df[col].count()}"
-                        )
-                    ])
-                )
-            cards.append(
-                dbc.Col(card, width=6)
+                dbc.CardBody([
+                    html.H5(f"📊 {col}"),
+                    html.P(f"Mean: {stats['mean']:.2f}"),
+                    html.P(f"Median: {df[col].median():.2f}"),
+                    html.P(f"Count: {int(stats['count'])}")
+                ])
             )
+
+        else:
+
+            card = dbc.Card(
+                dbc.CardBody([
+                    html.H5(f"📄 {col}"),
+                    html.P(
+                        f"Unique Values: {df[col].nunique()}"
+                    ),
+                    html.P(
+                        f"Count: {df[col].count()}"
+                    )
+                ])
+            )
+
+        cards.append(
+            dbc.Col(card, width=6)
+        )
+
     return (
-        file_options,
-        axis_options,
-        axis_options,
-        fig,
-        all_options,
-        [col for col in df.columns],
-        dbc.Row(cards)
-    )
+    file_options,
+    axis_options,
+    axis_options,
+    fig,
+    all_options,
+    [col for col in df.columns],
+    dbc.Row(cards)
+)
 @app.callback(   #show file cards
     Output("file-card", "children"),
     Input("upload-data", "contents"),
@@ -1210,7 +1227,6 @@ def show_file_cards(contents, filenames):
                 html.P(
                     f"Rows: {len(dfs[i])}"
                 ),
-
                 html.P(
                     f"Columns: {len(dfs[i].columns)}"
                 ),
