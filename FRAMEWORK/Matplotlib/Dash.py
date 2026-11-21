@@ -1152,43 +1152,35 @@ def update_dashboard(contents, selected_file, x_col, y_col, chart_type, filter_v
             fig.update_layout(
                 template="plotly_dark" if is_dark else "plotly_white"
             )
-
-    # Summary stats
+# Summary stats
     cards = []
-
     for col in [x_col, y_col]:
         if col:
             if pd.api.types.is_numeric_dtype(df[col]):
-
                 stats = df[col].describe()
-
                 card = dbc.Card(
-                dbc.CardBody([
-                    html.H5(f"📊 {col}"),
-                    html.P(f"Mean: {stats['mean']:.2f}"),
-                    html.P(f"Median: {df[col].median():.2f}"),
-                    html.P(f"Count: {int(stats['count'])}")
-                ])
+                    dbc.CardBody([
+                        html.H5(f"📊 {col}"),
+                        html.P(f"Mean: {stats['mean']:.2f}"),
+                        html.P(f"Median: {df[col].median():.2f}"),
+                        html.P(f"Count: {int(stats['count'])}")
+                    ])
+                )
+            else:
+                card = dbc.Card(
+                    dbc.CardBody([
+                        html.H5(f"📄 {col}"),
+                        html.P(
+                            f"Unique Values: {df[col].nunique()}"
+                        ),
+                        html.P(
+                            f"Count: {df[col].count()}"
+                        )
+                    ])
+                )
+            cards.append(
+                dbc.Col(card, width=6)
             )
-
-        else:
-
-            card = dbc.Card(
-                dbc.CardBody([
-                    html.H5(f"📄 {col}"),
-                    html.P(
-                        f"Unique Values: {df[col].nunique()}"
-                    ),
-                    html.P(
-                        f"Count: {df[col].count()}"
-                    )
-                ])
-            )
-
-        cards.append(
-            dbc.Col(card, width=6)
-        )
-
     return (
     file_options,
     axis_options,
@@ -1197,7 +1189,7 @@ def update_dashboard(contents, selected_file, x_col, y_col, chart_type, filter_v
     all_options,
     [col for col in df.columns],
     dbc.Row(cards)
-)
+    )
 @app.callback(   #show file cards
     Output("file-card", "children"),
     Input("upload-data", "contents"),
@@ -1488,11 +1480,12 @@ def download_merged_file(n_clicks, contents, merge_col):
 @app.callback(
     Output("heatmap-graph", "figure"),
     Input("heatmap-btn", "n_clicks"),
+    Input("theme-switch", "value"),
     State("upload-data", "contents"),
     State("file-select", "value"),
     prevent_initial_call=True
 )
-def generate_heatmap(n_clicks, contents, selected_file):
+def generate_heatmap(n_clicks, is_dark, contents, selected_file):
     if contents is None:
         return {}
     dfs = parse_multiple(contents)
@@ -1507,11 +1500,16 @@ def generate_heatmap(n_clicks, contents, selected_file):
     corr = df.corr(numeric_only=True)
     if corr.empty:
         return px.imshow([[0]], title="No Numeric Columns Found")
-    return px.imshow(
+    fig = px.imshow(
         corr,
         text_auto=True,
         title="Correlation Heatmap"
     )
+
+    fig.update_layout(
+        template="plotly_dark" if is_dark else "plotly_white"
+    )
+    return fig  
 @app.callback(
     Output("main-container", "style"),
     Input("theme-switch", "value")
