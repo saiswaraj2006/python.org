@@ -1261,7 +1261,18 @@ def show_selected_preview(n_clicks, contents, filenames):
             {"name":c,"id":c}
             for c in df.columns
         ],
-        page_size=5
+        page_size=5,
+        style_header={
+            "backgroundColor": "#333",
+            "color":"white",
+            "fontWeight":"bold"
+
+        },
+        style_cell={
+            "backgroundColor":"#222",
+            "color":"white",
+            "textAlign":"left"
+        }
     )
     return dbc.Card(
         dbc.CardBody([
