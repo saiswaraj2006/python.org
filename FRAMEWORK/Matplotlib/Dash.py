@@ -528,6 +528,8 @@ app.layout = html.Div(
                "marginTop":"10px"
         }
     ),
+    html.Div(id="insights-panel",
+             style={"marginTop":"10px"}),
 html.Div([
     dcc.Dropdown(
         id="x-axis-dropdown",
@@ -771,6 +773,44 @@ def parse_multiple(contents_list):
                 df = pd.DataFrame()
         dfs.append(df)
     return dfs
+@app.callback(
+    Output("insights-panel", "children"),
+    Input("file-select", "value"),
+    State("upload-data", "contents"),
+    prevent_initial_call=True
+)
+def dataset_insights(selected_file, contents):
+    dfs = parse_multiple(contents)
+    idx = selected_file if selected_file is not None else 0
+    if idx >= len(dfs):
+        idx = 0
+    df = dfs[idx]
+    missing_col = df.isnull().sum().idxmax()
+    missing_count = df.isnull().sum().max()
+
+    numeric_cols = len(
+        df.select_dtypes(include="number").columns
+    )
+    categorical_cols = len(
+        df.select_dtypes(exclude="number").columns
+    )
+    return dbc.Card(
+        dbc.CardBody([
+            html.H5("🔍 Dataset Insights"),
+            html.P(
+                f"Most Missing Values: {missing_col} ({missing_count})"
+            ),
+            html.P(
+                f"Numeric Columns: {numeric_cols}"
+            ),
+            html.P(
+                f"Categorical Columns: {categorical_cols}"
+            ),
+            html.P(
+                f"Total Rows: {len(df)}"
+            )
+        ])
+    )
 # Helper function to parse uploaded file
 @app.callback(
     [Output("merge-column", "options"),
@@ -1656,7 +1696,5 @@ def download_analysis_report(
         content=content,
         filename="analysis_report.txt"
     )
-
 if __name__ == "__main__":
     app.run(debug=True)
-
