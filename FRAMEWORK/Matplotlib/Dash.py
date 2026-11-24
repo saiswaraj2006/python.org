@@ -503,7 +503,6 @@ app.layout = html.Div(
         id="upload-data",
         children=html.Div(["Drag and Drop or ", html.A("Select Up To 2 CSV File")
                            ]),
-          
         style={
             "width": "50%", "height": "60px", "lineHeight": "60px",
             "borderWidth": "1px", "borderStyle": "dashed",
@@ -520,6 +519,10 @@ app.layout = html.Div(
         "display": "block"
     }
     ),
+    html.Div(
+    id="kpi-cards",
+    style={"marginTop": "20px"}
+    ),
     dcc.Input(
         id="filter-input",
         type="text",
@@ -530,41 +533,62 @@ app.layout = html.Div(
     ),
     html.Div(id="insights-panel",
              style={"marginTop":"10px"}),
-html.Div([
-    dcc.Dropdown(
-        id="x-axis-dropdown",
-        placeholder="Select X-axis"
+dbc.Card(
+    [
+        dbc.CardHeader(
+            "📊 Visualization Controls",
+            style={
+                "fontWeight": "bold",
+                "fontSize": "20px"
+            }
+        ),
+        dbc.CardBody([
+
+            html.Label("Select File"),
+            dcc.Dropdown(
+                id="file-select",
+                placeholder="Select a file to preview"
+            ),
+            html.Br(),
+            html.Label("X Axis"),
+            dcc.Dropdown(
+                id="x-axis-dropdown",
+                placeholder="Select X-axis"
+            ),
+
+            html.Br(),
+
+            html.Label("Y Axis"),
+            dcc.Dropdown(
+                id="y-axis-dropdown",
+                placeholder="Select Y-axis"
+            ),
+            html.Br(),
+            html.Label("Chart Type"),
+            dcc.Dropdown(
+                id="chart-type-dropdown",
+                options=[
+                    {"label": "Scatter Plot", "value": "scatter"},
+                    {"label": "Box Plot", "value": "box"},
+                    {"label": "Bar Chart", "value": "bar"},
+                    {"label": "Histogram", "value": "histogram"},
+                    {"label": "Line Chart", "value": "line"}
+                ],
+                placeholder="Choose a Chart Type"
+            )
+
+        ])
+    ],
+    style={
+        "marginTop": "20px",
+        "marginBottom": "20px"
+    }
+),
+    html.H3(
+    "👀 Dataset Preview",
+    style={"marginTop": "20px"}
     ),
-    dcc.Dropdown(
-        id="y-axis-dropdown",
-        placeholder="Select Y-axis"
-    ),
-    dcc.Dropdown(
-        id="file-select",
-        placeholder="Select a file to preview",
-        style={"width": "50%", "marginTop": "10px"}
-    ),
-    html.Label(
-        "📊 Select Chart Type",
-        style={
-            "fontWeight": "bold",
-            "marginTop": "10px",
-            "display": "block"
-        }
-    ),
-    dcc.Dropdown(
-        id="chart-type-dropdown",
-        options=[
-            {"label": "Scatter Plot", "value": "scatter"},
-            {"label": "Box Plot", "value": "box"},
-            {"label": "Bar Chart", "value": "bar"},
-            {"label": "Histogram", "value": "histogram"},
-            {"label": "Line Chart", "value": "line"}
-        ],
-        placeholder="Choose a Chart Type"
-    )
-], style={"width": "50%", "marginTop": "20px"}),
-    html.Div(id="preview-area", style={"marginTop": "20px"}),
+    html.Div(id="preview-area"),
     
     html.Button(
     "Generate Correlation Heatmap",
@@ -592,7 +616,12 @@ html.Div([
         style={"marginTop": "10px"}
     ),
     html.Div(id="summary-stats",style={"marginTop":"20px"}),
-    html.Div(id="file-card", style={"marginTop": "20px"}),
+    html.H3(
+    "📂 Uploaded Files",
+    style={"marginTop": "20px"}
+    ),
+    html.Div(id="file-card"),
+
     html.Button(
     "Compare Files",
     id="compare-btn",
@@ -637,6 +666,14 @@ html.Div([
             "marginLeft": "10px"
         }
     ),
+    html.H2(
+    "📊 Data Analysis Workspace",
+    style={
+        "marginTop": "30px",
+        "marginBottom": "15px",
+        "textAlign": "center"
+        }
+    ),
 dcc.Tabs([
     dcc.Tab(label="Visualization", children=[
 
@@ -656,7 +693,6 @@ dcc.Tabs([
         ),
     ]
     ),
-
     dcc.Tab(label="Comparison", children=[
         html.Div(id="comparison-output"),
         html.Div(id="common-columns-output")
@@ -666,7 +702,6 @@ dcc.Tabs([
         dcc.Dropdown(id="merge-column"),
         html.Div(id="merge-output")
     ]),
-
     dcc.Tab(label="Reports", children=[
     html.Div(id="quality-report"),
     html.Br(),
@@ -692,7 +727,7 @@ dcc.Tabs([
         icon="success",
         duration=4000,  # auto-hide after 4 seconds
         style={"position": "fixed", "top": 10, "right": 10, "width": 300}),
-    html.H4(
+    html.H2(
     "📥 Download Center",
     style={
         "color": "#0d6efd",
@@ -773,6 +808,77 @@ def parse_multiple(contents_list):
                 df = pd.DataFrame()
         dfs.append(df)
     return dfs
+@app.callback(
+    Output("kpi-cards", "children"),
+    Input("file-select", "value"),
+    State("upload-data", "contents"),
+    prevent_initial_call=True
+)
+def update_kpis(selected_file, contents):
+
+    if contents is None:
+        return ""
+
+    dfs = parse_multiple(contents)
+
+    idx = selected_file if selected_file is not None else 0
+
+    if idx >= len(dfs):
+        idx = 0
+
+    df = dfs[idx]
+
+    missing_pct = round(
+        (df.isna().sum().sum() /
+        (df.shape[0] * df.shape[1])) * 100,
+        2
+    )
+
+    score = round(
+        100 -
+        missing_pct -
+        (df.duplicated().sum()/len(df))*100
+    )
+
+    return dbc.Row([
+
+        dbc.Col(
+            dbc.Card(
+                dbc.CardBody([
+                    html.H6("Rows"),
+                    html.H3(len(df))
+                ])
+            ), width=3
+        ),
+
+        dbc.Col(
+            dbc.Card(
+                dbc.CardBody([
+                    html.H6("Columns"),
+                    html.H3(len(df.columns))
+                ])
+            ), width=3
+        ),
+
+        dbc.Col(
+            dbc.Card(
+                dbc.CardBody([
+                    html.H6("Missing %"),
+                    html.H3(f"{missing_pct}%")
+                ])
+            ), width=3
+        ),
+
+        dbc.Col(
+            dbc.Card(
+                dbc.CardBody([
+                    html.H6("Quality"),
+                    html.H3(f"{score}/100")
+                ])
+            ), width=3
+        )
+
+    ])
 @app.callback(
     Output("insights-panel", "children"),
     Input("file-select", "value"),
@@ -1066,22 +1172,42 @@ def merge_files(n_clicks, contents, merge_col):
         on=merge_col,
         how="inner"
     )
-
     return dbc.Card(
-        dbc.CardBody([#for showing the rows and cols how many?
+        dbc.CardBody([
             html.H5("Merged Dataset"),
             html.P(f"Rows: {len(merged)}"),
             html.P(f"Columns: {len(merged.columns)}"),
+
             dash_table.DataTable(
                 data=merged.head().to_dict("records"),
                 columns=[
                     {"name": c, "id": c}
                     for c in merged.columns
                 ],
-                page_size=10
+                page_size=10,
+
+                style_header={
+                    "backgroundColor": "#198754",
+                    "color": "white",
+                    "fontWeight": "bold",
+                    "textAlign": "center"
+                },
+
+                style_cell={
+                    "padding": "10px",
+                    "textAlign": "left",
+                    "border": "1px solid #dee2e6"
+                },
+
+                style_data_conditional=[
+                    {
+                        "if": {"row_index": "odd"},
+                        "backgroundColor": "#f8f9fa"
+                    }
+                ]
             )
         ])
-)
+    )
 @app.callback(
     Output("overview-report", "children"),
     Input("file-select", "value"),
@@ -1384,12 +1510,28 @@ def compare_files(n_clicks, contents, filenames):
     })
 
     return dash_table.DataTable(
-        data=comparison.to_dict("records"),
-        columns=[
-            {"name":i,"id":i}
-            for i in comparison.columns
-        ]
-    )
+    data=comparison.to_dict("records"),
+    columns=[
+        {"name": i, "id": i}
+        for i in comparison.columns
+    ],
+    page_size=10,
+    style_header={
+        "backgroundColor": "#0d6efd",
+        "color": "white",
+        "fontWeight": "bold"
+    },
+    style_cell={
+        "textAlign": "center",
+        "padding": "10px"
+    },
+    style_data_conditional=[
+        {
+            "if": {"row_index": "odd"},
+            "backgroundColor": "#f8f9fa"
+        }
+    ]
+)
 @app.callback(
     Output("common-columns-output", "children"),
     Input("common-btn", "n_clicks"),
