@@ -479,7 +479,6 @@ def update_output(contents, x_col, y_col):#generates dropdowns options and plots
 if __name__ == "__main__":
     app.run(debug=True)
 '''
-
 from dash import Dash, html, dcc, Input, Output, State
 import plotly.express as px
 import pandas as pd
@@ -555,9 +554,7 @@ dbc.Card(
                 id="x-axis-dropdown",
                 placeholder="Select X-axis"
             ),
-
             html.Br(),
-
             html.Label("Y Axis"),
             dcc.Dropdown(
                 id="y-axis-dropdown",
@@ -596,8 +593,6 @@ dbc.Card(
     className="btn btn-danger",
     style={"marginTop": "10px"}
     ),
-
-    
     html.Div(
         id="checklist-container",
         children=[
