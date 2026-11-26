@@ -532,6 +532,10 @@ app.layout = html.Div(
     ),
     html.Div(id="insights-panel",
              style={"marginTop":"10px"}),
+    html.Div(
+        id="datatype-report",
+        style={"marginTop":"10px"}
+    ),
 dbc.Card(
     [
         dbc.CardHeader(
@@ -569,7 +573,8 @@ dbc.Card(
                     {"label": "Box Plot", "value": "box"},
                     {"label": "Bar Chart", "value": "bar"},
                     {"label": "Histogram", "value": "histogram"},
-                    {"label": "Line Chart", "value": "line"}
+                    {"label": "Line Chart", "value": "line"},
+                    {"label": "Pie Chart", "value": "pie"}
                 ],
                 placeholder="Choose a Chart Type"
             )
@@ -842,7 +847,10 @@ def update_kpis(selected_file, contents):
                 dbc.CardBody([
                     html.H6("Rows"),
                     html.H3(len(df))
-                ])
+                ]),
+                color="primary",#Blue
+                inverse=True
+            
             ), width=3
         ),
 
@@ -851,7 +859,9 @@ def update_kpis(selected_file, contents):
                 dbc.CardBody([
                     html.H6("Columns"),
                     html.H3(len(df.columns))
-                ])
+                ]),
+                color="success",#Green
+                inverse=True
             ), width=3
         ),
 
@@ -860,7 +870,9 @@ def update_kpis(selected_file, contents):
                 dbc.CardBody([
                     html.H6("Missing %"),
                     html.H3(f"{missing_pct}%")
-                ])
+                ]),
+                color="warning",#means Yellow
+                inverse=True
             ), width=3
         ),
 
@@ -869,7 +881,9 @@ def update_kpis(selected_file, contents):
                 dbc.CardBody([
                     html.H6("Quality"),
                     html.H3(f"{score}/100")
-                ])
+                ]),
+                color="danger",#means Red
+                inverse=True
             ), width=3
         )
 
@@ -1307,7 +1321,8 @@ def update_dashboard(contents, selected_file, x_col, y_col, chart_type, filter_v
             fig = px.histogram(df, x=x_col)
         elif chart_type == "line":
             fig = px.line(df, x=x_col, y=y_col)
-
+        elif chart_type == "pie":
+            fig = px.pie(df, names=x_col,title=f"Distribution of {x_col}")
         # Apply dark/light theme to graph
         if fig:
             fig.update_layout(
