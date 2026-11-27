@@ -606,11 +606,6 @@ dbc.Card(
                 options=[],
                 value=[],
                 inline=True,
-                labelStyle={
-                "color": "white",
-                "fontSize": "18px",
-                "marginRight": "15px"
-                }
             )
         ],
         style={"marginTop": "10px"}
@@ -623,12 +618,21 @@ dbc.Card(
     html.Div(id="file-card"),
 
     html.Button(
+    "Show Duplicate Rows",
+    id="duplicate-btn",
+    className="btn btn-danger",
+    style={"marginTop": "15px"}
+    ),
+    html.Div(
+    id="duplicate-output",
+    style={"marginTop": "20px"}
+    ),
+    html.Button(
     "Compare Files",
     id="compare-btn",
     className="btn btn-success",
     style={"marginTop": "15px"}
-),
-
+    ),
     html.Button(
     "Download Comparison Report",
     id="download-comparison-btn",
@@ -636,11 +640,10 @@ dbc.Card(
     style={
         "marginTop": "15px",
         "marginLeft": "10px"
-        }
+    }
     ),
 
     dcc.Download(id="download-comparison"),
-
     html.Button(
     "Common Columns",
     id="common-btn",
@@ -665,6 +668,10 @@ dbc.Card(
             "marginTop": "15px",
             "marginLeft": "10px"
         }
+    ),
+    html.Div(
+    id="recommendation-panel",
+    style={"marginTop": "20px"}
     ),
     html.H2(
     "📊 Data Analysis Workspace",
@@ -809,39 +816,41 @@ def parse_multiple(contents_list):
         dfs.append(df)
     return dfs
 @app.callback(
+    Output("column-select", "labelStyle"),
+    Input("theme-switch", "value")
+)
+def update_checklist_labels(is_dark):#this is used in the checklist Dark mode
+    return {
+        "color": "white" if is_dark else "black",
+        "fontSize": "18px",
+        "marginRight": "15px"
+    }
+@app.callback(
     Output("kpi-cards", "children"),
     Input("file-select", "value"),
     State("upload-data", "contents"),
     prevent_initial_call=True
 )
 def update_kpis(selected_file, contents):
-
     if contents is None:
         return ""
-
     dfs = parse_multiple(contents)
 
     idx = selected_file if selected_file is not None else 0
-
     if idx >= len(dfs):
         idx = 0
-
     df = dfs[idx]
-
     missing_pct = round(
         (df.isna().sum().sum() /
         (df.shape[0] * df.shape[1])) * 100,
         2
     )
-
     score = round(
         100 -
         missing_pct -
         (df.duplicated().sum()/len(df))*100
     )
-
     return dbc.Row([
-
         dbc.Col(
             dbc.Card(
                 dbc.CardBody([
@@ -875,7 +884,6 @@ def update_kpis(selected_file, contents):
                 inverse=True
             ), width=3
         ),
-
         dbc.Col(
             dbc.Card(
                 dbc.CardBody([
@@ -886,8 +894,110 @@ def update_kpis(selected_file, contents):
                 inverse=True
             ), width=3
         )
-
     ])
+@app.callback(
+    Input("file-select", "value"),
+    State("upload-data", "contents"),
+    prevent_initial_call=True
+)
+def update_kpi_cards(selected_file, contents):
+    dfs = parse_multiple(contents)
+    idx = selected_file if selected_file is not None else 0
+    if idx >= len(dfs):
+        idx = 0
+    df = dfs[idx]
+    cards = dbc.Row([
+        dbc.Col(
+            dbc.Card(
+                dbc.CardBody([
+                    html.H4(len(df)),
+                    html.P("Rows")
+                ])
+            ),
+            width=3
+        ),
+        dbc.Col(
+            dbc.Card(
+                dbc.CardBody([
+                    html.H4(len(df.columns)),
+                    html.P("Columns")
+                ])
+            ),
+            width=3
+        ),
+        dbc.Col(
+            dbc.Card(
+                dbc.CardBody([
+                    html.H4(df.isna().sum().sum()),
+                    html.P("Missing Values")
+                ])
+            ),
+            width=3
+        ),
+        dbc.Col(
+            dbc.Card(
+                dbc.CardBody([
+                    html.H4(df.duplicated().sum()),
+                    html.P("Duplicate Rows")
+                ])
+            ),
+            width=3
+        )
+    ])
+    return cards
+#smart Recommendation 
+'''
+example ⇓
+-> Dataset contains 12 duplicate rows
+->Salary has 25 missing values
+->Age and Experience are highly correlated
+->consider cleaning missing values before analysis'''
+@app.callback(
+    Output("recommendation-panel", "children"),
+    Input("file-select", "value"),
+    State("upload-data", "contents"),
+    prevent_initial_call=True
+)
+def recommendations(selected_file, contents):
+    dfs = parse_multiple(contents)
+    idx = selected_file if selected_file is not None else 0
+    if idx >= len(dfs):
+        idx = 0
+    df = dfs[idx]
+    recommendations = []
+    missing = df.isna().sum().sum()
+    if missing > 0:
+        recommendations.append(
+            html.Li(
+                f"⚠ Dataset contains {missing} missing values."
+            )
+        )
+    duplicates = df.duplicated().sum()
+
+    if duplicates > 0:
+        recommendations.append(
+            html.Li(
+                f"🔄 Dataset contains {duplicates} duplicate rows."
+            )
+        )
+    if len(df.columns) > 20:
+        recommendations.append(
+            html.Li(
+                "📊 Large number of columns detected."
+            )
+        )
+    if not recommendations:
+        recommendations.append(
+            html.Li(
+                "✅ Dataset looks clean."
+            )
+        )
+    return dbc.Card(
+        dbc.CardBody([
+            html.H5("🤖 Smart Recommendations"),
+            html.Ul(recommendations)
+        ])
+    )
 @app.callback(
     Output("insights-panel", "children"),
     Input("file-select", "value"),
