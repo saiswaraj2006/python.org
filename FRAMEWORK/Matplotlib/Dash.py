@@ -1567,6 +1567,45 @@ def show_selected_preview(n_clicks, contents, filenames):
         ])
     )
 @app.callback(
+    Output("duplicate-output", "children"),
+    Input("duplicate-btn", "n_clicks"),
+    State("upload-data", "contents"),
+    State("file-select", "value"),
+    prevent_initial_call=True
+)
+def show_duplicates(n_clicks, contents, selected_file):
+    if contents is None:
+        return dbc.Alert(
+            "Upload a file first",
+            color="warning"
+        )
+    dfs = parse_multiple(contents)
+    idx = selected_file if selected_file is not None else 0
+    if idx >= len(dfs):
+        idx = 0
+    df = dfs[idx]
+    duplicates = df[df.duplicated()]
+    if duplicates.empty:
+        return dbc.Alert(
+            "✅ No duplicate rows found",
+            color="success"
+        )
+    return dbc.Card(
+        dbc.CardBody([
+            html.H5(
+                f"Duplicate Rows ({len(duplicates)})"
+            ),
+            dash_table.DataTable(
+                data=duplicates.head(20).to_dict("records"),
+                columns=[
+                    {"name": c, "id": c}
+                    for c in duplicates.columns
+                ],
+                page_size=10
+            )
+        ])
+    )
+@app.callback(
     Output("comparison-output", "children"),
     Input("compare-btn", "n_clicks"),
     State("upload-data", "contents"),
@@ -1574,18 +1613,13 @@ def show_selected_preview(n_clicks, contents, filenames):
     prevent_initial_call=True
 )
 def compare_files(n_clicks, contents, filenames):
-
     if contents is None:
         return "Upload 2 files first"
-
     dfs = parse_multiple(contents)
-
     if len(dfs) < 2:
         return "Please upload two files"
-
     df1 = dfs[0]
     df2 = dfs[1]
-
     comparison = pd.DataFrame({
         "Metric":[
             "Rows",
@@ -1628,7 +1662,6 @@ def compare_files(n_clicks, contents, filenames):
             )
         ]
     })
-
     return dash_table.DataTable(
     data=comparison.to_dict("records"),
     columns=[
@@ -1659,10 +1692,8 @@ def compare_files(n_clicks, contents, filenames):
     prevent_initial_call=True
 )
 def common_columns(n_clicks, contents):
-
     if contents is None:
         return "Upload two files first"
-
     dfs = parse_multiple(contents)
 
     if len(dfs) < 2:
@@ -1670,7 +1701,6 @@ def common_columns(n_clicks, contents):
     common = sorted(
     list(set(dfs[0].columns) & set(dfs[1].columns))
     )
-
     return dbc.Card(
         dbc.CardBody([
             html.H5("Common Columns"),
@@ -1784,7 +1814,6 @@ def download_merged_file(n_clicks, contents, merge_col):
         on=merge_col,
         how="inner"
     )
-
     return dcc.send_data_frame(
         merged.to_csv,
         "merged_dataset.csv",
@@ -1802,7 +1831,6 @@ def generate_heatmap(n_clicks, is_dark, contents, selected_file):
     if contents is None:
         return {}
     dfs = parse_multiple(contents)
-
     if len(dfs) == 0:
         return {}
 
